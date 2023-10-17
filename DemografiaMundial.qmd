@@ -1,0 +1,113 @@
+---
+title: "Demografía Mundial"
+author: "Carla Martínez, Patricia Mateu y Margalida Verd"
+format: html
+editor: visual
+---
+## Introducción
+
+
+## Carga de datos y limpieza
+
+Empezamos con la carga de los dataframes que usaremos y veamos la estructura del nuevo tibble.
+
+
+```{r, warning=FALSE,message=FALSE}
+library(tidyverse)
+
+# Cargamos el primer dataframe
+global_population = read_csv("Global Population Trends(2016-2022).csv", show_col_types = FALSE) 
+
+# Del segundo dataframe seleccionamos las variables que nos interesan para el estudio
+
+data = read_csv("world_population.csv",show_col_types = FALSE)
+world_data <- data %>% 
+  select(3,5,14) %>% rename(Country= "Country/Territory", Area_km2 = "Area (km²)")   
+# Unimos los dos dataframes y creamos el tibble que usaremos para el estudio
+world_population = left_join(global_population,world_data, by = "Country")
+
+world_population %>% 
+  glimpse()
+
+```
+
+Ahora, procedemos con la limpieza; para empezar, renombramos las columnas con la función `rename()`, ya que sus nombres estaban en inglés, y cambiamos la posición de algunas variables con la función `relocate()`, para que las variables sigan un orden lógico.
+
+```{r, warning=FALSE, message=FALSE}
+world_population <- world_population %>% 
+  rename(Pais = "Country", 
+         Año = "Year", 
+         Pob_total = "Total Population", 
+         Pob_urbana = "Urban Population", 
+         Pob_rural = "Rural Population", 
+         Densidad = "Population Density", 
+         Esp_vida = "Life Expectancy", 
+         Natalidad = "Birth Rate", 
+         Mortalidad = "Death Rate", 
+         Fertilidad = "Fertility Rate", 
+         Mortalidad_infantil = "Infant Mortality Rate", 
+         Crecimiento = "Growth Rate", 
+         Continente = "Continent") %>% 
+  relocate(Continente, .after = Pais) %>% 
+  relocate(Area_km2, .after = Continente) %>% 
+  relocate(Mortalidad_infantil, .after = Mortalidad) 
+
+```
+
+Además, cambiaremos el tipo de algunas variables ya que queremos que se ajusten a las necesidades del estudio. Para ello, utilizamos la función `mutate()`.
+
+```{r, warning=FALSE, message=FALSE}
+world_population <- world_population %>% 
+  mutate(Año = as.character(Año)) %>% 
+  mutate(Pob_total = as.numeric(gsub("," , "", Pob_total, fixed = TRUE))) %>%
+  mutate(Pob_rural = as.numeric(gsub("," , "", Pob_rural, fixed = TRUE))) %>%
+  mutate(Pob_urbana = as.numeric(gsub("," , "", Pob_urbana, fixed = TRUE))) %>% 
+  mutate(Densidad = as.integer(Densidad)) %>% 
+  mutate(Esp_vida = as.integer(Esp_vida)) %>% 
+  mutate(Fertilidad = as.numeric(Fertilidad)) %>% 
+  mutate(Mortalidad_infantil = as.numeric(Mortalidad_infantil)) %>% 
+  mutate(Crecimiento = as.integer(Crecimiento))
+  
+```
+
+Ahora, si observamos nuestro conjunto de datos, notamos que faltan muchos datos del año 2017; por eso, no consideraremos este año en nuestro estudio. Utilizaremos la función `filter()` para eliminarlo de nuestro tibble.
+
+```{r,warning=FALSE,message=FALSE}
+world_population <- world_population %>% 
+  filter(Año == 2018 |Año == 2019 |Año == 2020 | Año == 2021) 
+```
+
+Visualizamos la estructura del dataframe resultante de la limpieza:
+
+```{r}
+world_population <- world_population %>%
+  glimpse()
+```
+
+¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡TENEMOS QUE PENSAR QUE HACER CON LOS NA!!!!!!!!!!!!!!!!!!!
+
+```{r}
+
+View(world_population)
+data1 <- world_population %>% 
+  filter(., is.na(Continente)) %>% 
+  filter(., Año == 2018) %>% 
+  glimpse()
+View(data1)
+
+```
+
+
+## Análisis multivariante exploratorio
+
+```{r}
+world_population %>% 
+  summarise(., group_by(Año))
+
+```
+
+
+## Estimación y correlaciones
+
+## Conclusiones
+
