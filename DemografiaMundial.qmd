@@ -7,16 +7,25 @@ editor: visual
 
 ## Introducción
 
-analisis a nivel continental desde el 2018 al 2020
-ver si hay diferencias significativas por continentes
-en cada continente analizar los paises que más difieren del resto
-ver si en el 2020 han habido cambios significativos 
-ver si en los paises con más diferencias en mortalidad de un año al otro vienen dados por un evento significativo
-ver si la paz afecta en la esperanza de vida y en la natalidad ejemplo Dinamarca
+Este proyecto recoge datos poblacionales de los países del mundo, tomados en 3 años consecutivos (del 2018 al 2020) y pretende estudiarlos y analizarlos a nivel continental para ver si existen diferencias significativas entre continentes.
+
+Para ello, analizaremos cada continente individualmente y nos centraremos en entender las diferencias que puedan haber; es decir, aportar información histórica, si se da el caso, que pueda explicar los aumentos o decrementos de los valores demográficos.
+
+Los datos utilizados se han sacado de los siguientes enlaces:
+
+-   [Global Population Trends](https://www.kaggle.com/datasets/alitaqi000/global-population-trends2016-2022)
+
+-   [World Population](https://www.kaggle.com/datasets/iamsouravbanerjee/world-population-dataset)
 
 
-
-El objetivo de nuestro proyecto consiste en analizar los datos demográficos de los países del mundo a nivel continental 
+"""
+- analisis a nivel continental desde el 2018 al 2020 
+- ver si hay diferencias significativas por continentes
+- en cada continente analizar los paises que más difieren del resto 
+- ver si en el 2020 han habido cambios significativos 
+- ver si en los paises con más diferencias en mortalidad de un año al otro vienen dados por un evento significativo 
+- ver si la paz afecta en la esperanza de vida y en la natalidad ejemplo Dinamarca
+"""
 
 ## Carga de datos y limpieza
 
@@ -82,79 +91,32 @@ world_population <- world_population %>%
 
 Visualicemos el conjunto de datos que presentan algún valor NA.
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 world_population %>% 
   group_by(Año) %>% 
   summarise_all(funs(sum(is.na(.))))
 
 ```
 
-Como vemos, tenemos bastantes datos faltantes en los años 2017 y 2021; por eso, reduciremos nuestro estudio entre los años 2018 y 2020. Utilizaremos la función `filter()` para eliminarlo de nuestro tibble.
-
+Como vemos, tenemos bastantes datos faltantes en los años 2017 y 2021; por eso, reduciremos nuestro estudio entre los años 2018 y 2020. Utilizaremos la función `filter()` para eliminar los dos años de nuestro tibble.
 
 ```{r,warning=FALSE,message=FALSE}
 world_population <- world_population %>% 
   filter(Año == 2018 |Año == 2019 |Año == 2020 ) 
 ```
 
+Ahora, trataremos particularmente los datos NA de las variables *Contiente* y *Area_km2*, ya que son las variables que hemos añadido de otro dataframe. En este caso, rellenaremos manualmente estos datos con la función `fix()`. La información con la que hemos completado estos valores se han sacado de: ??????????????
+
 Visualizamos la estructura del dataframe resultante de la limpieza:
 
 ```{r}
 world_population <- world_population %>%
   glimpse()
+View(world_population)
 ```
-Ahora, trataremos particularmente los datos NA de las variables *Contiente* y *Area_km2*, ya que son las variables que hemos añadido de otro dataframe. En este caso, rellenaremos manualmente estos datos. La información con la que hemos completado estos valores se han sacado de: ??????????????
-
-```{r}
-
-world_population %>% 
-  filter(., is.na(Continente))
-
-````
-```{r}
-world_population %>% 
-  replace_na(replace = list("North America",))
-```
-
-Anty Barb: NA, 440,29
-Bosnia: Europa, 51197
-cabo Verde: africa, 4033
-Channel islands: europa, 198
-democratic republic congo: africa, 2344858
-isle of man: europa, 572
-kosovo: europa, 10887
-kyrgyz: asia, 199951
-lao pdr: asia, 236800
-macao: asia, 28.2
-congo: africa, 342000
-sao tome and principe: africa, 964
-slovak republic: europa, 49035
-saint marteen (parte alemana): europa, 34
-st kitts and nevis: north america, 269
-sta lucia: sud america, 616
-st marteen (parte francesa): europa, 53.2
-st. Vincent And The Grenadines: north america, 389
-syria: asia, 185180
-Trinidad And Tobago: sud america, 5128
-Turks And Caicos Islands: noth america, 948
-UAE: asia, 83600
-Virgin Islands (U.S.): north america, 346.36
-West Bank And Gaza: asia, 5860
-
 
 ## Análisis multivariante exploratorio
 
-<<<<<<< HEAD
-=======
-```{r}
-world_population %>% 
-  summarise(., group_by(Año))
-
-```
-
->>>>>>> c673026bd90803ca37435517c7a6e64160091089
 ## Estimación y correlaciones
 
 ## Conclusiones
-
-
