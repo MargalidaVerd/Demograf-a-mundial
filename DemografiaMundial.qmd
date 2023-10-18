@@ -100,13 +100,6 @@ View(data1)
 
 ## Análisis multivariante exploratorio
 
-```{r}
-world_population %>% 
-  summarise(., group_by(Año))
-
-```
-
-
 ## Estimación y correlaciones
 
 ## Conclusiones
