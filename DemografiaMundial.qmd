@@ -17,15 +17,7 @@ Los datos utilizados se han sacado de los siguientes enlaces:
 
 -   [World Population](https://www.kaggle.com/datasets/iamsouravbanerjee/world-population-dataset)
 
-
-"""
-- analisis a nivel continental desde el 2018 al 2020 
-- ver si hay diferencias significativas por continentes
-- en cada continente analizar los paises que más difieren del resto 
-- ver si en el 2020 han habido cambios significativos 
-- ver si en los paises con más diferencias en mortalidad de un año al otro vienen dados por un evento significativo 
-- ver si la paz afecta en la esperanza de vida y en la natalidad ejemplo Dinamarca
-"""
+""" - analisis a nivel continental desde el 2018 al 2020 - ver si hay diferencias significativas por continentes - en cada continente analizar los paises que más difieren del resto - ver si en el 2020 han habido cambios significativos - ver si en los paises con más diferencias en mortalidad de un año al otro vienen dados por un evento significativo - ver si la paz afecta en la esperanza de vida y en la natalidad ejemplo Dinamarca """
 
 ## Carga de datos y limpieza
 
@@ -105,14 +97,15 @@ world_population <- world_population %>%
   filter(Año == 2018 |Año == 2019 |Año == 2020 ) 
 ```
 
-Ahora, trataremos particularmente los datos NA de las variables *Contiente* y *Area_km2*, ya que son las variables que hemos añadido de otro dataframe. En este caso, rellenaremos manualmente estos datos con la función `fix()`. La información con la que hemos completado estos valores se han sacado de: ??????????????
+Ahora, trataremos particularmente los datos NA de las variables *Contiente* y *Area_km2*, ya que son las variables que hemos añadido de otro dataframe. En este caso, rellenaremos manualmente estos datos con la función `fix()`. La información con la que hemos completado estos valores se han sacado de:
 
 Visualizamos la estructura del dataframe resultante de la limpieza:
 
 ```{r}
 world_population <- world_population %>%
   glimpse()
-View(world_population)
+
+head(world_population,20)
 ```
 
 ## Análisis multivariante exploratorio

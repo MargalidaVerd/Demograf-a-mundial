@@ -206,7 +206,7 @@ $ Area_km2                &lt;dbl&gt; 652230, 652230, 652230, 652230, 652230, 28
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>world_population <span class="ot">&lt;-</span> world_population <span class="sc">%&gt;%</span> </span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Año <span class="sc">==</span> <span class="dv">2018</span> <span class="sc">|</span>Año <span class="sc">==</span> <span class="dv">2019</span> <span class="sc">|</span>Año <span class="sc">==</span> <span class="dv">2020</span> ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Ahora, trataremos particularmente los datos NA de las variables <em>Contiente</em> y <em>Area_km2</em>, ya que son las variables que hemos añadido de otro dataframe. En este caso, rellenaremos manualmente estos datos con la función <code>fix()</code>. La información con la que hemos completado estos valores se han sacado de: ??????????????</p>
+<p>Ahora, trataremos particularmente los datos NA de las variables <em>Contiente</em> y <em>Area_km2</em>, ya que son las variables que hemos añadido de otro dataframe. En este caso, rellenaremos manualmente estos datos con la función <code>fix()</code>. La información con la que hemos completado estos valores se han sacado de:</p>
 <p>Visualizamos la estructura del dataframe resultante de la limpieza:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>world_population <span class="ot">&lt;-</span> world_population <span class="sc">%&gt;%</span></span>
@@ -229,7 +229,34 @@ $ Mortalidad_infantil &lt;dbl&gt; 47.8, 46.3, 44.8, 8.3, 8.4, 8.4, 20.6, 20.1, 1
 $ Fertilidad          &lt;dbl&gt; 5.002, 4.870, 4.750, 1.440, 1.414, 1.400, 3.023, 2…
 $ Crecimiento         &lt;int&gt; 3, 3, 3, 0, 0, -1, 2, 2, 2, -2, -2, -2, 2, 2, 2, 3…</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(world_population)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(world_population,<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 14
+   Pais        Continente Area_km2 Año   Pob_total Pob_urbana Pob_rural Densidad
+   &lt;chr&gt;       &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;    &lt;int&gt;
+ 1 Afghanistan Asia         652230 2018   36686784    9353296  27333488       56
+ 2 Afghanistan Asia         652230 2019   37769499    9727157  28042342       58
+ 3 Afghanistan Asia         652230 2020   38972230   10142913  28829317       60
+ 4 Albania     Europe        28748 2018    2866376    1728969   1137407      105
+ 5 Albania     Europe        28748 2019    2854191    1747593   1106598      104
+ 6 Albania     Europe        28748 2020    2837849    1762645   1075204      104
+ 7 Algeria     Africa      2381741 2018   41927007   30451166  11475841       18
+ 8 Algeria     Africa      2381741 2019   42705368   31255632  11449736       18
+ 9 Algeria     Africa      2381741 2020   43451666   32038217  11413449       18
+10 American S… Oceania         199 2018      48424      42203      6221      242
+11 American S… Oceania         199 2019      47321      41239      6082      237
+12 American S… Oceania         199 2020      46189      40255      5934      231
+13 Andorra     Europe          468 2018      75013      66058      8955      160
+14 Andorra     Europe          468 2019      76343      67170      9173      162
+15 Andorra     Europe          468 2020      77700      68311      9389      165
+16 Angola      Africa      1246700 2018   31273533   20488542  10784991       25
+17 Angola      Africa      1246700 2019   32353588   21410634  10942954       26
+18 Angola      Africa      1246700 2020   33428486   22338586  11089900       27
+19 Antigua An… &lt;NA&gt;             NA 2018      91626      22539     69087      208
+20 Antigua An… &lt;NA&gt;             NA 2019      92117      22574     69543      209
+# ℹ 6 more variables: Esp_vida &lt;int&gt;, Natalidad &lt;dbl&gt;, Mortalidad &lt;dbl&gt;,
+#   Mortalidad_infantil &lt;dbl&gt;, Fertilidad &lt;dbl&gt;, Crecimiento &lt;int&gt;</code></pre>
+</div>
 </div>
 </section>
 <section id="análisis-multivariante-exploratorio" class="level2">
