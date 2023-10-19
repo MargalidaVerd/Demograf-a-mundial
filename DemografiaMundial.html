@@ -204,13 +204,87 @@ $ Area_km2                &lt;dbl&gt; 652230, 652230, 652230, 652230, 652230, 28
 <p>Como vemos, tenemos bastantes datos faltantes en los años 2017 y 2021; por eso, reduciremos nuestro estudio entre los años 2018 y 2020. Utilizaremos la función <code>filter()</code> para eliminar los dos años de nuestro tibble.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>world_population <span class="ot">&lt;-</span> world_population <span class="sc">%&gt;%</span> </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Año <span class="sc">==</span> <span class="dv">2018</span> <span class="sc">|</span>Año <span class="sc">==</span> <span class="dv">2019</span> <span class="sc">|</span>Año <span class="sc">==</span> <span class="dv">2020</span> ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Año <span class="sc">==</span> <span class="dv">2018</span> <span class="sc">|</span>Año <span class="sc">==</span> <span class="dv">2019</span> <span class="sc">|</span>Año <span class="sc">==</span> <span class="dv">2020</span> ) </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(world_population)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Ahora, trataremos particularmente los datos NA de las variables <em>Contiente</em> y <em>Area_km2</em>, ya que son las variables que hemos añadido de otro dataframe. En este caso, rellenaremos manualmente estos datos con la función <code>fix()</code>. La información con la que hemos completado estos valores se han sacado de:</p>
+<p>Ahora, trataremos particularmente los datos NA de las variables <em>Contiente</em> y <em>Area_km2</em>, ya que son las variables que hemos añadido de otro dataframe. En este caso, rellenaremos manualmente estos datos con la función <code>fix()</code>. La información con la que hemos completado estos valores se han sacado de las correspondientes páginas web de Wikipedia de cada uno de los países.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Continente[<span class="dv">19</span><span class="sc">:</span><span class="dv">21</span>] <span class="ot">=</span> <span class="st">"North America"</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Area_km2[<span class="dv">19</span><span class="sc">:</span><span class="dv">21</span>] <span class="ot">=</span> <span class="dv">442</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Continente[<span class="dv">73</span><span class="sc">:</span><span class="dv">75</span>] <span class="ot">=</span> <span class="st">"Europe"</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Area_km2[<span class="dv">73</span><span class="sc">:</span><span class="dv">75</span>] <span class="ot">=</span> <span class="dv">51197</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Continente[<span class="dv">97</span><span class="sc">:</span><span class="dv">99</span>] <span class="ot">=</span> <span class="st">"Africa"</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Area_km2[<span class="dv">97</span><span class="sc">:</span><span class="dv">99</span>] <span class="ot">=</span> <span class="dv">4033</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Continente[<span class="dv">151</span><span class="sc">:</span><span class="dv">153</span>] <span class="ot">=</span> <span class="st">"Africa"</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Area_km2[<span class="dv">151</span><span class="sc">:</span><span class="dv">153</span>] <span class="ot">=</span> <span class="dv">2344858</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Continente[<span class="dv">118</span><span class="sc">:</span><span class="dv">120</span>] <span class="ot">=</span> <span class="st">"Europe"</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Area_km2[<span class="dv">118</span><span class="sc">:</span><span class="dv">120</span>] <span class="ot">=</span> <span class="dv">198</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Continente[<span class="dv">277</span><span class="sc">:</span><span class="dv">279</span>] <span class="ot">=</span> <span class="st">"Europe"</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Area_km2[<span class="dv">277</span><span class="sc">:</span><span class="dv">279</span>] <span class="ot">=</span> <span class="dv">572</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Continente[<span class="dv">304</span><span class="sc">:</span><span class="dv">306</span>] <span class="ot">=</span> <span class="st">"Europe"</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Area_km2[<span class="dv">304</span><span class="sc">:</span><span class="dv">306</span>] <span class="ot">=</span> <span class="dv">10887</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Continente[<span class="dv">310</span><span class="sc">:</span><span class="dv">312</span>] <span class="ot">=</span> <span class="st">"Asia"</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Area_km2[<span class="dv">310</span><span class="sc">:</span><span class="dv">312</span>] <span class="ot">=</span> <span class="dv">199951</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Continente[<span class="dv">313</span><span class="sc">:</span><span class="dv">315</span>] <span class="ot">=</span> <span class="st">"Asia"</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Area_km2[<span class="dv">313</span><span class="sc">:</span><span class="dv">315</span>] <span class="ot">=</span> <span class="dv">236800</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Continente[<span class="dv">340</span><span class="sc">:</span><span class="dv">342</span>] <span class="ot">=</span> <span class="st">"Asia"</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Area_km2[<span class="dv">340</span><span class="sc">:</span><span class="dv">342</span>] <span class="ot">=</span> <span class="dv">28</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Continente[<span class="dv">472</span><span class="sc">:</span><span class="dv">474</span>] <span class="ot">=</span> <span class="st">"Africa"</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Area_km2[<span class="dv">472</span><span class="sc">:</span><span class="dv">474</span>] <span class="ot">=</span> <span class="dv">342000</span></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Continente[<span class="dv">490</span><span class="sc">:</span><span class="dv">492</span>] <span class="ot">=</span> <span class="st">"Africa"</span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Area_km2[<span class="dv">490</span><span class="sc">:</span><span class="dv">492</span>] <span class="ot">=</span> <span class="dv">964</span></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Continente[<span class="dv">511</span><span class="sc">:</span><span class="dv">513</span>] <span class="ot">=</span> <span class="st">"Europe"</span></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Area_km2[<span class="dv">511</span><span class="sc">:</span><span class="dv">513</span>] <span class="ot">=</span> <span class="dv">34</span></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Continente[<span class="dv">514</span><span class="sc">:</span><span class="dv">516</span>] <span class="ot">=</span> <span class="st">"Europe"</span></span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Area_km2[<span class="dv">514</span><span class="sc">:</span><span class="dv">516</span>] <span class="ot">=</span> <span class="dv">49035</span></span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Continente[<span class="dv">541</span><span class="sc">:</span><span class="dv">543</span>] <span class="ot">=</span> <span class="st">"North America"</span></span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Area_km2[<span class="dv">541</span><span class="sc">:</span><span class="dv">543</span>] <span class="ot">=</span> <span class="dv">269</span></span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Continente[<span class="dv">544</span><span class="sc">:</span><span class="dv">546</span>] <span class="ot">=</span> <span class="st">"South America"</span></span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Area_km2[<span class="dv">544</span><span class="sc">:</span><span class="dv">546</span>] <span class="ot">=</span> <span class="dv">616</span></span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Continente[<span class="dv">547</span><span class="sc">:</span><span class="dv">549</span>] <span class="ot">=</span> <span class="st">"Europe"</span></span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Area_km2[<span class="dv">547</span><span class="sc">:</span><span class="dv">549</span>] <span class="ot">=</span> <span class="dv">53</span></span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Continente[<span class="dv">550</span><span class="sc">:</span><span class="dv">552</span>] <span class="ot">=</span> <span class="st">"North America"</span></span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Area_km2[<span class="dv">550</span><span class="sc">:</span><span class="dv">552</span>] <span class="ot">=</span> <span class="dv">389</span></span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Continente[<span class="dv">565</span><span class="sc">:</span><span class="dv">567</span>] <span class="ot">=</span> <span class="st">"Asia"</span></span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Area_km2[<span class="dv">565</span><span class="sc">:</span><span class="dv">567</span>] <span class="ot">=</span> <span class="dv">185180</span></span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Continente[<span class="dv">586</span><span class="sc">:</span><span class="dv">588</span>] <span class="ot">=</span> <span class="st">"South America"</span></span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Area_km2[<span class="dv">586</span><span class="sc">:</span><span class="dv">588</span>] <span class="ot">=</span> <span class="dv">5128</span></span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Continente[<span class="dv">598</span><span class="sc">:</span><span class="dv">600</span>] <span class="ot">=</span> <span class="st">"North America"</span></span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Area_km2[<span class="dv">598</span><span class="sc">:</span><span class="dv">600</span>] <span class="ot">=</span> <span class="dv">948</span></span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Continente[<span class="dv">604</span><span class="sc">:</span><span class="dv">606</span>] <span class="ot">=</span> <span class="st">"Asia"</span></span>
+<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Area_km2[<span class="dv">604</span><span class="sc">:</span><span class="dv">606</span>] <span class="ot">=</span> <span class="dv">83600</span></span>
+<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Continente[<span class="dv">634</span><span class="sc">:</span><span class="dv">636</span>] <span class="ot">=</span> <span class="st">"North America"</span></span>
+<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Area_km2[<span class="dv">634</span><span class="sc">:</span><span class="dv">636</span>] <span class="ot">=</span> <span class="dv">346</span></span>
+<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Continente[<span class="dv">637</span><span class="sc">:</span><span class="dv">639</span>] <span class="ot">=</span> <span class="st">"Asia"</span></span>
+<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Area_km2[<span class="dv">637</span><span class="sc">:</span><span class="dv">639</span>] <span class="ot">=</span> <span class="dv">5860</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>Visualizamos la estructura del dataframe resultante de la limpieza:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>world_population <span class="ot">&lt;-</span> world_population <span class="sc">%&gt;%</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>world_population <span class="ot">&lt;-</span> world_population <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 648
 Columns: 14
@@ -229,7 +303,7 @@ $ Mortalidad_infantil &lt;dbl&gt; 47.8, 46.3, 44.8, 8.3, 8.4, 8.4, 20.6, 20.1, 1
 $ Fertilidad          &lt;dbl&gt; 5.002, 4.870, 4.750, 1.440, 1.414, 1.400, 3.023, 2…
 $ Crecimiento         &lt;int&gt; 3, 3, 3, 0, 0, -1, 2, 2, 2, -2, -2, -2, 2, 2, 2, 3…</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(world_population,<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(world_population,<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 20 × 14
    Pais        Continente Area_km2 Año   Pob_total Pob_urbana Pob_rural Densidad
@@ -252,8 +326,8 @@ $ Crecimiento         &lt;int&gt; 3, 3, 3, 0, 0, -1, 2, 2, 2, -2, -2, -2, 2, 2, 
 16 Angola      Africa      1246700 2018   31273533   20488542  10784991       25
 17 Angola      Africa      1246700 2019   32353588   21410634  10942954       26
 18 Angola      Africa      1246700 2020   33428486   22338586  11089900       27
-19 Antigua An… &lt;NA&gt;             NA 2018      91626      22539     69087      208
-20 Antigua An… &lt;NA&gt;             NA 2019      92117      22574     69543      209
+19 Antigua An… North Ame…      442 2018      91626      22539     69087      208
+20 Antigua An… North Ame…      442 2019      92117      22574     69543      209
 # ℹ 6 more variables: Esp_vida &lt;int&gt;, Natalidad &lt;dbl&gt;, Mortalidad &lt;dbl&gt;,
 #   Mortalidad_infantil &lt;dbl&gt;, Fertilidad &lt;dbl&gt;, Crecimiento &lt;int&gt;</code></pre>
 </div>
@@ -261,6 +335,75 @@ $ Crecimiento         &lt;int&gt; 3, 3, 3, 0, 0, -1, 2, 2, 2, -2, -2, -2, 2, 2, 
 </section>
 <section id="análisis-multivariante-exploratorio" class="level2">
 <h2 class="anchored" data-anchor-id="análisis-multivariante-exploratorio">Análisis multivariante exploratorio</h2>
+<p>Debido a que nos interesa realizar un estudio por continentes y por año, utilizaremos la función <code>group_by()</code>, para poder agrupar nuestros datos en base a nuestros intereses.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>world_population <span class="sc">%&gt;%</span>  </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Continente,Año) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">"Población total"</span> <span class="ot">=</span> <span class="fu">sum</span>(Pob_total), <span class="st">"Natalidad media"</span> <span class="ot">=</span> <span class="fu">mean</span>(Natalidad), <span class="st">"Mortalidad media"</span> <span class="ot">=</span> <span class="fu">mean</span>(Mortalidad),  <span class="st">"Esperanza media de Vida"</span> <span class="ot">=</span> <span class="fu">mean</span>(Esp_vida)) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Año <span class="sc">==</span><span class="st">"2018"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'Continente'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 6
+# Groups:   Continente [6]
+  Continente    Año   `Población total` `Natalidad media` `Mortalidad media`
+  &lt;chr&gt;         &lt;chr&gt;             &lt;dbl&gt;             &lt;dbl&gt;              &lt;dbl&gt;
+1 Africa        2018         1267973300              31.7               8.00
+2 Asia          2018         4551390293              18.3               5.69
+3 Europe        2018          747225176              10.1               9.76
+4 North America 2018          577352828              14.2               7.18
+5 Oceania       2018           42542878              19.5               5.74
+6 South America 2018          426223875              16.4               6.88
+# ℹ 1 more variable: `Esperanza media de Vida` &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>world_population <span class="sc">%&gt;%</span>  <span class="fu">group_by</span>(Continente,Año) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">"Esperanza media de vida"</span> <span class="ot">=</span> <span class="fu">mean</span>(Esp_vida), <span class="st">"Población total"</span> <span class="ot">=</span> <span class="fu">sum</span>(Pob_total), <span class="st">"Número total de países"</span> <span class="ot">=</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'Continente'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 18 × 5
+# Groups:   Continente [6]
+   Continente    Año   `Esperanza media de vida` `Población total`
+   &lt;chr&gt;         &lt;chr&gt;                     &lt;dbl&gt;             &lt;dbl&gt;
+ 1 Africa        2018                       63.7        1267973300
+ 2 Africa        2019                       64.0        1299722341
+ 3 Africa        2020                       63.7        1332001684
+ 4 Asia          2018                       74.6        4551390293
+ 5 Asia          2019                       74.8        4591104253
+ 6 Asia          2020                       74          4627046275
+ 7 Europe        2018                       NA           747225176
+ 8 Europe        2019                       NA           747609915
+ 9 Europe        2020                       NA           747519807
+10 North America 2018                       NA           577352828
+11 North America 2019                       NA           581350287
+12 North America 2020                       NA           586825619
+13 Oceania       2018                       NA            42542878
+14 Oceania       2019                       NA            43234733
+15 Oceania       2020                       NA            43901335
+16 South America 2018                       74.5         426223875
+17 South America 2019                       74.4         429922107
+18 South America 2020                       73.1         433273442
+# ℹ 1 more variable: `Número total de países` &lt;int&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>world_population <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(Continente, <span class="at">fill=</span>Año),</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">position=</span><span class="st">"dodge"</span>) <span class="sc">+</span> <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">"Año"</span>)) <span class="sc">+</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Número de habitantes"</span>, <span class="at">y=</span><span class="st">"Especie"</span>) <span class="sc">+</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>),</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
 <section id="estimación-y-correlaciones" class="level2">
 <h2 class="anchored" data-anchor-id="estimación-y-correlaciones">Estimación y correlaciones</h2>
