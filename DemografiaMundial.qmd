@@ -1,3 +1,5 @@
+
+
 ---
 title: "Demografía Mundial"
 author: "Carla Martínez, Patricia Mateu y Margalida Verd"
@@ -97,7 +99,7 @@ world_population <- world_population %>%
   filter(Año == 2018 |Año == 2019 |Año == 2020 ) 
 ```
 
-Ahora, trataremos particularmente los datos NA de las variables *Contiente* y *Area_km2*, ya que son las variables que hemos añadido de otro dataframe. En este caso, rellenaremos manualmente estos datos con la función `fix()`. La información con la que hemos completado estos valores se han sacado de:
+Ahora, trataremos particularmente los datos NA de las variables *Contiente* y *Area_km2*, ya que son las variables que hemos añadido de otro dataframe. En este caso, rellenaremos manualmente estos datos con la función `fix()`. La información con la que hemos completado estos valores se han sacado de las correspondientes páginas web de Wikipedia de cada uno de los países.
 
 Visualizamos la estructura del dataframe resultante de la limpieza:
 
@@ -110,6 +112,50 @@ head(world_population,20)
 
 ## Análisis multivariante exploratorio
 
+Debido a que nos interesa realizar un estudio por continentes y por año, utilizaremos la función `group_by()`, para poder agrupar nuestros datos en base a nuestros intereses.
+
+```{r}
+world_population %>%  
+  group_by(Continente,Año) %>% 
+  summarise("Población total" = sum(Pob_total), "Natalidad media" = mean(Natalidad), "Mortalidad media" = mean(Mortalidad),  "Esperanza media de Vida" = mean(Esp_vida)) %>% 
+  filter(Año =="2018") 
+
+
+
+```
+
+```{r}
+#world_population %>%  group_by(Continente,Año) %>% 
+ # summarise("Esperanza media de vida" = mean(Esp_vida), "Población total" = sum(Pob_total), "Número total de países" = n())
+
+
+
+world_population %>% ggplot() + 
+  geom_bar(aes(Continente, fill=Año),
+           position="dodge") + coord_flip() +
+  guides(fill = guide_legend(title = "Año")) +
+  labs(x="Número de habitantes", y="Especie") +
+  theme_bw() +
+  theme(axis.text = element_text(size=10),
+        axis.title = element_text(size=10, face = "bold"),
+        legend.title = element_text(size=10)) 
+
+
+world_population %>% 
+  ggplot(mapping= (aes(x=Continente, y = Pob_total, color = Año))) + 
+  geom_bar(na.rm = TRUE) + 
+  coord_flip() +
+  guides(fill = guide_legend(title = "Tipo de tracción")) +
+  labs(x="Tipo de vehículo", y="Rendimiento medio en ciudad") +
+  theme_bw() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12, face = "bold"),
+        legend.title = element_text(size=12, face = "bold")) 
+
+```
+
+
 ## Estimación y correlaciones
 
 ## Conclusiones
+
