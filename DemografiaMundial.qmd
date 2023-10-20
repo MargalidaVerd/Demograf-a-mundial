@@ -1,3 +1,5 @@
+
+
 ---
 title: "Demografía Mundial"
 author: "Carla Martínez, Patricia Mateu y Margalida Verd"
@@ -6,6 +8,18 @@ editor: visual
 ---
 
 ## Introducción
+
+Este proyecto recoge datos poblacionales de los países del mundo, tomados en 3 años consecutivos (del 2018 al 2020) y pretende estudiarlos y analizarlos a nivel continental para ver si existen diferencias significativas entre continentes.
+
+Para ello, analizaremos cada continente individualmente y nos centraremos en entender las diferencias que puedan haber; es decir, aportar información histórica, si se da el caso, que pueda explicar los aumentos o decrementos de los valores demográficos.
+
+Los datos utilizados se han sacado de los siguientes enlaces:
+
+-   [Global Population Trends](https://www.kaggle.com/datasets/alitaqi000/global-population-trends2016-2022)
+
+-   [World Population](https://www.kaggle.com/datasets/iamsouravbanerjee/world-population-dataset)
+
+""" - analisis a nivel continental desde el 2018 al 2020 - ver si hay diferencias significativas por continentes - en cada continente analizar los paises que más difieren del resto - ver si en el 2020 han habido cambios significativos - ver si en los paises con más diferencias en mortalidad de un año al otro vienen dados por un evento significativo - ver si la paz afecta en la esperanza de vida y en la natalidad ejemplo Dinamarca """
 
 ## Carga de datos y limpieza
 
@@ -69,11 +83,97 @@ world_population <- world_population %>%
   
 ```
 
-Ahora, si observamos nuestro conjunto de datos, notamos que faltan muchos datos del año 2017; por eso, no consideraremos este año en nuestro estudio. Utilizaremos la función `filter()` para eliminarlo de nuestro tibble.
+Visualicemos el conjunto de datos que presentan algún valor NA.
+
+```{r, warning=FALSE, message=FALSE}
+world_population %>% 
+  group_by(Año) %>% 
+  summarise_all(funs(sum(is.na(.))))
+```
+
+Como vemos, tenemos bastantes datos faltantes en los años 2017 y 2021; por eso, reduciremos nuestro estudio entre los años 2018 y 2020. Utilizaremos la función `filter()` para eliminar los dos años de nuestro tibble.
 
 ```{r,warning=FALSE,message=FALSE}
 world_population <- world_population %>% 
-  filter(Año == 2018 |Año == 2019 |Año == 2020 | Año == 2021) 
+  filter(Año == 2018 |Año == 2019 |Año == 2020 ) 
+View(world_population)
+```
+
+Ahora, trataremos particularmente los datos NA de las variables *Contiente* y *Area_km2*, ya que son las variables que hemos añadido de otro dataframe. En este caso, rellenaremos manualmente estos datos con la función `fix()`. La información con la que hemos completado estos valores se han sacado de las correspondientes páginas web de Wikipedia de cada uno de los países.
+
+```{r}
+world_population$Continente[19:21] = "North America"
+world_population$Area_km2[19:21] = 442
+
+world_population$Continente[73:75] = "Europe"
+world_population$Area_km2[73:75] = 51197
+
+world_population$Continente[97:99] = "Africa"
+world_population$Area_km2[97:99] = 4033
+
+world_population$Continente[151:153] = "Africa"
+world_population$Area_km2[151:153] = 2344858
+
+world_population$Continente[118:120] = "Europe"
+world_population$Area_km2[118:120] = 198
+
+world_population$Continente[277:279] = "Europe"
+world_population$Area_km2[277:279] = 572
+
+world_population$Continente[304:306] = "Europe"
+world_population$Area_km2[304:306] = 10887
+
+world_population$Continente[310:312] = "Asia"
+world_population$Area_km2[310:312] = 199951
+
+world_population$Continente[313:315] = "Asia"
+world_population$Area_km2[313:315] = 236800
+
+world_population$Continente[340:342] = "Asia"
+world_population$Area_km2[340:342] = 28
+
+world_population$Continente[472:474] = "Africa"
+world_population$Area_km2[472:474] = 342000
+
+world_population$Continente[490:492] = "Africa"
+world_population$Area_km2[490:492] = 964
+
+world_population$Continente[511:513] = "Europe"
+world_population$Area_km2[511:513] = 34
+
+world_population$Continente[514:516] = "Europe"
+world_population$Area_km2[514:516] = 49035
+
+world_population$Continente[541:543] = "North America"
+world_population$Area_km2[541:543] = 269
+
+world_population$Continente[544:546] = "South America"
+world_population$Area_km2[544:546] = 616
+
+world_population$Continente[547:549] = "Europe"
+world_population$Area_km2[547:549] = 53
+
+world_population$Continente[550:552] = "North America"
+world_population$Area_km2[550:552] = 389
+
+world_population$Continente[565:567] = "Asia"
+world_population$Area_km2[565:567] = 185180
+
+world_population$Continente[586:588] = "South America"
+world_population$Area_km2[586:588] = 5128
+
+world_population$Continente[598:600] = "North America"
+world_population$Area_km2[598:600] = 948
+
+world_population$Continente[604:606] = "Asia"
+world_population$Area_km2[604:606] = 83600
+
+world_population$Continente[634:636] = "North America"
+world_population$Area_km2[634:636] = 346
+
+world_population$Continente[637:639] = "Asia"
+world_population$Area_km2[637:639] = 5860
+
 ```
 
 Visualizamos la estructura del dataframe resultante de la limpieza:
@@ -81,6 +181,8 @@ Visualizamos la estructura del dataframe resultante de la limpieza:
 ```{r}
 world_population <- world_population %>%
   glimpse()
+
+head(world_population,20)
 ```
 
 ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡TENEMOS QUE PENSAR QUE HACER CON LOS NA!!!!!!!!!!!!!!!!!!!
@@ -98,9 +200,31 @@ View(data1)
 
 ## Análisis multivariante exploratorio
 
+Debido a que nos interesa realizar un estudio por continentes y por año, utilizaremos la función `group_by()`, para poder agrupar nuestros datos en base a nuestros intereses.
+
 ```{r}
-world_population %>% 
-  summarise(., group_by('Año'))
+
+world_population %>%  
+  group_by(Continente,Año) %>% 
+  summarise("Población total" = sum(Pob_total), "Natalidad media" = mean(Natalidad), "Mortalidad media" = mean(Mortalidad),  "Esperanza media de Vida" = mean(Esp_vida)) %>% 
+  filter(Año =="2018") 
+```
+
+```{r}
+world_population %>%  group_by(Continente,Año) %>% 
+  summarise("Esperanza media de vida" = mean(Esp_vida), "Población total" = sum(Pob_total), "Número total de países" = n())
+
+
+
+world_population %>% ggplot() + 
+  geom_bar(aes(Continente, fill=Año),
+           position="dodge") + coord_flip() +
+  guides(fill = guide_legend(title = "Año")) +
+  labs(x="Continente", y="Número de paises") +
+  theme_bw() +
+  theme(axis.text = element_text(size=10),
+        axis.title = element_text(size=10, face = "bold"),
+        legend.title = element_text(size=10)) 
 
 ```
 
