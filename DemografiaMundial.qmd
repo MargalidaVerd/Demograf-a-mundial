@@ -4,13 +4,12 @@ author: "Carla Martínez, Patricia Mateu y Margalida Verd"
 format: html
 editor: visual
 ---
-## Introducción
 
+## Introducción
 
 ## Carga de datos y limpieza
 
 Empezamos con la carga de los dataframes que usaremos y veamos la estructura del nuevo tibble.
-
 
 ```{r, warning=FALSE,message=FALSE}
 library(tidyverse)
@@ -97,17 +96,14 @@ View(data1)
 
 ```
 
-
 ## Análisis multivariante exploratorio
 
 ```{r}
 world_population %>% 
-  summarise(., group_by(Año))
+  summarise(., group_by('Año'))
 
 ```
-
 
 ## Estimación y correlaciones
 
 ## Conclusiones
-
