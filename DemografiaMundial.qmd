@@ -1,5 +1,3 @@
-
-
 ---
 title: "Demografía Mundial"
 author: "Carla Martínez, Patricia Mateu y Margalida Verd"
@@ -177,19 +175,19 @@ world_population$Area_km2[637:639] = 5860
 
 ```
 
-
 Visualizamos la estructura del dataframe resultante de la limpieza:
 
 ```{r}
 world_population <- world_population %>%
   glimpse()
 
-head(world_population,20)
+View(world_population)
+
 ```
 
 ## Análisis multivariante exploratorio
 
-Debido a que nos interesa realizar un estudio por continentes y por año, utilizaremos la función `group_by()`, para poder agrupar nuestros datos en base a nuestros intereses.
+Una vez hecha la limpieza, empezamos con el análisis multivariante. Debido a que nos interesa realizar un estudio por continentes y por año, utilizaremos la función `group_by()`, para poder agrupar nuestros datos en base a nuestros intereses.
 
 ```{r}
 world_population %>%  
@@ -203,8 +201,6 @@ world_population %>%
 world_population %>%  group_by(Continente,Año) %>% 
   summarise("Esperanza media de vida" = mean(Esp_vida), "Población total" = sum(Pob_total), "Número total de países" = n())
 
-
-
 world_population %>% ggplot() + 
   geom_bar(aes(Continente, fill=Año),
            position="dodge") + coord_flip() +
@@ -217,10 +213,39 @@ world_population %>% ggplot() +
 
 ```
 
+```{r}
+library(GGally)
+a_europe <- world_population %>% 
+  filter(Continente == "Europe") %>% 
+  filter(Año == 2019) %>% 
+  select(10:13) %>% 
+  drop_na()
 
+ggpairs(a_europe)
 
+a_asia <- world_population %>% 
+  filter(Continente == "Asia") %>% 
+  select(10:13) %>% 
+  drop_na()
+
+ggpairs(a_asia)
+
+a_africa <- world_population %>% 
+  filter(Continente == "Africa") %>% 
+  select(10:13) %>% 
+  drop_na()
+
+ggpairs(a_africa)
+
+a_north_am <- world_population %>% 
+  filter(Continente == "North America") %>% 
+  select(10:13) %>% 
+  drop_na()
+
+ggpairs(a_north_am)
+
+```
 
 ## Estimación y correlaciones
 
 ## Conclusiones
-
