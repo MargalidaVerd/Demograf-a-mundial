@@ -1,37 +1,15 @@
 ---
-title: "DemografiaMundial"
+title: "Demografia Mundial"
+author: "Carla Martínez, Patricia Mateu, Margalida Verd"
 format: 
   revealjs:
-    theme: moon
+    theme: beige
     transition: concave
 editor: visual
 ---
 
-## Portada
+## Introducción
 
 Este proyecto recoge datos poblacionales de los países del mundo, tomados en 3 años consecutivos (del 2018 al 2020) y pretende estudiarlos y analizarlos a nivel continental para ver si existen diferencias significativas entre continentes.
 
 Para ello, analizaremos cada continente individualmente y nos centraremos en entender las diferencias que puedan haber; es decir, aportar información histórica, si se da el caso, que pueda explicar los aumentos o decrementos de los valores demográficos.
-
-Los datos utilizados se han sacado de los siguientes enlaces:
-
--   [Global Population Trends](https://www.kaggle.com/datasets/alitaqi000/global-population-trends2016-2022)
-
--   [World Population](https://www.kaggle.com/datasets/iamsouravbanerjee/world-population-dataset)
-
-## Descripción variables
-
-Ahora que ya tenemos bien construida nuestra base de datos, hagamos una breve explicación de las distintas variables que lo conforman:
-
--   $\textit{País}$ nos indica el país de estudio.
--   $\textit{Continente}$ variable que nos indica a continente pertenece cada uno de los países.
--   $\textit{Area_km2}$ se refiere al área en $km^2$ que ocupa cada uno de los paises
--   $\textit{Año}$ nos expone a que año fue tomada la muestra, ya que observamos que de cada país tenemos 4 muestras distintas que vienen tomadas desde el 2018 hasta el 2021.
--   $\textit{Pob_total}$ nos indica en número total de habitantes en cada pais
--   $\textit{Pob_urbana}$ y $\textit{Pob_rural}$ que se refieren al numéro de habitantes que residen en una localidad urbana y en una rural, respectivamente. - $\textit{Densidad}$, que nos indica la densidad de cada país; recordemos que la densidad no és más que un indicador que nos permite saber cuánta población habita en una zona territorial. Ésta viene dada por: $\textit{Densidad} = \frac{\textit{Pob_total}}{\textit{Area_km2}}$.
--   $\textit{Esp_vida}$ presenta la edad media que pueden alcanzar los individuos de cada país.
--   $\textit{Natalidad}$ número de personas que nacen en un año y país determinado.
--   $\textit{Mortalidad}$ número de personas que fallecen en un año y país determinado.
--   $\textit{Fertilidad}$ ???????????? número de embarazos????
--   $\textit{Mortalidad_infantil}$ número total de defunciones de menores de un año de vida, por cada 1000 nacidos vivos.
--   $\textit{Crecimiento}$ ???????????

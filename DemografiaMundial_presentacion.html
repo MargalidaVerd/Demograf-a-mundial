@@ -9,7 +9,8 @@
 <link href="DemografiaMundial_presentacion_files/libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.2.269">
 
-  <title>DemografiaMundial</title>
+  <meta name="author" content="Carla Martínez, Patricia Mateu, Margalida Verd">
+  <title>Demografia Mundial</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -323,9 +324,14 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">DemografiaMundial</h1>
+  <h1 class="title">Demografia Mundial</h1>
 
 <div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Carla Martínez, Patricia Mateu, Margalida Verd 
+</div>
+</div>
 </div>
 
 </section>
@@ -333,10 +339,13 @@
 <h2>Portada</h2>
 <p>Este proyecto recoge datos poblacionales de los países del mundo, tomados en 3 años consecutivos (del 2018 al 2020) y pretende estudiarlos y analizarlos a nivel continental para ver si existen diferencias significativas entre continentes.</p>
 <p>Para ello, analizaremos cada continente individualmente y nos centraremos en entender las diferencias que puedan haber; es decir, aportar información histórica, si se da el caso, que pueda explicar los aumentos o decrementos de los valores demográficos.</p>
+</section>
+<section id="section" class="slide level2">
+<h2></h2>
 <p>Los datos utilizados se han sacado de los siguientes enlaces:</p>
 <ul>
-<li><p><a href="https://www.kaggle.com/datasets/alitaqi000/global-population-trends2016-2022">Global Population Trends</a></p></li>
-<li><p><a href="https://www.kaggle.com/datasets/iamsouravbanerjee/world-population-dataset">World Population</a></p></li>
+<li><p><a href="https://www.kaggle.com/datasets/alitaqi000/global-population-trends2016-2022">Global Population Trends</a> https://www.kaggle.com/datasets/alitaqi000/global-population-trends2016-2022</p></li>
+<li><p><a href="https://www.kaggle.com/datasets/iamsouravbanerjee/world-population-dataset">World Population</a> https://www.kaggle.com/datasets/iamsouravbanerjee/world-population-dataset</p></li>
 </ul>
 </section>
 <section id="descripción-variables" class="slide level2">
@@ -345,16 +354,32 @@
 <ul>
 <li><span class="math inline">\(\textit{País}\)</span> nos indica el país de estudio.</li>
 <li><span class="math inline">\(\textit{Continente}\)</span> variable que nos indica a continente pertenece cada uno de los países.</li>
-<li><span class="math inline">\(\textit{Area_km2}\)</span> se refiere al área en <span class="math inline">\(km^2\)</span> que ocupa cada uno de los paises</li>
+<li><span class="math inline">\(\textit{Area_km2}\)</span> se refiere al área en <span class="math inline">\(km^2\)</span> que ocupa cada uno de los países.</li>
+</ul>
+</section>
+<section id="section-1" class="slide level2">
+<h2></h2>
+<ul>
 <li><span class="math inline">\(\textit{Año}\)</span> nos expone a que año fue tomada la muestra, ya que observamos que de cada país tenemos 4 muestras distintas que vienen tomadas desde el 2018 hasta el 2021.</li>
 <li><span class="math inline">\(\textit{Pob_total}\)</span> nos indica en número total de habitantes en cada pais</li>
-<li><span class="math inline">\(\textit{Pob_urbana}\)</span> y <span class="math inline">\(\textit{Pob_rural}\)</span> que se refieren al numéro de habitantes que residen en una localidad urbana y en una rural, respectivamente. - <span class="math inline">\(\textit{Densidad}\)</span>, que nos indica la densidad de cada país; recordemos que la densidad no és más que un indicador que nos permite saber cuánta población habita en una zona territorial. Ésta viene dada por: <span class="math inline">\(\textit{Densidad} = \frac{\textit{Pob_total}}{\textit{Area_km2}}\)</span>.</li>
+<li><span class="math inline">\(\textit{Pob_urbana}\)</span> y <span class="math inline">\(\textit{Pob_rural}\)</span> que se refieren al numéro de habitantes que residen en una localidad urbana y en una rural, respectivamente.</li>
+</ul>
+</section>
+<section id="section-2" class="slide level2">
+<h2></h2>
+<ul>
+<li><span class="math inline">\(\textit{Densidad}\)</span> que nos indica la densidad de cada país; recordemos que la densidad no és más que un indicador que nos permite saber cuánta población habita en una zona territorial. Ésta viene dada por: <span class="math inline">\(\textit{Densidad} =\frac{\textit{Pob_total}}{\textit{Area_km2}}\)</span></li>
 <li><span class="math inline">\(\textit{Esp_vida}\)</span> presenta la edad media que pueden alcanzar los individuos de cada país.</li>
 <li><span class="math inline">\(\textit{Natalidad}\)</span> número de personas que nacen en un año y país determinado.</li>
 <li><span class="math inline">\(\textit{Mortalidad}\)</span> número de personas que fallecen en un año y país determinado.</li>
-<li><span class="math inline">\(\textit{Fertilidad}\)</span> ???????????? número de embarazos????</li>
+</ul>
+</section>
+<section id="section-3" class="slide level2">
+<h2></h2>
+<ul>
+<li><span class="math inline">\(\textit{Fertilidad}\)</span> esla tasa de fertilidad total que representa el número de hijos que tendría una mujer si viviera hasta el final de sus años fértiles y tuviera hijos de acuerdo con las tasas de fertilidad específicas por edad del año indicado</li>
 <li><span class="math inline">\(\textit{Mortalidad_infantil}\)</span> número total de defunciones de menores de un año de vida, por cada 1000 nacidos vivos.</li>
-<li><span class="math inline">\(\textit{Crecimiento}\)</span> ???????????</li>
+<li><span class="math inline">\(\textit{Crecimiento}\)</span> es la diferencia entre el número de nacimientos y el de muertes totales.</li>
 </ul>
 <div class="footer footer-default">
 
