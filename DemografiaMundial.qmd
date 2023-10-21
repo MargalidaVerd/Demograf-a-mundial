@@ -7,7 +7,7 @@ editor: visual
 
 ## Introducción
 
-Este proyecto recoge datos poblacionales de los países del mundo, tomados en 3 años consecutivos (del 2018 al 2020) y pretende estudiarlos y analizarlos a nivel continental para ver si existen diferencias significativas entre continentes.
+Este proyecto recoge datos poblacionales de los países del mundo, tomados en 3 años consecutivos (del 2018 al 2020) y pretende estudiarlos y analizarlos a nivel continental para examinar si existen diferencias significativas entre continentes.
 
 Para ello, analizaremos cada continente individualmente y nos centraremos en entender las diferencias que puedan haber; es decir, aportar información histórica, si se da el caso, que pueda explicar los aumentos o decrementos de los valores demográficos.
 
@@ -225,6 +225,7 @@ ggpairs(a_europe)
 
 a_asia <- world_population %>% 
   filter(Continente == "Asia") %>% 
+  filter(Año == 2019) %>% 
   select(10:13) %>% 
   drop_na()
 
@@ -232,6 +233,7 @@ ggpairs(a_asia)
 
 a_africa <- world_population %>% 
   filter(Continente == "Africa") %>% 
+  filter(Año == 2019) %>% 
   select(10:13) %>% 
   drop_na()
 
@@ -239,13 +241,61 @@ ggpairs(a_africa)
 
 a_north_am <- world_population %>% 
   filter(Continente == "North America") %>% 
+  filter(Año == 2019) %>% 
   select(10:13) %>% 
   drop_na()
 
 ggpairs(a_north_am)
 
+a_oceania <- world_population %>% 
+  filter(Continente == "Oceania") %>% 
+  filter(Año == 2019) %>% 
+  select(10:13) %>% 
+  drop_na()
+
+ggpairs(a_oceania)
+
+a_south_am <- world_population %>% 
+  filter(Continente == "South America") %>% 
+  filter(Año == 2019) %>% 
+  select(10:13) %>% 
+  drop_na()
+
+ggpairs(a_south_am)
+
+
+
 ```
 
 ## Estimación y correlaciones
+
+Estimación del vector de medias por continentes:
+
+
+```{r}
+
+world_population %>% 
+  group_by(Continente) %>% 
+  summarise("Población media" = mean(Pob_total), "Población rural media" = mean(Pob_rural), "Población urbana media" = mean (Pob_urbana), "Densidad media" = mean(Densidad), "Esperanza media de vida" = mean(Esp_vida), "Natalidad media" = mean(Natalidad), "Mortalidad media" = mean(Mortalidad), "Mortalidad infantil media" = mean(Mortalidad_infantil), "Fertilidad media"= mean(Fertilidad)) 
+
+
+```
+
+
+```{r}
+world_population %>% 
+  group_by(Continente, Año) %>% 
+  filter(Año == "2018")
+
+boxplot(world_population$Mortalidad ~ world_population$Continente, xlab = "Continente",  ylab = "Mortalidad", )
+boxplot(world_population$Mortalidad_infantil ~ world_population$Continente, xlab = "Continente", ylab = "Mortalidad Infantil")
+boxplot(world_population$Densidad ~ world_population$Continente, xlab = "Continente", ylab = "Densidad")
+boxplot(world_population$Natalidad ~ world_population$Continente, xlab = "Continente", ylab = "Natalidad")
+boxplot(world_population$Esp_vida ~ world_population$Continente, xlab = "Continente", ylab = "Esperanza de vida")
+
+```
+
+
+
 
 ## Conclusiones
