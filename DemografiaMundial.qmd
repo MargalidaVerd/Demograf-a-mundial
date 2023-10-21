@@ -1,5 +1,3 @@
-
-
 ---
 title: "Demografía Mundial"
 author: "Carla Martínez, Patricia Mateu y Margalida Verd"

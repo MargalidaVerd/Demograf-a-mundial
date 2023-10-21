@@ -1,13 +1,25 @@
 ---
 title: "DemografiaMundial"
-format: revealjs
+format: 
+  revealjs:
+    theme: moon
+    transition: concave
 editor: visual
 ---
 
-
 ## Portada
-## Descripción variables
 
+Este proyecto recoge datos poblacionales de los países del mundo, tomados en 3 años consecutivos (del 2018 al 2020) y pretende estudiarlos y analizarlos a nivel continental para ver si existen diferencias significativas entre continentes.
+
+Para ello, analizaremos cada continente individualmente y nos centraremos en entender las diferencias que puedan haber; es decir, aportar información histórica, si se da el caso, que pueda explicar los aumentos o decrementos de los valores demográficos.
+
+Los datos utilizados se han sacado de los siguientes enlaces:
+
+-   [Global Population Trends](https://www.kaggle.com/datasets/alitaqi000/global-population-trends2016-2022)
+
+-   [World Population](https://www.kaggle.com/datasets/iamsouravbanerjee/world-population-dataset)
+
+## Descripción variables
 
 Ahora que ya tenemos bien construida nuestra base de datos, hagamos una breve explicación de las distintas variables que lo conforman:
 
@@ -23,4 +35,3 @@ Ahora que ya tenemos bien construida nuestra base de datos, hagamos una breve ex
 -   $\textit{Fertilidad}$ ???????????? número de embarazos????
 -   $\textit{Mortalidad_infantil}$ número total de defunciones de menores de un año de vida, por cada 1000 nacidos vivos.
 -   $\textit{Crecimiento}$ ???????????
-
