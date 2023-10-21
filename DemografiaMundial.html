@@ -68,6 +68,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="DemografiaMundial_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="DemografiaMundial_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="DemografiaMundial_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="DemografiaMundial_files/libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="DemografiaMundial_files/libs/plotly-binding-4.10.2/plotly.js"></script>
+<script src="DemografiaMundial_files/libs/typedarray-0.1/typedarray.min.js"></script>
+<script src="DemografiaMundial_files/libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="DemografiaMundial_files/libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="DemografiaMundial_files/libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="DemografiaMundial_files/libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="DemografiaMundial_files/libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
 
 
 </head>
@@ -103,7 +111,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="introducción" class="level2">
 <h2 class="anchored" data-anchor-id="introducción">Introducción</h2>
-<p>Este proyecto recoge datos poblacionales de los países del mundo, tomados en 3 años consecutivos (del 2018 al 2020) y pretende estudiarlos y analizarlos a nivel continental para ver si existen diferencias significativas entre continentes.</p>
+<p>Este proyecto recoge datos poblacionales de los países del mundo, tomados en 3 años consecutivos (del 2018 al 2020) y pretende estudiarlos y analizarlos a nivel continental para examinar si existen diferencias significativas entre continentes.</p>
 <p>Para ello, analizaremos cada continente individualmente y nos centraremos en entender las diferencias que puedan haber; es decir, aportar información histórica, si se da el caso, que pueda explicar los aumentos o decrementos de los valores demográficos.</p>
 <p>Los datos utilizados se han sacado de los siguientes enlaces:</p>
 <ul>
@@ -126,11 +134,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"world_population.csv"</span>,<span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>world_data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> </span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">14</span>) <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Country=</span> <span class="st">"Country/Territory"</span>, <span class="at">Area_km2 =</span> <span class="st">"Area (km²)"</span>)   </span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Unimos los dos dataframes y creamos el tibble que usaremos para el estudio</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>world_population <span class="ot">=</span> <span class="fu">left_join</span>(global_population,world_data, <span class="at">by =</span> <span class="st">"Country"</span>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>world_population <span class="sc">%&gt;%</span> </span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Unimos los dos dataframes y creamos el tibble que usaremos para el estudio</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>world_population <span class="ot">=</span> <span class="fu">left_join</span>(global_population,world_data, <span class="at">by =</span> <span class="st">"Country"</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>world_population <span class="sc">%&gt;%</span> </span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 1,073
 Columns: 14
@@ -204,10 +213,10 @@ $ Area_km2                &lt;dbl&gt; 652230, 652230, 652230, 652230, 652230, 28
 <p>Como vemos, tenemos bastantes datos faltantes en los años 2017 y 2021; por eso, reduciremos nuestro estudio entre los años 2018 y 2020. Utilizaremos la función <code>filter()</code> para eliminar los dos años de nuestro tibble.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>world_population <span class="ot">&lt;-</span> world_population <span class="sc">%&gt;%</span> </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Año <span class="sc">==</span> <span class="dv">2018</span> <span class="sc">|</span>Año <span class="sc">==</span> <span class="dv">2019</span> <span class="sc">|</span>Año <span class="sc">==</span> <span class="dv">2020</span> ) </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Año <span class="sc">==</span> <span class="dv">2018</span> <span class="sc">|</span>Año <span class="sc">==</span> <span class="dv">2019</span> <span class="sc">|</span>Año <span class="sc">==</span> <span class="dv">2020</span>  ) </span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(world_population)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Ahora, trataremos particularmente los datos NA de las variables <em>Contiente</em> y <em>Area_km2</em>, ya que son las variables que hemos añadido de otro dataframe. En este caso, rellenaremos manualmente estos datos con la función <code>fix()</code>. La información con la que hemos completado estos valores se han sacado de las correspondientes páginas web de Wikipedia de cada uno de los países.</p>
+<p>Ahora, trataremos particularmente los datos NA de las variables <em>Contiente</em> y <em>Area_km2</em>, ya que son las variables que hemos añadido de otro dataframe. En este caso, rellenaremos manualmente. La información con la que hemos completado estos valores se han sacado de las correspondientes páginas web de <em>Wikipedia</em> de cada uno de los países.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Continente[<span class="dv">19</span><span class="sc">:</span><span class="dv">21</span>] <span class="ot">=</span> <span class="st">"North America"</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>world_population<span class="sc">$</span>Area_km2[<span class="dv">19</span><span class="sc">:</span><span class="dv">21</span>] <span class="ot">=</span> <span class="dv">442</span></span>
@@ -303,110 +312,492 @@ $ Mortalidad_infantil &lt;dbl&gt; 47.8, 46.3, 44.8, 8.3, 8.4, 8.4, 20.6, 20.1, 1
 $ Fertilidad          &lt;dbl&gt; 5.002, 4.870, 4.750, 1.440, 1.414, 1.400, 3.023, 2…
 $ Crecimiento         &lt;int&gt; 3, 3, 3, 0, 0, -1, 2, 2, 2, -2, -2, -2, 2, 2, 2, 3…</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(world_population,<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 20 × 14
-   Pais        Continente Area_km2 Año   Pob_total Pob_urbana Pob_rural Densidad
-   &lt;chr&gt;       &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;    &lt;int&gt;
- 1 Afghanistan Asia         652230 2018   36686784    9353296  27333488       56
- 2 Afghanistan Asia         652230 2019   37769499    9727157  28042342       58
- 3 Afghanistan Asia         652230 2020   38972230   10142913  28829317       60
- 4 Albania     Europe        28748 2018    2866376    1728969   1137407      105
- 5 Albania     Europe        28748 2019    2854191    1747593   1106598      104
- 6 Albania     Europe        28748 2020    2837849    1762645   1075204      104
- 7 Algeria     Africa      2381741 2018   41927007   30451166  11475841       18
- 8 Algeria     Africa      2381741 2019   42705368   31255632  11449736       18
- 9 Algeria     Africa      2381741 2020   43451666   32038217  11413449       18
-10 American S… Oceania         199 2018      48424      42203      6221      242
-11 American S… Oceania         199 2019      47321      41239      6082      237
-12 American S… Oceania         199 2020      46189      40255      5934      231
-13 Andorra     Europe          468 2018      75013      66058      8955      160
-14 Andorra     Europe          468 2019      76343      67170      9173      162
-15 Andorra     Europe          468 2020      77700      68311      9389      165
-16 Angola      Africa      1246700 2018   31273533   20488542  10784991       25
-17 Angola      Africa      1246700 2019   32353588   21410634  10942954       26
-18 Angola      Africa      1246700 2020   33428486   22338586  11089900       27
-19 Antigua An… North Ame…      442 2018      91626      22539     69087      208
-20 Antigua An… North Ame…      442 2019      92117      22574     69543      209
-# ℹ 6 more variables: Esp_vida &lt;int&gt;, Natalidad &lt;dbl&gt;, Mortalidad &lt;dbl&gt;,
-#   Mortalidad_infantil &lt;dbl&gt;, Fertilidad &lt;dbl&gt;, Crecimiento &lt;int&gt;</code></pre>
-</div>
 </div>
 </section>
 <section id="análisis-multivariante-exploratorio" class="level2">
 <h2 class="anchored" data-anchor-id="análisis-multivariante-exploratorio">Análisis multivariante exploratorio</h2>
-<p>Debido a que nos interesa realizar un estudio por continentes y por año, utilizaremos la función <code>group_by()</code>, para poder agrupar nuestros datos en base a nuestros intereses.</p>
+<p>idees: - estudi per any - estudi per continent</p>
+<p>Una vez hecha la limpieza, empezamos con el análisis multivariante. Debido a que nos interesa realizar un estudio por continentes y por año, utilizaremos la función <code>group_by()</code>, para poder agrupar nuestros datos en base a nuestros intereses. Primero, veamos la población total por continentes en los diferentes años:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>world_population <span class="sc">%&gt;%</span>  </span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Continente,Año) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">"Población total"</span> <span class="ot">=</span> <span class="fu">sum</span>(Pob_total), <span class="st">"Natalidad media"</span> <span class="ot">=</span> <span class="fu">mean</span>(Natalidad), <span class="st">"Mortalidad media"</span> <span class="ot">=</span> <span class="fu">mean</span>(Mortalidad),  <span class="st">"Esperanza media de Vida"</span> <span class="ot">=</span> <span class="fu">mean</span>(Esp_vida)) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Año <span class="sc">==</span><span class="st">"2018"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>world_population <span class="sc">%&gt;%</span>  </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Continente,Año) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">"Población total"</span> <span class="ot">=</span> <span class="fu">sum</span>(Pob_total))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'Continente'. You can override using the
 `.groups` argument.</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 6
+<pre><code># A tibble: 18 × 3
 # Groups:   Continente [6]
-  Continente    Año   `Población total` `Natalidad media` `Mortalidad media`
-  &lt;chr&gt;         &lt;chr&gt;             &lt;dbl&gt;             &lt;dbl&gt;              &lt;dbl&gt;
-1 Africa        2018         1267973300              31.7               8.00
-2 Asia          2018         4551390293              18.3               5.69
-3 Europe        2018          747225176              10.1               9.76
-4 North America 2018          577352828              14.2               7.18
-5 Oceania       2018           42542878              19.5               5.74
-6 South America 2018          426223875              16.4               6.88
-# ℹ 1 more variable: `Esperanza media de Vida` &lt;dbl&gt;</code></pre>
+   Continente    Año   `Población total`
+   &lt;chr&gt;         &lt;chr&gt;             &lt;dbl&gt;
+ 1 Africa        2018         1267973300
+ 2 Africa        2019         1299722341
+ 3 Africa        2020         1332001684
+ 4 Asia          2018         4551390293
+ 5 Asia          2019         4591104253
+ 6 Asia          2020         4627046275
+ 7 Europe        2018          747225176
+ 8 Europe        2019          747609915
+ 9 Europe        2020          747519807
+10 North America 2018          577352828
+11 North America 2019          581350287
+12 North America 2020          586825619
+13 Oceania       2018           42542878
+14 Oceania       2019           43234733
+15 Oceania       2020           43901335
+16 South America 2018          426223875
+17 South America 2019          429922107
+18 South America 2020          433273442</code></pre>
 </div>
 </div>
+<p>Vemos que el contiente con más población es Asia, seguido de África; en cambio, el continente menos poblado es Oceanía.</p>
+<p>Vamos a visualizar ahora los valores medios, por continente y año de las diferentes variables del estudio. Empezamos con la natalidad:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>world_population <span class="sc">%&gt;%</span>  <span class="fu">group_by</span>(Continente,Año) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">"Esperanza media de vida"</span> <span class="ot">=</span> <span class="fu">mean</span>(Esp_vida), <span class="st">"Población total"</span> <span class="ot">=</span> <span class="fu">sum</span>(Pob_total), <span class="st">"Número total de países"</span> <span class="ot">=</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>nat<span class="ot">&lt;-</span> world_population <span class="sc">%&gt;%</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Continente, Año) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">med =</span> <span class="fu">round</span>(<span class="fu">mean</span>(Natalidad), <span class="at">digits =</span> <span class="dv">5</span>),Natalidad)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'Continente'. You can override using the
-`.groups` argument.</code></pre>
+<pre><code>Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in
+dplyr 1.1.0.
+ℹ Please use `reframe()` instead.
+ℹ When switching from `summarise()` to `reframe()`, remember that `reframe()`
+  always returns an ungrouped data frame and adjust accordingly.</code></pre>
 </div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 18 × 5
-# Groups:   Continente [6]
-   Continente    Año   `Esperanza media de vida` `Población total`
-   &lt;chr&gt;         &lt;chr&gt;                     &lt;dbl&gt;             &lt;dbl&gt;
- 1 Africa        2018                       63.7        1267973300
- 2 Africa        2019                       64.0        1299722341
- 3 Africa        2020                       63.7        1332001684
- 4 Asia          2018                       74.6        4551390293
- 5 Asia          2019                       74.8        4591104253
- 6 Asia          2020                       74          4627046275
- 7 Europe        2018                       NA           747225176
- 8 Europe        2019                       NA           747609915
- 9 Europe        2020                       NA           747519807
-10 North America 2018                       NA           577352828
-11 North America 2019                       NA           581350287
-12 North America 2020                       NA           586825619
-13 Oceania       2018                       NA            42542878
-14 Oceania       2019                       NA            43234733
-15 Oceania       2020                       NA            43901335
-16 South America 2018                       74.5         426223875
-17 South America 2019                       74.4         429922107
-18 South America 2020                       73.1         433273442
-# ℹ 1 more variable: `Número total de países` &lt;int&gt;</code></pre>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'Continente', 'Año'. You can override using
+the `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>world_population <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(Continente, <span class="at">fill=</span>Año),</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">position=</span><span class="st">"dodge"</span>) <span class="sc">+</span> <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">"Año"</span>)) <span class="sc">+</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Número de habitantes"</span>, <span class="at">y=</span><span class="st">"Especie"</span>) <span class="sc">+</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>),</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(nat, <span class="fu">aes</span>(<span class="at">x=</span>Continente, <span class="at">y =</span> Natalidad ,<span class="at">fill =</span> Año)) <span class="sc">+</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping=</span> (<span class="fu">aes</span>(<span class="at">x =</span> Continente, <span class="at">y =</span> med, <span class="at">color =</span> <span class="st">"white"</span>)))<span class="sc">+</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">"Año"</span>)) <span class="sc">+</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Continente"</span>, <span class="at">y=</span><span class="st">"Natalidad"</span>) <span class="sc">+</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">8</span>),</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>, <span class="at">face =</span> <span class="st">"bold"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Analicemos bien estos resultados. Como vemos, llama la atención los valores que presenta Europa. Como vemos a continuación, la media de personas que nacen por año en este continente es realativamente baja: aproximadamente 10 recién nacidos por cada 1000 habitantes.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(world_population)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>world_population <span class="sc">%&gt;%</span> </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Continente <span class="sc">==</span> <span class="st">"Europe"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Año) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Natalidad) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>( <span class="at">media =</span> <span class="fu">mean</span>(Natalidad))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Adding missing grouping variables: `Año`</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  Año   media
+  &lt;chr&gt; &lt;dbl&gt;
+1 2018  10.1 
+2 2019   9.74
+3 2020   9.39</code></pre>
+</div>
+</div>
+<p>De la misma forma, África presenta los valores de natalidad más altos; en concreto</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>world_population <span class="sc">%&gt;%</span> </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Continente <span class="sc">==</span> <span class="st">"Africa"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Año) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Natalidad) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>( <span class="at">media =</span> <span class="fu">mean</span>(Natalidad))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Adding missing grouping variables: `Año`</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  Año   media
+  &lt;chr&gt; &lt;dbl&gt;
+1 2018   31.7
+2 2019   31.3
+3 2020   30.8</code></pre>
+</div>
+</div>
+<p>Como vemos, los valores difieren significativamente de los de Europa. No vemos diferencias significativas por años en ningun continente.</p>
+<p>Continuamos con la mortalidad:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>mort<span class="ot">&lt;-</span> world_population <span class="sc">%&gt;%</span> </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Continente, Año) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">med =</span> <span class="fu">round</span>(<span class="fu">mean</span>(Mortalidad), <span class="at">digits =</span> <span class="dv">5</span>),Mortalidad)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in
+dplyr 1.1.0.
+ℹ Please use `reframe()` instead.
+ℹ When switching from `summarise()` to `reframe()`, remember that `reframe()`
+  always returns an ungrouped data frame and adjust accordingly.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'Continente', 'Año'. You can override using
+the `.groups` argument.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mort, <span class="fu">aes</span>(<span class="at">x=</span>Continente, <span class="at">y =</span> Mortalidad ,<span class="at">fill =</span> Año)) <span class="sc">+</span> </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping=</span> (<span class="fu">aes</span>(<span class="at">x =</span> Continente, <span class="at">y =</span> med, <span class="at">color =</span> <span class="st">"white"</span>)))<span class="sc">+</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">"Año"</span>)) <span class="sc">+</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Continente"</span>, <span class="at">y=</span><span class="st">"Mortalidad"</span>) <span class="sc">+</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">8</span>),</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>, <span class="at">face =</span> <span class="st">"bold"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Igual que antes, Europa es el continente con el índice de mortalidad más alto. Fijémonos también en los diferentes valores por años:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>world_population <span class="sc">%&gt;%</span> </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Continente <span class="sc">==</span> <span class="st">"Europe"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Año) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Mortalidad) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>( <span class="at">media =</span> <span class="fu">mean</span>(Mortalidad))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Adding missing grouping variables: `Año`</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  Año   media
+  &lt;chr&gt; &lt;dbl&gt;
+1 2018   9.76
+2 2019   9.57
+3 2020  10.6 </code></pre>
+</div>
+</div>
+<p>En 2020, aumenta el 1000 el número de fallecidos. Como vemos, en la mayoría de continentes ocurre lo mismo.</p>
+<p>Vamos ahora con la mortalidad infantil.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>mort_inf<span class="ot">&lt;-</span> world_population <span class="sc">%&gt;%</span> </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Continente, Año) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">med =</span> <span class="fu">round</span>(<span class="fu">mean</span>(Mortalidad_infantil), <span class="at">digits =</span> <span class="dv">5</span>),Mortalidad_infantil)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in
+dplyr 1.1.0.
+ℹ Please use `reframe()` instead.
+ℹ When switching from `summarise()` to `reframe()`, remember that `reframe()`
+  always returns an ungrouped data frame and adjust accordingly.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'Continente', 'Año'. You can override using
+the `.groups` argument.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mort_inf, <span class="fu">aes</span>(<span class="at">x=</span>Continente, <span class="at">y =</span> Mortalidad_infantil ,<span class="at">fill =</span> Año)) <span class="sc">+</span> </span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping=</span> (<span class="fu">aes</span>(<span class="at">x =</span> Continente, <span class="at">y =</span> med, <span class="at">color =</span> <span class="st">"white"</span>)))<span class="sc">+</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">"Año"</span>)) <span class="sc">+</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Continente"</span>, <span class="at">y=</span><span class="st">"Mortalidad infantil"</span>) <span class="sc">+</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">8</span>),</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>, <span class="at">face =</span> <span class="st">"bold"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>África es el continente con más mortalidad infantil, con diferencia. Ilustremos estos valores:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>world_population <span class="sc">%&gt;%</span> </span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Continente <span class="sc">==</span> <span class="st">"Africa"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Año) <span class="sc">%&gt;%</span> </span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Mortalidad_infantil) <span class="sc">%&gt;%</span> </span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>( <span class="at">media =</span> <span class="fu">mean</span>(Mortalidad_infantil))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Adding missing grouping variables: `Año`</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  Año   media
+  &lt;chr&gt; &lt;dbl&gt;
+1 2018   43.2
+2 2019   42.2
+3 2020   41.2</code></pre>
+</div>
+</div>
+<p>En concreto, mueren al año 43 niños/niñas por cada 1000 nacimientos. Teniendo en cuenta el número de nacimientos en este continente, esto equivale a 1.5 millones de muertes infantiles, cada año.</p>
+<p>Por otro lado, Europa presenta unos valores mínimos en mortalidad infantil:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>world_population <span class="sc">%&gt;%</span> </span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Continente <span class="sc">==</span> <span class="st">"Europe"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Año) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Mortalidad_infantil) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>( <span class="at">media =</span> <span class="fu">mean</span>(Mortalidad_infantil))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Adding missing grouping variables: `Año`</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  Año   media
+  &lt;chr&gt; &lt;dbl&gt;
+1 2018   3.90
+2 2019   3.79
+3 2020   3.68</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'plotly' was built under R version 4.2.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'plotly'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:ggplot2':
+
+    last_plot</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:stats':
+
+    filter</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:graphics':
+
+    layout</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(viridis)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'viridis' was built under R version 4.2.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: viridisLite</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'viridisLite' was built under R version 4.2.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(hrbrthemes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'hrbrthemes' was built under R version 4.2.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>NOTE: Either Arial Narrow or Roboto Condensed fonts are required to use these themes.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>      Please use hrbrthemes::import_roboto_condensed() to install Roboto Condensed and</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>      if Arial Narrow is not on your system, please see https://bit.ly/arialnarrow</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>data_2019 <span class="ot">&lt;-</span> world_population <span class="sc">%&gt;%</span> </span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Año <span class="sc">==</span> <span class="dv">2019</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Año)</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>p_19 <span class="ot">&lt;-</span> data_2019 <span class="sc">%&gt;%</span> </span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Pob =</span> <span class="fu">round</span>(Pob_total <span class="sc">/</span><span class="dv">1000000</span>,<span class="dv">2</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Pob)) <span class="sc">%&gt;%</span> </span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">country =</span> <span class="fu">factor</span>(Pais, Pais)) <span class="sc">%&gt;%</span> </span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">text=</span> <span class="fu">paste</span>(<span class="st">"Pais: "</span>, country, <span class="st">"</span><span class="sc">\n</span><span class="st">Población (M):"</span>, Pob, <span class="st">"</span><span class="sc">\n</span><span class="st">Crecimiento: "</span>, Crecimiento)) <span class="sc">%&gt;%</span></span>
+<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Pob_total, <span class="at">y =</span> Crecimiento, <span class="at">size=</span> Pob_total, <span class="at">color =</span> Continente, <span class="at">text =</span> text)) <span class="sc">+</span></span>
+<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb56-12"><a href="#cb56-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="fl">1.4</span>, <span class="dv">19</span>),<span class="at">name=</span><span class="st">"Population (M)"</span>) <span class="sc">+</span></span>
+<span id="cb56-13"><a href="#cb56-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_viridis</span>(<span class="at">discrete=</span><span class="cn">TRUE</span>, <span class="at">guide=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb56-14"><a href="#cb56-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_ipsum</span>() <span class="sc">+</span></span>
+<span id="cb56-15"><a href="#cb56-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"right"</span>)</span>
+<span id="cb56-16"><a href="#cb56-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-17"><a href="#cb56-17" aria-hidden="true" tabindex="-1"></a>pp_19 <span class="ot">&lt;-</span> <span class="fu">ggplotly</span>(p_19, <span class="at">tooltip =</span> <span class="st">"text"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The `guide` argument in `scale_*()` cannot be `FALSE`. This was deprecated in
+ggplot2 3.3.4.
+ℹ Please use "none" instead.
+ℹ The deprecated feature was likely used in the plotly package.
+  Please report the issue at &lt;https://github.com/plotly/plotly.R/issues&gt;.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>pp_19</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-c22f07435c8e094f6017" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-c22f07435c8e094f6017">{"x":{"data":[{"x":[203304492,114120594,105618671,89906890,59872579,58087055,50951450,43232093,42949080,42705368,36304408,32353588,31522290,30285595,27533134,25782341,23443393,20951639,20567424,18867337,18380477,16126866,16000781,15981300,15354608,12877539,12835028,12290444,12049314,11874838,10447666,8243094,8046828,6569088,5570733,5209324,4985289,4383849,3498818,2508883,2499702,2446644,2242785,2225702,1970457,1553031,1265985,1169613,1073994,790986,577030,214599,97625],"y":[2,3,2,3,3,1,2,3,3,2,1,3,2,3,3,3,4,3,3,3,3,3,3,4,2,3,2,3,1,3,1,2,2,1,2,2,2,3,2,3,2,2,2,1,2,3,0,1,2,2,1,2,1],"text":["Pais:  Nigeria <br />Población (M): 203.3 <br />Crecimiento:  2","Pais:  Ethiopia <br />Población (M): 114.12 <br />Crecimiento:  3","Pais:  Egypt <br />Población (M): 105.62 <br />Crecimiento:  2","Pais:  Democratic Republic Of Congo <br />Población (M): 89.91 <br />Crecimiento:  3","Pais:  Tanzania <br />Población (M): 59.87 <br />Crecimiento:  3","Pais:  South Africa <br />Población (M): 58.09 <br />Crecimiento:  1","Pais:  Kenya <br />Población (M): 50.95 <br />Crecimiento:  2","Pais:  Sudan <br />Población (M): 43.23 <br />Crecimiento:  3","Pais:  Uganda <br />Población (M): 42.95 <br />Crecimiento:  3","Pais:  Algeria <br />Población (M): 42.71 <br />Crecimiento:  2","Pais:  Morocco <br />Población (M): 36.3 <br />Crecimiento:  1","Pais:  Angola <br />Población (M): 32.35 <br />Crecimiento:  3","Pais:  Ghana <br />Población (M): 31.52 <br />Crecimiento:  2","Pais:  Mozambique <br />Población (M): 30.29 <br />Crecimiento:  3","Pais:  Madagascar <br />Población (M): 27.53 <br />Crecimiento:  3","Pais:  Cameroon <br />Población (M): 25.78 <br />Crecimiento:  3","Pais:  Niger <br />Población (M): 23.44 <br />Crecimiento:  4","Pais:  Burkina Faso <br />Población (M): 20.95 <br />Crecimiento:  3","Pais:  Mali <br />Población (M): 20.57 <br />Crecimiento:  3","Pais:  Malawi <br />Población (M): 18.87 <br />Crecimiento:  3","Pais:  Zambia <br />Población (M): 18.38 <br />Crecimiento:  3","Pais:  Chad <br />Población (M): 16.13 <br />Crecimiento:  3","Pais:  Senegal <br />Población (M): 16 <br />Crecimiento:  3","Pais:  Somalia <br />Población (M): 15.98 <br />Crecimiento:  4","Pais:  Zimbabwe <br />Población (M): 15.35 <br />Crecimiento:  2","Pais:  Guinea <br />Población (M): 12.88 <br />Crecimiento:  3","Pais:  Rwanda <br />Población (M): 12.84 <br />Crecimiento:  2","Pais:  Benin <br />Población (M): 12.29 <br />Crecimiento:  3","Pais:  Tunisia <br />Población (M): 12.05 <br />Crecimiento:  1","Pais:  Burundi <br />Población (M): 11.87 <br />Crecimiento:  3","Pais:  South Sudan <br />Población (M): 10.45 <br />Crecimiento:  1","Pais:  Togo <br />Población (M): 8.24 <br />Crecimiento:  2","Pais:  Sierra Leone <br />Población (M): 8.05 <br />Crecimiento:  2","Pais:  Libya <br />Población (M): 6.57 <br />Crecimiento:  1","Pais:  Republic Of Congo <br />Población (M): 5.57 <br />Crecimiento:  2","Pais:  Central African Republic <br />Población (M): 5.21 <br />Crecimiento:  2","Pais:  Liberia <br />Población (M): 4.99 <br />Crecimiento:  2","Pais:  Mauritania <br />Población (M): 4.38 <br />Crecimiento:  3","Pais:  Eritrea <br />Población (M): 3.5 <br />Crecimiento:  2","Pais:  Gambia <br />Población (M): 2.51 <br />Crecimiento:  3","Pais:  Botswana <br />Población (M): 2.5 <br />Crecimiento:  2","Pais:  Namibia <br />Población (M): 2.45 <br />Crecimiento:  2","Pais:  Gabon <br />Población (M): 2.24 <br />Crecimiento:  2","Pais:  Lesotho <br />Población (M): 2.23 <br />Crecimiento:  1","Pais:  Guinea-Bissau <br />Población (M): 1.97 <br />Crecimiento:  2","Pais:  Equatorial Guinea <br />Población (M): 1.55 <br />Crecimiento:  3","Pais:  Mauritius <br />Población (M): 1.27 <br />Crecimiento:  0","Pais:  Eswatini <br />Población (M): 1.17 <br />Crecimiento:  1","Pais:  Djibouti <br />Población (M): 1.07 <br />Crecimiento:  2","Pais:  Comoros <br />Población (M): 0.79 <br />Crecimiento:  2","Pais:  Cabo Verde <br />Población (M): 0.58 <br />Crecimiento:  1","Pais:  Sao Tome And Principe <br />Población (M): 0.21 <br />Crecimiento:  2","Pais:  Seychelles <br />Población (M): 0.1 <br />Crecimiento:  1"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(68,1,84,1)","opacity":0.7,"size":[30.5698596890378,24.2300768120913,23.5108908586008,22.1010362313717,19.0084959561971,18.8023728643868,17.9451527919501,16.9470281264271,16.9088045897903,16.8757879531532,15.9721443206191,15.3740551061413,15.2436343005453,15.0463855360023,14.5923735505873,14.2916752902941,13.8735380960107,13.4044099951948,13.3296370118092,12.9900678902541,12.8900297416283,12.4086717211246,12.3807753423438,12.3764553635731,12.2360507006831,11.650816892607,11.6403023893249,11.5040332062554,11.442732015352,11.3979922020932,11.0189254617845,10.3781565727215,10.3171522460851,9.83159054038356,9.47174555845654,9.33359061229388,9.24552650312184,8.99878004736157,8.60241744040684,8.09341353910094,8.08825935881062,8.05828472426689,7.93996273929428,7.92980663830244,7.7731148215143,7.49295992055582,7.27751013872467,7.19972941833429,7.11928841376264,6.85717190311497,6.62524843869931,6.09140238272304,5.8132800117123],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(68,1,84,1)"}},"hoveron":"points","name":"Africa","legendgroup":"Africa","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1407745000,1383112050,269582878,223293280,165516222,126633000,110380804,95776716,86564202,83481684,71307763,53040212,51764822,41563520,37769499,35827362,33580350,32804020,31546691,28832496,25755441,21803000,20098251,18513673,16207746,10698683,10024283,9337003,9211657,9054000,7507900,7212053,6456200,6158420,5781907,5703569,4685306,4602768,4441100,3720161,3232430,2820602,2807235,1494188,1280438,767459,663653,504508,438048],"y":[0,1,1,2,1,0,2,1,1,1,0,1,0,2,3,2,2,1,2,1,0,1,4,1,1,2,1,2,1,2,1,1,2,2,-3,1,3,0,3,0,2,-1,1,0,1,1,2,3,1],"text":["Pais:  China <br />Población (M): 1407.74 <br />Crecimiento:  0","Pais:  India <br />Población (M): 1383.11 <br />Crecimiento:  1","Pais:  Indonesia <br />Población (M): 269.58 <br />Crecimiento:  1","Pais:  Pakistan <br />Población (M): 223.29 <br />Crecimiento:  2","Pais:  Bangladesh <br />Población (M): 165.52 <br />Crecimiento:  1","Pais:  Japan <br />Población (M): 126.63 <br />Crecimiento:  0","Pais:  Philippines <br />Población (M): 110.38 <br />Crecimiento:  2","Pais:  Vietnam <br />Población (M): 95.78 <br />Crecimiento:  1","Pais:  Iran <br />Población (M): 86.56 <br />Crecimiento:  1","Pais:  Turkey <br />Población (M): 83.48 <br />Crecimiento:  1","Pais:  Thailand <br />Población (M): 71.31 <br />Crecimiento:  0","Pais:  Myanmar <br />Población (M): 53.04 <br />Crecimiento:  1","Pais:  South Korea <br />Población (M): 51.76 <br />Crecimiento:  0","Pais:  Iraq <br />Población (M): 41.56 <br />Crecimiento:  2","Pais:  Afghanistan <br />Población (M): 37.77 <br />Crecimiento:  3","Pais:  Saudi Arabia <br />Población (M): 35.83 <br />Crecimiento:  2","Pais:  Uzbekistan <br />Población (M): 33.58 <br />Crecimiento:  2","Pais:  Malaysia <br />Población (M): 32.8 <br />Crecimiento:  1","Pais:  Yemen <br />Población (M): 31.55 <br />Crecimiento:  2","Pais:  Nepal <br />Población (M): 28.83 <br />Crecimiento:  1","Pais:  North Korea <br />Población (M): 25.76 <br />Crecimiento:  0","Pais:  Sri Lanka <br />Población (M): 21.8 <br />Crecimiento:  1","Pais:  Syrian Arab Republic <br />Población (M): 20.1 <br />Crecimiento:  4","Pais:  Kazakhstan <br />Población (M): 18.51 <br />Crecimiento:  1","Pais:  Cambodia <br />Población (M): 16.21 <br />Crecimiento:  1","Pais:  Jordan <br />Población (M): 10.7 <br />Crecimiento:  2","Pais:  Azerbaijan <br />Población (M): 10.02 <br />Crecimiento:  1","Pais:  Tajikistan <br />Población (M): 9.34 <br />Crecimiento:  2","Pais:  UAE <br />Población (M): 9.21 <br />Crecimiento:  1","Pais:  Israel <br />Población (M): 9.05 <br />Crecimiento:  2","Pais:  Hong Kong <br />Población (M): 7.51 <br />Crecimiento:  1","Pais:  Lao PDR <br />Población (M): 7.21 <br />Crecimiento:  1","Pais:  Kyrgyz Republic <br />Población (M): 6.46 <br />Crecimiento:  2","Pais:  Turkmenistan <br />Población (M): 6.16 <br />Crecimiento:  2","Pais:  Lebanon <br />Población (M): 5.78 <br />Crecimiento:  -3","Pais:  Singapore <br />Población (M): 5.7 <br />Crecimiento:  1","Pais:  West Bank And Gaza <br />Población (M): 4.69 <br />Crecimiento:  3","Pais:  Oman <br />Población (M): 4.6 <br />Crecimiento:  0","Pais:  Kuwait <br />Población (M): 4.44 <br />Crecimiento:  3","Pais:  Georgia <br />Población (M): 3.72 <br />Crecimiento:  0","Pais:  Mongolia <br />Población (M): 3.23 <br />Crecimiento:  2","Pais:  Armenia <br />Población (M): 2.82 <br />Crecimiento:  -1","Pais:  Qatar <br />Población (M): 2.81 <br />Crecimiento:  1","Pais:  Bahrain <br />Población (M): 1.49 <br />Crecimiento:  0","Pais:  Timor-Leste <br />Población (M): 1.28 <br />Crecimiento:  1","Pais:  Bhutan <br />Población (M): 0.77 <br />Crecimiento:  1","Pais:  Macao <br />Población (M): 0.66 <br />Crecimiento:  2","Pais:  Maldives <br />Población (M): 0.5 <br />Crecimiento:  3","Pais:  Brunei <br />Población (M): 0.44 <br />Crecimiento:  1"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(65,68,135,1)","opacity":0.7,"size":[71.8110236220472,71.2264644985731,34.4003331481867,31.7834790659857,28.0997892632263,25.2414137983754,23.9171456341706,22.6411599335464,21.7855500184135,21.4891738593363,20.2614460395865,18.2019748085911,18.0457750842306,16.7198269615405,16.1855924491058,15.9017171576356,15.5634951004141,15.4440227393294,15.2474868663186,14.8093992513816,14.2869768181634,13.567688824579,13.2373760091342,12.9175287492647,12.4265090466486,11.0873943236272,10.9015480526883,10.7055932225296,10.6690852052903,10.6228114020651,10.1456989219,10.0489526319148,9.79234424305164,9.68713807529907,9.55039674479687,9.5213905964017,9.12444160005187,9.09044909397469,9.02297049968481,8.70586357419043,8.4734632690242,8.26311190552044,8.25603431398662,7.45054628502121,7.28891384513917,6.83337703978137,6.72367714934347,6.53687472886399,6.44998412678043],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(65,68,135,1)"}},"hoveron":"points","name":"Asia","legendgroup":"Asia","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[144406261,83092962,67388001,66836327,59729081,47134837,44386203,37965475,19371648,17344874,11488980,10721582,10671870,10286263,10278887,9771141,9419758,8879920,8575280,6975761,6945235,5814422,5521606,5454147,5347896,4934340,4065253,3360711,2854191,2794137,2664224,2088385,2076694,1913822,1788878,1326898,1228836,620001,622028,504062,360563,169410,76343,83933,51681,38482,37034,41608,32685,34178,33121],"y":[0,0,0,1,-1,1,-1,0,-1,1,1,0,0,0,1,0,0,0,1,-1,-1,0,0,0,1,1,-1,-1,0,0,-2,1,0,-1,0,0,1,2,0,4,2,1,2,0,1,1,0,2,0,0,-2],"text":["Pais:  Russia <br />Población (M): 144.41 <br />Crecimiento:  0","Pais:  Germany <br />Población (M): 83.09 <br />Crecimiento:  0","Pais:  France <br />Población (M): 67.39 <br />Crecimiento:  0","Pais:  United Kingdom <br />Población (M): 66.84 <br />Crecimiento:  1","Pais:  Italy <br />Población (M): 59.73 <br />Crecimiento:  -1","Pais:  Spain <br />Población (M): 47.13 <br />Crecimiento:  1","Pais:  Ukraine <br />Población (M): 44.39 <br />Crecimiento:  -1","Pais:  Poland <br />Población (M): 37.97 <br />Crecimiento:  0","Pais:  Romania <br />Población (M): 19.37 <br />Crecimiento:  -1","Pais:  Netherlands <br />Población (M): 17.34 <br />Crecimiento:  1","Pais:  Belgium <br />Población (M): 11.49 <br />Crecimiento:  1","Pais:  Greece <br />Población (M): 10.72 <br />Crecimiento:  0","Pais:  Czech Republic <br />Población (M): 10.67 <br />Crecimiento:  0","Pais:  Portugal <br />Población (M): 10.29 <br />Crecimiento:  0","Pais:  Sweden <br />Población (M): 10.28 <br />Crecimiento:  1","Pais:  Hungary <br />Población (M): 9.77 <br />Crecimiento:  0","Pais:  Belarus <br />Población (M): 9.42 <br />Crecimiento:  0","Pais:  Austria <br />Población (M): 8.88 <br />Crecimiento:  0","Pais:  Switzerland <br />Población (M): 8.58 <br />Crecimiento:  1","Pais:  Bulgaria <br />Población (M): 6.98 <br />Crecimiento:  -1","Pais:  Serbia <br />Población (M): 6.95 <br />Crecimiento:  -1","Pais:  Denmark <br />Población (M): 5.81 <br />Crecimiento:  0","Pais:  Finland <br />Población (M): 5.52 <br />Crecimiento:  0","Pais:  Slovak Republic <br />Población (M): 5.45 <br />Crecimiento:  0","Pais:  Norway <br />Población (M): 5.35 <br />Crecimiento:  1","Pais:  Ireland <br />Población (M): 4.93 <br />Crecimiento:  1","Pais:  Croatia <br />Población (M): 4.07 <br />Crecimiento:  -1","Pais:  Bosnia <br />Población (M): 3.36 <br />Crecimiento:  -1","Pais:  Albania <br />Población (M): 2.85 <br />Crecimiento:  0","Pais:  Lithuania <br />Población (M): 2.79 <br />Crecimiento:  0","Pais:  Moldova <br />Población (M): 2.66 <br />Crecimiento:  -2","Pais:  Slovenia <br />Población (M): 2.09 <br />Crecimiento:  1","Pais:  North Macedonia <br />Población (M): 2.08 <br />Crecimiento:  0","Pais:  Latvia <br />Población (M): 1.91 <br />Crecimiento:  -1","Pais:  Kosovo <br />Población (M): 1.79 <br />Crecimiento:  0","Pais:  Estonia <br />Población (M): 1.33 <br />Crecimiento:  0","Pais:  Cyprus <br />Población (M): 1.23 <br />Crecimiento:  1","Pais:  Luxembourg <br />Población (M): 0.62 <br />Crecimiento:  2","Pais:  Montenegro <br />Población (M): 0.62 <br />Crecimiento:  0","Pais:  Malta <br />Población (M): 0.5 <br />Crecimiento:  4","Pais:  Iceland <br />Población (M): 0.36 <br />Crecimiento:  2","Pais:  Channel Islands <br />Población (M): 0.17 <br />Crecimiento:  1","Pais:  Andorra <br />Población (M): 0.08 <br />Crecimiento:  2","Pais:  Isle Of Man <br />Población (M): 0.08 <br />Crecimiento:  0","Pais:  Faroe Islands <br />Población (M): 0.05 <br />Crecimiento:  1","Pais:  Liechtenstein <br />Población (M): 0.04 <br />Crecimiento:  1","Pais:  Monaco <br />Población (M): 0.04 <br />Crecimiento:  0","Pais:  Sint Maarten (Dutch Part) <br />Población (M): 0.04 <br />Crecimiento:  2","Pais:  Gibraltar <br />Población (M): 0.03 <br />Crecimiento:  0","Pais:  San Marino <br />Población (M): 0.03 <br />Crecimiento:  0","Pais:  St. Martin (French Part) <br />Población (M): 0.03 <br />Crecimiento:  -2"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(42,120,142,1)","opacity":0.7,"size":[26.5955966221198,21.4514133005153,19.8441150118514,19.784414487402,18.9920449680661,17.4618941280639,17.1016206257451,16.2138277699682,13.0923392578624,12.6727301840527,11.2978656948339,11.0936001737836,11.0801192857906,10.9744645277487,10.9724243812897,10.830179633285,10.7295619558455,10.5712461971364,10.4797740795867,9.97024499249227,9.95998015799356,9.56237819822317,9.45323523504866,9.42768272185092,9.38711308124248,9.22522423932914,8.86116959009445,8.53620183773009,8.28082273693609,8.2490827250927,8.17922718746227,7.84670376102117,7.839503292552,7.73698675757709,7.65533181789834,7.32513862288237,7.24789388024623,6.67495137464756,6.6772519053786,6.53631183511128,6.33962494848827,5.99707329784792,5.74469063228787,5.77028053534026,5.64912217803493,5.5854835554351,5.57764232050246,5.60173684828716,5.55268090587526,5.56151017837362,5.55528984620134],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(42,120,142,1)"}},"hoveron":"points","name":"Europe","legendgroup":"Europe","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[328329953,125085311,37601230,16604026,11316697,11160438,10881882,9958829,6663924,6280217,5084532,4232532,3193694,2813773,404557,389095,280180,157441,122724,106442,106669,104924,92117,66134,71428,63911,56225,47712,43080,30610],"y":[0,1,1,2,0,1,1,2,1,0,1,2,0,0,1,2,0,-1,1,0,0,0,1,2,1,0,0,0,4,1],"text":["Pais:  United States <br />Población (M): 328.33 <br />Crecimiento:  0","Pais:  Mexico <br />Población (M): 125.09 <br />Crecimiento:  1","Pais:  Canada <br />Población (M): 37.6 <br />Crecimiento:  1","Pais:  Guatemala <br />Población (M): 16.6 <br />Crecimiento:  2","Pais:  Cuba <br />Población (M): 11.32 <br />Crecimiento:  0","Pais:  Haiti <br />Población (M): 11.16 <br />Crecimiento:  1","Pais:  Dominican Republic <br />Población (M): 10.88 <br />Crecimiento:  1","Pais:  Honduras <br />Población (M): 9.96 <br />Crecimiento:  2","Pais:  Nicaragua <br />Población (M): 6.66 <br />Crecimiento:  1","Pais:  El Salvador <br />Población (M): 6.28 <br />Crecimiento:  0","Pais:  Costa Rica <br />Población (M): 5.08 <br />Crecimiento:  1","Pais:  Panama <br />Población (M): 4.23 <br />Crecimiento:  2","Pais:  Puerto Rico <br />Población (M): 3.19 <br />Crecimiento:  0","Pais:  Jamaica <br />Población (M): 2.81 <br />Crecimiento:  0","Pais:  Bahamas <br />Población (M): 0.4 <br />Crecimiento:  1","Pais:  Belize <br />Población (M): 0.39 <br />Crecimiento:  2","Pais:  Barbados <br />Población (M): 0.28 <br />Crecimiento:  0","Pais:  Curacao <br />Población (M): 0.16 <br />Crecimiento:  -1","Pais:  Grenada <br />Población (M): 0.12 <br />Crecimiento:  1","Pais:  Aruba <br />Población (M): 0.11 <br />Crecimiento:  0","Pais:  Virgin Islands (U.S.) <br />Población (M): 0.11 <br />Crecimiento:  0","Pais:  St. Vincent And The Grenadines <br />Población (M): 0.1 <br />Crecimiento:  0","Pais:  Antigua And Barbuda <br />Población (M): 0.09 <br />Crecimiento:  1","Pais:  Cayman Islands <br />Población (M): 0.07 <br />Crecimiento:  2","Pais:  Dominica <br />Población (M): 0.07 <br />Crecimiento:  1","Pais:  Bermuda <br />Población (M): 0.06 <br />Crecimiento:  0","Pais:  Greenland <br />Población (M): 0.06 <br />Crecimiento:  0","Pais:  St. Kitts And Nevis <br />Población (M): 0.05 <br />Crecimiento:  0","Pais:  Turks And Caicos Islands <br />Población (M): 0.04 <br />Crecimiento:  4","Pais:  British Virgin Islands <br />Población (M): 0.03 <br />Crecimiento:  1"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(34,168,132,1)","opacity":0.7,"size":[37.4159500406015,25.1191150177029,16.1612905034648,12.5132681754207,11.25261683264,11.211277461773,11.1368585347794,10.883181893998,9.86430060598916,9.73047051717558,9.28477673377384,8.93407026975281,8.45427398425603,8.25949817863118,6.4036284323824,6.38156226857504,6.21125159850882,5.96989577038067,5.88405726637103,5.83918613775525,5.83983695343123,5.83481395560416,5.79642253730912,5.70779816085385,5.72731906112204,5.69932280068004,5.66855477589759,5.63124080096016,5.60910257708815,5.53988949027708],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(34,168,132,1)"}},"hoveron":"points","name":"North America","legendgroup":"North America","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[25340217,9542486,4979200,918465,674993,299717,304404,271240,211905,168624,124241,111379,104951,47321,49858,44728,17916,12132,10956],"y":[1,2,2,0,2,1,2,0,1,0,2,0,0,-2,-1,-3,0,2,1],"text":["Pais:  Australia <br />Población (M): 25.34 <br />Crecimiento:  1","Pais:  Papua New Guinea <br />Población (M): 9.54 <br />Crecimiento:  2","Pais:  New Zealand <br />Población (M): 4.98 <br />Crecimiento:  2","Pais:  Fiji <br />Población (M): 0.92 <br />Crecimiento:  0","Pais:  Solomon Islands <br />Población (M): 0.67 <br />Crecimiento:  2","Pais:  French Polynesia <br />Población (M): 0.3 <br />Crecimiento:  1","Pais:  Vanuatu <br />Población (M): 0.3 <br />Crecimiento:  2","Pais:  New Caledonia <br />Población (M): 0.27 <br />Crecimiento:  0","Pais:  Samoa <br />Población (M): 0.21 <br />Crecimiento:  1","Pais:  Guam <br />Población (M): 0.17 <br />Crecimiento:  0","Pais:  Kiribati <br />Población (M): 0.12 <br />Crecimiento:  2","Pais:  Micronesia <br />Población (M): 0.11 <br />Crecimiento:  0","Pais:  Tonga <br />Población (M): 0.1 <br />Crecimiento:  0","Pais:  American Samoa <br />Población (M): 0.05 <br />Crecimiento:  -2","Pais:  Northern Mariana Islands <br />Población (M): 0.05 <br />Crecimiento:  -1","Pais:  Marshall Islands <br />Población (M): 0.04 <br />Crecimiento:  -3","Pais:  Palau <br />Población (M): 0.02 <br />Crecimiento:  0","Pais:  Nauru <br />Población (M): 0.01 <br />Crecimiento:  2","Pais:  Tuvalu <br />Población (M): 0.01 <br />Crecimiento:  1"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(122,209,81,1)","opacity":0.7,"size":[14.2141381393873,10.764915016817,9.24310563354577,6.9802829632311,6.73606633998679,6.24404512165535,6.25174588707574,6.19584908452066,6.08609272859042,5.99532074791387,5.8880661229924,5.85317058473696,5.83489202889057,5.62942807510903,5.6410226477937,5.6171514769164,5.43924754740436,5.35213717699187,5.29133858267716],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(122,209,81,1)"}},"hoveron":"points","name":"Oceania","legendgroup":"Oceania","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[211782878,50187406,44938712,32824861,28971683,19039485,17343740,11777315,6530026,3428409,1519955,798753,600301,178583],"y":[1,2,1,2,-3,2,2,1,1,0,1,2,1,0],"text":["Pais:  Brazil <br />Población (M): 211.78 <br />Crecimiento:  1","Pais:  Colombia <br />Población (M): 50.19 <br />Crecimiento:  2","Pais:  Argentina <br />Población (M): 44.94 <br />Crecimiento:  1","Pais:  Peru <br />Población (M): 32.82 <br />Crecimiento:  2","Pais:  Venezuela <br />Población (M): 28.97 <br />Crecimiento:  -3","Pais:  Chile <br />Población (M): 19.04 <br />Crecimiento:  2","Pais:  Ecuador <br />Población (M): 17.34 <br />Crecimiento:  2","Pais:  Bolivia <br />Población (M): 11.78 <br />Crecimiento:  1","Pais:  Paraguay <br />Población (M): 6.53 <br />Crecimiento:  1","Pais:  Uruguay <br />Población (M): 3.43 <br />Crecimiento:  0","Pais:  Trinidad And Tobago <br />Población (M): 1.52 <br />Crecimiento:  1","Pais:  Guyana <br />Población (M): 0.8 <br />Crecimiento:  2","Pais:  Suriname <br />Población (M): 0.6 <br />Crecimiento:  1","Pais:  St. Lucia <br />Población (M): 0.18 <br />Crecimiento:  0"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(253,231,37,1)","opacity":0.7,"size":[31.0915976336075,17.8498985377843,17.1749171334756,15.4472483983113,14.8323542135072,13.0251305495829,12.6724887315726,11.3728415771206,9.81804886422804,8.56882690294982,7.46922062253486,6.8649483363461,6.65239046069607,6.01721362398894],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(253,231,37,1)"}},"hoveron":"points","name":"South America","legendgroup":"South America","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":71.7907845579078,"r":39.8505603985056,"b":86.8410128684101,"l":70.9007887090079},"font":{"color":"rgba(0,0,0,1)","family":"Arial Narrow","size":15.2760481527605},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-70375746.2,1478131702.2],"tickmode":"array","ticktext":["0e+00","5e+08","1e+09"],"tickvals":[0,500000000,1000000000],"categoryorder":"array","categoryarray":["0e+00","5e+08","1e+09"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.81901203819012,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"Arial Narrow","size":15.2760481527605},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(204,204,204,1)","gridwidth":0.265670402656704,"zeroline":false,"anchor":"y","title":{"text":"Pob_total","font":{"color":"rgba(0,0,0,1)","family":"Arial Narrow","size":11.9551681195517}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-3.35,4.35],"tickmode":"array","ticktext":["-2","0","2","4"],"tickvals":[-2,0,2,4],"categoryorder":"array","categoryarray":["-2","0","2","4"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.81901203819012,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"Arial Narrow","size":15.2760481527605},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(204,204,204,1)","gridwidth":0.265670402656704,"zeroline":false,"anchor":"x","title":{"text":"Crecimiento","font":{"color":"rgba(0,0,0,1)","family":"Arial Narrow","size":11.9551681195517}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"Arial Narrow","size":12.2208385222084},"title":{"text":"Population (M)","font":{"color":"rgba(0,0,0,1)","family":"Arial Narrow","size":15.2760481527605}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"264c5aba7c98":{"x":{},"y":{},"size":{},"colour":{},"text":{},"type":"scatter"}},"cur_data":"264c5aba7c98","visdat":{"264c5aba7c98":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>world_population <span class="ot">&lt;-</span> world_population <span class="sc">%&gt;%</span> </span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dens =</span> <span class="fu">round</span>(Pob_total<span class="sc">/</span>Area_km2,<span class="dv">2</span>), <span class="at">.keep =</span> <span class="st">"all"</span>, <span class="at">.after =</span> Densidad) </span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(world_population)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'GGally' was built under R version 4.2.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Registered S3 method overwritten by 'GGally':
+  method from   
+  +.gg   ggplot2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>a_europe <span class="ot">&lt;-</span> world_population <span class="sc">%&gt;%</span> </span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Continente <span class="sc">==</span> <span class="st">"Europe"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="dv">4</span>,<span class="dv">11</span><span class="sc">:</span><span class="dv">13</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>()</span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(a_europe,<span class="at">mapping=</span>ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">colour =</span> Año),</span>
+<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">upper =</span> <span class="fu">list</span>(<span class="at">continuous =</span> <span class="fu">wrap</span>(<span class="st">"cor"</span>, <span class="at">size =</span> <span class="dv">3</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>a_asia <span class="ot">&lt;-</span> world_population <span class="sc">%&gt;%</span> </span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Continente <span class="sc">==</span> <span class="st">"Asia"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Año <span class="sc">==</span> <span class="dv">2019</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="dv">10</span><span class="sc">:</span><span class="dv">13</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>()</span>
+<span id="cb66-6"><a href="#cb66-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-7"><a href="#cb66-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(a_asia)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-19-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>a_africa <span class="ot">&lt;-</span> world_population <span class="sc">%&gt;%</span> </span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Continente <span class="sc">==</span> <span class="st">"Africa"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Año <span class="sc">==</span> <span class="dv">2019</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="dv">10</span><span class="sc">:</span><span class="dv">13</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>()</span>
+<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(a_africa)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-19-3.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>a_north_am <span class="ot">&lt;-</span> world_population <span class="sc">%&gt;%</span> </span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Continente <span class="sc">==</span> <span class="st">"North America"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Año <span class="sc">==</span> <span class="dv">2019</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="dv">10</span><span class="sc">:</span><span class="dv">13</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>()</span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-7"><a href="#cb68-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(a_north_am)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-19-4.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>a_oceania <span class="ot">&lt;-</span> world_population <span class="sc">%&gt;%</span> </span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Continente <span class="sc">==</span> <span class="st">"Oceania"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Año <span class="sc">==</span> <span class="dv">2019</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="dv">10</span><span class="sc">:</span><span class="dv">13</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>()</span>
+<span id="cb69-6"><a href="#cb69-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-7"><a href="#cb69-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(a_oceania)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-19-5.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>a_south_am <span class="ot">&lt;-</span> world_population <span class="sc">%&gt;%</span> </span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Continente <span class="sc">==</span> <span class="st">"South America"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Año <span class="sc">==</span> <span class="dv">2019</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="dv">10</span><span class="sc">:</span><span class="dv">13</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>()</span>
+<span id="cb70-6"><a href="#cb70-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-7"><a href="#cb70-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(a_south_am)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-19-6.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
 <section id="estimación-y-correlaciones" class="level2">
 <h2 class="anchored" data-anchor-id="estimación-y-correlaciones">Estimación y correlaciones</h2>
+<p>Estimación del vector de medias por continentes:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>world_population <span class="sc">%&gt;%</span> </span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Continente, Año) <span class="sc">%&gt;%</span> </span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">"Población media"</span> <span class="ot">=</span> <span class="fu">mean</span>(Pob_total), <span class="st">"Población rural media"</span> <span class="ot">=</span> <span class="fu">mean</span>(Pob_rural), <span class="st">"Población urbana media"</span> <span class="ot">=</span> <span class="fu">mean</span> (Pob_urbana), <span class="st">"Densidad media"</span> <span class="ot">=</span> <span class="fu">mean</span>(Densidad), <span class="st">"Esperanza media de vida"</span> <span class="ot">=</span> <span class="fu">mean</span>(Esp_vida), <span class="st">"Natalidad media"</span> <span class="ot">=</span> <span class="fu">mean</span>(Natalidad), <span class="st">"Mortalidad media"</span> <span class="ot">=</span> <span class="fu">mean</span>(Mortalidad), <span class="st">"Mortalidad infantil media"</span> <span class="ot">=</span> <span class="fu">mean</span>(Mortalidad_infantil), <span class="st">"Fertilidad media"</span><span class="ot">=</span> <span class="fu">mean</span>(Fertilidad)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'Continente'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 18 × 11
+# Groups:   Continente [6]
+   Continente    Año   `Población media` `Población rural media`
+   &lt;chr&gt;         &lt;chr&gt;             &lt;dbl&gt;                   &lt;dbl&gt;
+ 1 Africa        2018          23924025.               13775011.
+ 2 Africa        2019          24523063.               14005021.
+ 3 Africa        2020          25132107.               14234652.
+ 4 Asia          2018          92885516.                     NA 
+ 5 Asia          2019          93696005.                     NA 
+ 6 Asia          2020          94429516.                     NA 
+ 7 Europe        2018          14651474.                     NA 
+ 8 Europe        2019          14659018.                     NA 
+ 9 Europe        2020          14657251.                     NA 
+10 North America 2018          19245094.                     NA 
+11 North America 2019          19378343.                     NA 
+12 North America 2020          19560854.                     NA 
+13 Oceania       2018           2239099.                     NA 
+14 Oceania       2019           2275512.                     NA 
+15 Oceania       2020           2310597.                     NA 
+16 South America 2018          30444562.                4874401.
+17 South America 2019          30708722.                4859556.
+18 South America 2020          30948103                 4836201.
+# ℹ 7 more variables: `Población urbana media` &lt;dbl&gt;, `Densidad media` &lt;dbl&gt;,
+#   `Esperanza media de vida` &lt;dbl&gt;, `Natalidad media` &lt;dbl&gt;,
+#   `Mortalidad media` &lt;dbl&gt;, `Mortalidad infantil media` &lt;dbl&gt;,
+#   `Fertilidad media` &lt;dbl&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>world_population <span class="sc">%&gt;%</span> </span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Continente, Año) <span class="sc">%&gt;%</span> </span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">"Natalidad media"</span> <span class="ot">=</span> <span class="fu">mean</span>(Natalidad), <span class="st">"Mortalidad media"</span> <span class="ot">=</span> <span class="fu">mean</span>(Mortalidad)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'Continente'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 18 × 4
+# Groups:   Continente [6]
+   Continente    Año   `Natalidad media` `Mortalidad media`
+   &lt;chr&gt;         &lt;chr&gt;             &lt;dbl&gt;              &lt;dbl&gt;
+ 1 Africa        2018              31.7                8.00
+ 2 Africa        2019              31.3                7.87
+ 3 Africa        2020              30.8                8.05
+ 4 Asia          2018              18.3                5.69
+ 5 Asia          2019              17.9                5.68
+ 6 Asia          2020              17.4                6.14
+ 7 Europe        2018              10.1                9.76
+ 8 Europe        2019               9.74               9.57
+ 9 Europe        2020               9.39              10.6 
+10 North America 2018              14.2                7.18
+11 North America 2019              13.8                7.40
+12 North America 2020              13.6                7.83
+13 Oceania       2018              19.5                5.74
+14 Oceania       2019              19.7                6.15
+15 Oceania       2020              19.4                6.17
+16 South America 2018              16.4                6.88
+17 South America 2019              16.1                6.93
+18 South America 2020              15.7                7.71</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(world_population<span class="sc">$</span>Mortalidad <span class="sc">~</span> world_population<span class="sc">$</span>Continente, <span class="at">xlab =</span> <span class="st">"Continente"</span>,  <span class="at">ylab =</span> <span class="st">"Mortalidad"</span>, )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(world_population<span class="sc">$</span>Mortalidad_infantil <span class="sc">~</span> world_population<span class="sc">$</span>Continente, <span class="at">xlab =</span> <span class="st">"Continente"</span>, <span class="at">ylab =</span> <span class="st">"Mortalidad Infantil"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-21-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(world_population<span class="sc">$</span>Densidad <span class="sc">~</span> world_population<span class="sc">$</span>Continente, <span class="at">xlab =</span> <span class="st">"Continente"</span>, <span class="at">ylab =</span> <span class="st">"Densidad"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-21-3.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(world_population<span class="sc">$</span>Natalidad <span class="sc">~</span> world_population<span class="sc">$</span>Continente, <span class="at">xlab =</span> <span class="st">"Continente"</span>, <span class="at">ylab =</span> <span class="st">"Natalidad"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-21-4.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(world_population<span class="sc">$</span>Esp_vida <span class="sc">~</span> world_population<span class="sc">$</span>Continente, <span class="at">xlab =</span> <span class="st">"Continente"</span>, <span class="at">ylab =</span> <span class="st">"Esperanza de vida"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-21-5.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
 <section id="conclusiones" class="level2">
 <h2 class="anchored" data-anchor-id="conclusiones">Conclusiones</h2>
