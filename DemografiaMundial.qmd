@@ -4,7 +4,9 @@ author: "Carla Martínez, Patricia Mateu y Margalida Verd"
 format: html
 editor: visual
 ---
+
 ## Introducción
+
 Este proyecto recoge datos poblacionales de los países del mundo, tomados en 3 años consecutivos (del 2018 al 2020) y pretende estudiarlos y analizarlos a nivel continental para ver si existen diferencias significativas entre continentes.
 
 Para ello, analizaremos cada continente individualmente y nos centraremos en entender las diferencias que puedan haber; es decir, aportar información histórica, si se da el caso, que pueda explicar los aumentos o decrementos de los valores demográficos.
@@ -19,14 +21,13 @@ Los datos utilizados se han sacado de los siguientes enlaces:
 
 Ahora que ya tenemos bien construida nuestra base de datos, hagamos una breve explicación de las distintas variables que lo conforman:
 
-- $\textit{País}$ nos indica el país de estudio.
-- $\textit{Continente}$ variable que nos indica a continente pertenece cada uno de los países.
-- $\textit{Area_km2}$ se refiere al área en $km^2$ que ocupa cada uno de los países.
+-   $\textit{País}$ nos indica el país de estudio.
+-   $\textit{Continente}$ variable que nos indica a continente pertenece cada uno de los países.
+-   $\textit{Area_km2}$ se refiere al área en $km^2$ que ocupa cada uno de los países.
 -   $\textit{Año}$ nos expone a que año fue tomada la muestra, ya que observamos que de cada país tenemos 4 muestras distintas que vienen tomadas desde el 2018 hasta el 2021.
 -   $\textit{Pob_total}$ nos indica en número total de habitantes en cada país.
--   $\textit{Pob_urbana}$ y $\textit{Pob_rural}$ que se refieren al numéro de habitantes que residen en una localidad urbana y en una rural, respectivamente. 
-- $\textit{Densidad}$ que nos indica la densidad de cada país; recordemos que la densidad no és más que un indicador que nos permite saber cuánta población habita en una zona territorial. Ésta viene dada por: 
-  $\textit{Densidad} =\frac{\textit{Pob_total}}{\textit{Area_km2}}$
+-   $\textit{Pob_urbana}$ y $\textit{Pob_rural}$ que se refieren al numéro de habitantes que residen en una localidad urbana y en una rural, respectivamente.
+-   $\textit{Densidad}$ que nos indica la densidad de cada país; recordemos que la densidad no és más que un indicador que nos permite saber cuánta población habita en una zona territorial. Ésta viene dada por: $\textit{Densidad} =\frac{\textit{Pob_total}}{\textit{Area_km2}}$
 -   $\textit{Esp_vida}$ presenta la edad media que pueden alcanzar los individuos de cada país.
 -   $\textit{Natalidad}$ número de personas que nacen en un año y país determinado, por 1000 habitantes estimados a mitad de año.
 -   $\textit{Mortalidad}$ número de personas que fallecen en un año y país determinado, por 1000 habitantes estimados a mitad de año.
@@ -214,9 +215,7 @@ world_population <- world_population %>%
 
 ## Análisis multivariante exploratorio
 
-idees: 
-- estudi per any
-- estudi per continent
+idees: - estudi per any - estudi per continent
 
 Una vez hecha la limpieza, empezamos con el análisis multivariante. Debido a que nos interesa realizar un estudio por continentes y por año, utilizaremos la función `group_by()`, para poder agrupar nuestros datos en base a nuestros intereses. Primero, veamos la población total por continentes en los diferentes años:
 
@@ -252,8 +251,8 @@ ggplot(nat, aes(x=Continente, y = Natalidad ,fill = Año)) +
         legend.title = element_text(size=12, face = "bold")) 
 #Las medias no recaen encima de su año :(
 ```
-Analicemos bien estos resultados. Como vemos, llama la atención los valores que presenta Europa. Como vemos a continuación, la media de personas que nacen por año en este continente es realativamente baja: aproximadamente 10 recién nacidos por cada 1000 habitantes.
 
+Analicemos bien estos resultados. Como vemos, llama la atención los valores que presenta Europa. Como vemos a continuación, la media de personas que nacen por año en este continente es realativamente baja: aproximadamente 10 recién nacidos por cada 1000 habitantes.
 
 ```{r}
 View(world_population)
@@ -273,8 +272,8 @@ world_population %>%
   select(Natalidad) %>% 
   summarise( media = mean(Natalidad))
 ```
-Como vemos, los valores difieren significativamente de los de Europa. 
-No vemos diferencias significativas por años en ningún continente.
+
+Como vemos, los valores difieren significativamente de los de Europa. No vemos diferencias significativas por años en ningún continente.
 
 Continuamos con la mortalidad:
 
@@ -294,6 +293,7 @@ ggplot(mort, aes(x=Continente, y = Mortalidad ,fill = Año)) +
         axis.title = element_text(size=12, face = "bold"),
         legend.title = element_text(size=12, face = "bold")) 
 ```
+
 Igual que antes, Europa es el continente con el índice de mortalidad más alto. Fijémonos también en los diferentes valores por años:
 
 ```{r}
@@ -304,7 +304,7 @@ world_population %>%
   summarise( media = mean(Mortalidad))
 ```
 
-En 2020, aumenta el número de fallecidos. Como vemos, en la mayoría de continentes ocurre lo mismo. 
+En 2020, aumenta el número de fallecidos. Como vemos, en la mayoría de continentes ocurre lo mismo.
 
 Vamos ahora con la mortalidad infantil.
 
@@ -334,6 +334,7 @@ world_population %>%
   select(Mortalidad_infantil) %>% 
   summarise( media = mean(Mortalidad_infantil))
 ```
+
 En concreto, mueren al año 43 niños/niñas por cada 1000 nacimientos. Teniendo en cuenta el número de nacimientos en este continente, esto equivale a $\textbf{1.5 millones de muertes infantiles cada año}$.
 
 Por otro lado, Europa presenta unos valores mínimos en mortalidad infantil:
@@ -346,6 +347,7 @@ world_population %>%
   select(Mortalidad_infantil) %>% 
   summarise( media = mean(Mortalidad_infantil))
 ```
+
 Por último, veamos la fertilidad:
 
 ```{r}
@@ -364,9 +366,11 @@ ggplot(mort_inf, aes(x=Continente, y = Fertilidad ,fill = Año)) +
         axis.title = element_text(size=12, face = "bold"),
         legend.title = element_text(size=12, face = "bold"))
 ```
+
 $\textit{Fertilidad}$ es la tasa de fertilidad total que representa el número de hijos que tendría una mujer si viviera hasta el final de sus años fértiles y tuviera hijos de acuerdo con las tasas de fertilidad específicas por edad del año indicado.
 
 Observemos que la mayor tasa de fertilidad total está en África, veamos los datos
+
 ```{r}
 world_population %>% 
   filter(Continente == "Africa") %>% 
@@ -374,9 +378,11 @@ world_population %>%
   select(Fertilidad) %>% 
   summarise( media = mean(Fertilidad))
 ```
+
 Entonces, nos encontramos que de media, cada persona gestante de África, tendría 4 hijos de acuerdo con la tasa de fertilidad específica por edad.
 
 Además, observemos que Europa es el continente con menor tasa de fertilidad. Vamos a ver cuántos hijos de media tendrían las personas gestantes de este continente.
+
 ```{r}
 world_population %>% 
   filter(Continente == "Europe") %>% 
@@ -385,8 +391,6 @@ world_population %>%
   select(Fertilidad) %>% 
   summarise( media = mean(Fertilidad))
 ```
-
-
 
 ```{r}
 library(ggplot2)
@@ -419,13 +423,11 @@ pp_19
 
 ## Estimación y correlaciones
 
-
 ```{r}
 world_population <- world_population %>% 
   mutate(dens = round(Pob_total/Area_km2,2), .keep = "all", .after = Densidad) 
 View(world_population)
 ```
-
 
 ```{r}
 library(GGally)
@@ -485,7 +487,6 @@ ggpairs(a_south_am)
 
 Estimación del vector de medias por continentes:
 
-
 ```{r}
 
 world_population %>% 
@@ -499,7 +500,6 @@ world_population %>%
 
 ```
 
-
 ```{r}
 
 boxplot(world_population$Mortalidad ~ world_population$Continente, xlab = "Continente",  ylab = "Mortalidad", )
@@ -511,6 +511,7 @@ boxplot(world_population$Esp_vida ~ world_population$Continente, xlab = "Contine
 
 
 ```
+
 ```{r}
 world_population %>%   
   group_by(Continente,Año) %>% 
@@ -535,10 +536,5 @@ ggplot(data, aes(x="", y=value, fill=group)) +
   coord_polar("y", start=0) +
   theme_void() # remove background, grid, numeric labels
 ```
-
-
-
-
-
 
 ## Conclusiones
