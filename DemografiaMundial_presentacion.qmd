@@ -4,10 +4,9 @@ format: revealjs
 editor: visual
 ---
 
-
 ## Portada
-## Descripción variables
 
+## Descripción variables
 
 Ahora que ya tenemos bien construida nuestra base de datos, hagamos una breve explicación de las distintas variables que lo conforman:
 
@@ -23,4 +22,3 @@ Ahora que ya tenemos bien construida nuestra base de datos, hagamos una breve ex
 -   $\textit{Fertilidad}$ ???????????? número de embarazos????
 -   $\textit{Mortalidad_infantil}$ número total de defunciones de menores de un año de vida, por cada 1000 nacidos vivos.
 -   $\textit{Crecimiento}$ ???????????
-

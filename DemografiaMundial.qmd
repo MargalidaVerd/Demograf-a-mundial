@@ -316,6 +316,29 @@ world_population %>%
   summarise( media = mean(Mortalidad_infantil))
 ```
 
+Fertilidad
+
+```{r}
+
+espe_vida <- world_population %>% 
+  group_by(Continente) %>% 
+  drop_na() %>% 
+  summarise(med = mean(Esp_vida),Esp_vida, Año)
+
+
+ggplot(espe_vida, aes(x=Continente, y = Esp_vida, fill = Continente)) + 
+  geom_violin() + 
+  geom_boxplot(width=0.1, color="grey", alpha=0.2) +
+  geom_point(mapping= (aes(x = Continente, y = med, color = "white")))+
+  guides(fill = guide_legend(title = "Año")) +
+  labs(x="Continente", y="Mortalidad infantil") +
+  theme_bw() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12, face = "bold"),
+        legend.title = element_text(size=12, face = "bold"))
+
+
+```
 
 
 
@@ -379,7 +402,7 @@ ggpairs(a_asia)
 a_africa <- world_population %>% 
   filter(Continente == "Africa") %>% 
   filter(Año == 2019) %>% 
-  select(10:13) %>% 
+  select(9:12) %>% 
   drop_na()
 
 ggpairs(a_africa)
