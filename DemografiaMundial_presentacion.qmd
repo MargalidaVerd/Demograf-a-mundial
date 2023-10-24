@@ -161,7 +161,7 @@ world_population$Area_km2[637:639] = 5860
     -   2017-2021
     -   Añadir Continente y Área
 
-## Descripción variables {.scrollable}
+## Descripción de las variables {.scrollable}
 
 -   **País:** (chr) nombre del país de estudio.
 -   **Continente:** (chr) continente al que pertenece cada país.
@@ -209,7 +209,7 @@ world_population %>%
 
 ```
 
-Máximo: Níger, África.
+-   **Máximo:** Níger, África.
 
 ## Natalidad y fertilidad
 
@@ -245,8 +245,8 @@ g2<-  world_population %>%
 
 print(plot_grid(g1,g2,nrow = 2))
 ```
-Mínima natalidad y fertilidad: South Korea
 
+-   **Mínimo:** Corea del sur, Asia
 
 ## Mortalidad
 
@@ -266,7 +266,7 @@ world_population %>%
 
 ```
 
-Maxima: Bulgaria
+-   **Máximo:** Bulgaria, Europa
 
 ## Mortalidad infantil
 
@@ -285,9 +285,9 @@ world_population %>%
         legend.title = element_text(size=12, face = "bold"))
 ```
 
+-   **Máximo en Norteamérica:** Haití
 
-Máxima en Norteamérica: Haití.\n
-Máxima : Sierra Leone, África. 
+-   **Máximo:** Sierra Leone, África
 
 ## Esperanza de vida
 
@@ -301,17 +301,16 @@ world_population %>%
   ggplot(aes(x=Continente, y = Esp_vida, fill = Continente)) + 
   geom_violin() + 
   geom_boxplot(width=0.1, fill="black", alpha=0.2)  +
-  guides(fill = guide_legend(title = "Año")) +
   labs(x="Continente", y="Esperanza de vida") +
   theme_bw() +
   theme(axis.text = element_text(size=12),
-        axis.title = element_text(size=10, face = "bold"),
-        legend.title = element_text(size=12, face = "bold"))
+        axis.title = element_text(size=10, face = "bold"))
 
 ```
 
-Mínimo: Chad, África.\n
-Máximo: Hong Kong, Ásia.
+-   **Mínimo:** Chad, África
+
+-   **Máximo:** Hong Kong, Asia
 
 ## Asia
 
@@ -410,5 +409,8 @@ cor.test(world_population$Esp_vida, world_population$Mortalidad_infantil, altern
 
 -   No observamos cambios significativos en estos años a nivel global
 -   Sí que hay diferencias entre continentes
--   Como consecuencia, hemos visto que hay correlación positiva entre Natalidad y Fertilidad
+-   Como consecuencia, hemos visto que hay correlación positiva entre:
+    -   Natalidad y Fertilidad
+    -   Natalidad y Mortalidad infantil
+    -   Esperanza de vida y Mortalidad infantil
 -   La mayoría de los outliers están justificados por eventos históricos
