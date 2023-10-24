@@ -7,6 +7,7 @@ format:
     transition: concave
 editor: visual
 ---
+
 ```{r, warning=FALSE,message=FALSE,echo=FALSE}
 library(tidyverse)
 
@@ -187,8 +188,6 @@ world_population %>%
 
 ```
 
-
-
 ## Natalidad
 
 ```{r, warning=FALSE,message=FALSE,echo=FALSE}
@@ -209,6 +208,9 @@ world_population %>%
 
 
 ```
+
+Máximo: Níger, África.
+
 ## Natalidad y fertilidad
 
 ```{r, warning=FALSE,message=FALSE,echo=FALSE}
@@ -243,6 +245,8 @@ g2<-  world_population %>%
 
 print(plot_grid(g1,g2,nrow = 2))
 ```
+Mínima natalidad y fertilidad: South Korea
+
 
 ## Mortalidad
 
@@ -262,6 +266,8 @@ world_population %>%
 
 ```
 
+Maxima: Bulgaria
+
 ## Mortalidad infantil
 
 ```{r, warning=FALSE,message=FALSE,echo=FALSE}
@@ -278,6 +284,10 @@ world_population %>%
         axis.title = element_text(size=10, face = "bold"),
         legend.title = element_text(size=12, face = "bold"))
 ```
+
+
+Máxima en Norteamérica: Haití.\n
+Máxima : Sierra Leone, África. 
 
 ## Esperanza de vida
 
@@ -300,6 +310,9 @@ world_population %>%
 
 ```
 
+Mínimo: Chad, África.\n
+Máximo: Hong Kong, Ásia.
+
 ## Asia
 
 ```{r, echo = FALSE,warning=FALSE, message=FALSE}
@@ -314,7 +327,9 @@ a_asia <- world_population %>%
 ggpairs(a_asia,mapping=ggplot2::aes(colour = Año, alpha = 0.5),
         upper = list(continuous = wrap("cor", size = 3)))
 ```
+
 ## África
+
 ```{r, echo = FALSE,warning=FALSE, message=FALSE}
 a_africa <- world_population %>% 
   filter(Continente == "Africa") %>% 
@@ -324,7 +339,6 @@ a_africa <- world_population %>%
 ggpairs(a_africa,mapping=ggplot2::aes(colour = Año, alpha = 0.5),
         upper = list(continuous = wrap("cor", size = 3)))
 ```
-
 
 ## Europa
 
@@ -340,7 +354,6 @@ ggpairs(a_europe,mapping=ggplot2::aes(colour = Año, alpha = 0.5),
 
 ## Oceanía
 
-
 ```{r, echo = FALSE,warning=FALSE, message=FALSE}
 a_oceania <- world_population %>% 
   filter(Continente == "Oceania") %>% 
@@ -352,7 +365,6 @@ ggpairs(a_oceania,mapping=ggplot2::aes(colour = Año, alpha = 0.5),
 ```
 
 ## Norteamérica
-
 
 ```{r, echo = FALSE,warning=FALSE, message=FALSE}
 a_north_am <- world_population %>% 
@@ -366,7 +378,6 @@ ggpairs(a_north_am,mapping=ggplot2::aes(colour = Año, alpha = 0.5),
 
 ## Sudamérica
 
-
 ```{r, echo = FALSE,warning=FALSE, message=FALSE}
 a_south_am <- world_population %>% 
   filter(Continente == "South America") %>% 
@@ -377,17 +388,18 @@ ggpairs(a_south_am,mapping=ggplot2::aes(colour = Año, alpha = 0.5),
         upper = list(continuous = wrap("cor", size = 3)))
 ```
 
-
 ## Contraste para la Natalidad y Fertilidad
 
 ```{r, echo = FALSE,warning=FALSE, message=FALSE}
 cor.test(world_population$Natalidad, world_population$Fertilidad,alternative="greater")
 ```
+
 ## Contraste para la Natalidad y la Mortalidad infantil
 
 ```{r, echo = FALSE,warning=FALSE, message=FALSE}
 cor.test(world_population$Natalidad, world_population$Mortalidad_infantil,alternative="greater")
 ```
+
 ## Contraste para la Esperanza de vida y la Mortalidad infantil
 
 ```{r}
@@ -396,8 +408,7 @@ cor.test(world_population$Esp_vida, world_population$Mortalidad_infantil, altern
 
 ## Conclusiones
 
-- No observamos cambios significativos en estos años a nivel global
-- Sí que hay diferencias entre continentes
-- Como consecuencia, hemos visto que hay correlación positiva entre Natalidad y Fertilidad
-- La mayoría de los outliers están justificados por eventos históricos
-
+-   No observamos cambios significativos en estos años a nivel global
+-   Sí que hay diferencias entre continentes
+-   Como consecuencia, hemos visto que hay correlación positiva entre Natalidad y Fertilidad
+-   La mayoría de los outliers están justificados por eventos históricos

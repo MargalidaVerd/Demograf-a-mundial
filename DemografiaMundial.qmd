@@ -334,7 +334,7 @@ nat<- world_population %>%
 
 ggplot(nat, aes(x=Continente, y = Natalidad ,fill = Año)) + 
   geom_boxplot() + 
-  geom_point(aes(x = Continente, y = med, fill = Año))+
+ 
   guides(fill = guide_legend(title = "Año")) +
   labs(x="Continente", y="Número de paises") +
   labs(x="Continente", y="Natalidad") +
@@ -342,7 +342,7 @@ ggplot(nat, aes(x=Continente, y = Natalidad ,fill = Año)) +
   theme(axis.text = element_text(size=8),
         axis.title = element_text(size=12, face = "bold"),
         legend.title = element_text(size=12, face = "bold")) 
-#Las medias no recaen encima de su año :(
+
 ```
 
 Analicemos bien estos resultados. Como vemos, llama la atención los valores que presenta Europa. Como vemos a continuación, la media de personas que nacen por año en este continente es realativamente baja: aproximadamente 10 recién nacidos por cada 1000 habitantes.
@@ -355,8 +355,19 @@ world_population %>%
   select(Natalidad) %>% 
   summarise( media = mean(Natalidad))
 ```
+Además, nos encontramos con el el índice mínimo de natalidad lo encontramos en South Korea, Ásia, las causas se deben a distintos factores como el alto costo de la vida, la presión económica o la desigualdad entre hombres y mujeres en el ámbito laboral, esta diferencia salarial entre hombres y mujeres, provoca que las personas gestantes se vean en la tesitura de elegir entre tener hijos o una carrera profesional.
 
-De la misma forma, África presenta los valores de natalidad más altos; en concreto
+
+```{r,warning=FALSE,message=FALSE,echo=FALSE}
+datos = world_population[world_population$Natalidad > 0 & world_population$Mortalidad,]
+datos[which.min(datos$Natalidad),]  %>% 
+  select(Pais, Año, Natalidad)
+datoss = world_population[world_population$Fertilidad>0,]
+datoss[which.min(datoss$Fertilidad),]  %>% 
+  select(Pais, Año, Natalidad)
+```
+
+Nos econtramos con que África presenta los valores de natalidad más altos; en concreto, la tasa de máxima natalidad la encontramos en Níger, Africa, se trata de uno de los países más pobres del mundo con una notable desigualdad de género, que incluye la falta de oportunidades educativas para las mujeres, que desencadena en el matrimonio y el parto precoces. La natalidad és tanta, que a pesar de que la tasa de mortalidad infantil sea muy alta, nos encontramos con que la tasa de crecimiento toma uno de los valores más elevados a nivel mundial.
 
 ```{r, warning=FALSE,message=FALSE,echo=FALSE}
 world_population %>% 
@@ -388,7 +399,30 @@ ggplot(mort, aes(x=Continente, y = Mortalidad ,fill = Año)) +
 
 ```
 
-Igual que antes, Europa es el continente con el índice de mortalidad más alto. Fijémonos también en los diferentes valores por años:
+Igual que antes, Europa es el continente con el índice de mortalidad más alto, veamos cual es el pais con más tasa de mortalidad en los disitintos años: 
+
+```{r}
+data_18 = world_population[world_population$Año == "2018",]
+data_18[which.max(data_18$Mortalidad),] %>% 
+  select(Pais, Año, Mortalidad)
+```
+
+```{r}
+data_19 = world_population[world_population$Año == "2019",]
+data_19[which.max(data_19$Mortalidad),]  %>% 
+  select(Pais, Año, Mortalidad)
+```
+
+```{r}
+data_20 = world_population[world_population$Año == "2020",]
+data_20[which.max(data_20$Mortalidad),]  %>% 
+  select(Pais, Año, Mortalidad)
+```
+
+Nos resulta impactante que el país con más mortalidad del mundo sea Bulgaria, sin embargo, tras investigar un poco, hemos observado que se trata del país con más pobreza de la UE, con una inversión en el sistema sanitario muy bajo, lo que imlicó ser el país de la UE con más muertes a lo largo de la pandemia. Añadiendo que la tasa de desempleo es muy alta, tenemos como consecuendia que una tasa de natalidad muy baja, resultando asi en un índice de crecimiento de -1.   
+
+
+Fijémonos también en los diferentes valores por años:
 
 ```{r, warning=FALSE,message=FALSE,echo=FALSE}
 world_population %>% 
@@ -430,6 +464,14 @@ world_population %>%
 ```
 
 En concreto, mueren al año 43 niños/niñas por cada 1000 nacimientos. Teniendo en cuenta el número de nacimientos en este continente, esto equivale a $\textbf{1.5 millones de muertes infantiles cada año}$.
+
+Sin embargo, nos llama la atención el valor máximo de Norteamérica, y tras investigar un poco, encontramos que en 2018 hibo un terremoto en Haití, que hizo que las tasas de mortalidad infantil augmentaran respecto al resto de años, sin embargo, en general, las tasas en Haití siguen siendo muy altas, esto viene provocado por la situación de pobreza y de insalubridad, que causan enfermedad y sufrimiento entre la población infantil, un 8% de la cual sufre desnutrición grave y el 22% padece desnutrición crónica.
+
+```{r}
+north_am = world_population[world_population$Continente == "North America",]
+north_am[which.max(north_am$Mortalidad_infantil),]  %>% 
+  select(Pais, Año, Mortalidad_infantil)
+```
 
 Por otro lado, Europa presenta unos valores mínimos en mortalidad infantil:
 
@@ -488,32 +530,40 @@ Otra variable interesante en nuestro estudio es la esperanza de vida. Veamos rep
 
 ```{r, warning=FALSE,message=FALSE,echo=FALSE}
 
+
 world_population %>% 
   group_by(Continente) %>% 
   filter(Año == 2019) %>% 
+  drop_na() %>% 
+  filter( Esp_vida > 0) %>%
   ggplot(aes(x=Continente, y = Esp_vida, fill = Continente)) + 
   geom_violin() + 
-  geom_boxplot(width=0.1, fill="black", alpha=0.2) +
-  #geom_point(mapping = aes(x = Continente, y = mean(Esp_vida))) +
+  geom_boxplot(width=0.1, fill="black", alpha=0.2)  +
   guides(fill = guide_legend(title = "Año")) +
   labs(x="Continente", y="Esperanza de vida") +
   theme_bw() +
-  theme(axis.text = element_text(size=8),
-        axis.title = element_text(size=12, face = "bold"),
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=10, face = "bold"),
         legend.title = element_text(size=12, face = "bold"))
-
-world_population %>% 
-  filter(Continente == "North America", Año == 2019, Esp_vida == 0)
-  
-  
-#ggplot(aes(x = Esp_vida)) +
-  #geom_density(color = 4,
-               #fill = 4,
-               #alpha = 0.25) 
 
 ```
 
-Resalta África; la esperanza de vida es mucho más baja que en los demás continentes
+Resalta África; la esperanza de vida es mucho más baja que en los demás continentes, veamos cuál és el país que presenta una esperanza de vida más baja:
+
+```{r}
+world_population[which.min(world_population[world_population$Esp_vida>0,]$Esp_vida),] %>% 
+  select(Pais, Año, Esp_vida)
+```
+La esperanza de vida és un claro indicador de la calidad de vida de un determinado país; así, teniendo en cuenta las enfermedades causadas por la falta de agua, la poca asistencia médica y la desnutrición, hacen que Chad sea él país con una esperaza de vida de tan solo 53 años, siendo la más baja del mundo.
+
+De la misma forma, veamo qué país presenta una esperanza de vida más alta:
+```{r}
+world_population[which.max(world_population$Esp_vida),] %>% 
+  select(Pais, Año, Esp_vida)
+```
+Los motivos podrían ser su estilo de vida activo y saludable acompañado de una dieta rica en alimentos cocinados al vapor y el alto consumo de diferentes variedades de tés.
+
+
 
 ```{r, warning=FALSE,message=FALSE,echo=FALSE}
 library(ggplot2)
