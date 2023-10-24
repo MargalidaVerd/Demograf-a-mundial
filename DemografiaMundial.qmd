@@ -96,7 +96,7 @@ world_population <- world_population %>%
   mutate(Esp_vida = as.integer(Esp_vida)) %>% 
   mutate(Fertilidad = as.numeric(Fertilidad)) %>% 
   mutate(Mortalidad_infantil = as.numeric(Mortalidad_infantil)) %>% 
-  mutate(Crecimiento = as.integer(Crecimiento))
+  mutate(Crecimiento = as.character(Crecimiento))
   
 ```
 
@@ -112,8 +112,7 @@ Como vemos, tenemos bastantes datos faltantes en los años 2017 y 2021; por eso,
 
 ```{r,warning=FALSE,message=FALSE,echo=FALSE}
 world_population <- world_population %>% 
-  filter(Año == 2018 |Año == 2019 |Año == 2020  ) 
-View(world_population)
+  filter(Año == 2018 |Año == 2019 |Año == 2020) 
 ```
 
 Ahora, trataremos particularmente los datos NA de las variables *Contiente* y *Area_km2*, ya que son las variables que hemos añadido de otro dataframe. En este caso, rellenaremos manualmente. La información con la que hemos completado estos valores se han sacado de las correspondientes páginas web de *Wikipedia* de cada uno de los países.
@@ -547,17 +546,12 @@ pp_19
 ```
 
 ```{r, warning=FALSE,message=FALSE,echo=FALSE}
-world_population <- world_population %>% 
-  mutate(dens = round(Pob_total/Area_km2,2), .keep = "all", .after = Densidad) 
-View(world_population)
-```
-
-```{r, warning=FALSE,message=FALSE,echo=FALSE}
 library(GGally)
 
 a_asia <- world_population %>% 
   filter(Continente == "Asia") %>% 
-  select(4,10:14) %>% 
+  filter(Natalidad >0, Mortalidad >0, Mortalidad_infantil>0, Esp_vida > 0) %>%
+  select(4,10:13) %>% 
   drop_na()
 
 ggpairs(a_asia,mapping=ggplot2::aes(colour = Año),
@@ -565,10 +559,10 @@ ggpairs(a_asia,mapping=ggplot2::aes(colour = Año),
 
 a_africa <- world_population %>% 
   filter(Continente == "Africa") %>% 
-  select(4,10:14) %>% 
+  select(4,10:13) %>% 
   drop_na()
 
-ggpairs(a_africa,mapping=ggplot2::aes(colour = Año),
+ggpairs(a_africa,mapping=ggplot2::aes(colour = Año, alpha = 0.5),
         upper = list(continuous = wrap("cor", size = 3)))
 
 a_north_am <- world_population %>% 

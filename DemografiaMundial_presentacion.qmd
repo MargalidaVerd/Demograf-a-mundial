@@ -1,5 +1,5 @@
 ---
-title: "Demografia Mundial"
+title: "Demografía Mundial"
 author: "Carla Martínez, Patricia Mateu, Margalida Verd"
 format: 
   revealjs:
@@ -7,14 +7,143 @@ format:
     transition: concave
 editor: visual
 ---
+```{r, warning=FALSE,message=FALSE,echo=FALSE}
+library(tidyverse)
 
-## Portada
+# Cargamos el primer dataframe
+global_population = read_csv("Global Population Trends(2016-2022).csv", show_col_types = FALSE) 
 
-## Índice
+# Del segundo dataframe seleccionamos las variables que nos interesan para el estudio
+
+data = read_csv("world_population.csv",show_col_types = FALSE)
+world_data <- data %>% 
+  select(3,5,14) %>% rename(Country= "Country/Territory", Area_km2 = "Area (km²)")   
+
+# Unimos los dos dataframes y creamos el tibble que usaremos para el estudio
+world_population = left_join(global_population,world_data, by = "Country")
+
+
+
+```
+
+```{r, warning=FALSE, message=FALSE,echo=FALSE}
+world_population <- world_population %>% 
+  rename(Pais = "Country", 
+         Año = "Year", 
+         Pob_total = "Total Population", 
+         Pob_urbana = "Urban Population", 
+         Pob_rural = "Rural Population", 
+         Densidad = "Population Density", 
+         Esp_vida = "Life Expectancy", 
+         Natalidad = "Birth Rate", 
+         Mortalidad = "Death Rate", 
+         Fertilidad = "Fertility Rate", 
+         Mortalidad_infantil = "Infant Mortality Rate", 
+         Crecimiento = "Growth Rate", 
+         Continente = "Continent") %>% 
+  relocate(Continente, .after = Pais) %>% 
+  relocate(Area_km2, .after = Continente) %>% 
+  relocate(Mortalidad_infantil, .after = Mortalidad) 
+
+```
+
+```{r, warning=FALSE, message=FALSE,echo=FALSE}
+world_population <- world_population %>% 
+  mutate(Año = as.character(Año)) %>% 
+  mutate(Pob_total = as.numeric(gsub("," , "", Pob_total, fixed = TRUE))) %>%
+  mutate(Pob_rural = as.numeric(gsub("," , "", Pob_rural, fixed = TRUE))) %>%
+  mutate(Pob_urbana = as.numeric(gsub("," , "", Pob_urbana, fixed = TRUE))) %>% 
+  mutate(Densidad = as.integer(Densidad)) %>% 
+  mutate(Esp_vida = as.integer(Esp_vida)) %>% 
+  mutate(Fertilidad = as.numeric(Fertilidad)) %>% 
+  mutate(Mortalidad_infantil = as.numeric(Mortalidad_infantil)) %>% 
+  mutate(Crecimiento = as.character(Crecimiento))
+  
+```
+
+```{r,warning=FALSE,message=FALSE,echo=FALSE}
+world_population <- world_population %>% 
+  filter(Año == 2018 |Año == 2019 |Año == 2020) 
+```
+
+```{r, warning=FALSE,message=FALSE,echo=FALSE}
+world_population$Continente[19:21] = "North America"
+world_population$Area_km2[19:21] = 442
+
+world_population$Continente[73:75] = "Europe"
+world_population$Area_km2[73:75] = 51197
+
+world_population$Continente[97:99] = "Africa"
+world_population$Area_km2[97:99] = 4033
+
+world_population$Continente[151:153] = "Africa"
+world_population$Area_km2[151:153] = 2344858
+
+world_population$Continente[118:120] = "Europe"
+world_population$Area_km2[118:120] = 198
+
+world_population$Continente[277:279] = "Europe"
+world_population$Area_km2[277:279] = 572
+
+world_population$Continente[304:306] = "Europe"
+world_population$Area_km2[304:306] = 10887
+
+world_population$Continente[310:312] = "Asia"
+world_population$Area_km2[310:312] = 199951
+
+world_population$Continente[313:315] = "Asia"
+world_population$Area_km2[313:315] = 236800
+
+world_population$Continente[340:342] = "Asia"
+world_population$Area_km2[340:342] = 28
+
+world_population$Continente[472:474] = "Africa"
+world_population$Area_km2[472:474] = 342000
+
+world_population$Continente[490:492] = "Africa"
+world_population$Area_km2[490:492] = 964
+
+world_population$Continente[511:513] = "Europe"
+world_population$Area_km2[511:513] = 34
+
+world_population$Continente[514:516] = "Europe"
+world_population$Area_km2[514:516] = 49035
+
+world_population$Continente[541:543] = "North America"
+world_population$Area_km2[541:543] = 269
+
+world_population$Continente[544:546] = "South America"
+world_population$Area_km2[544:546] = 616
+
+world_population$Continente[547:549] = "Europe"
+world_population$Area_km2[547:549] = 53
+
+world_population$Continente[550:552] = "North America"
+world_population$Area_km2[550:552] = 389
+
+world_population$Continente[565:567] = "Asia"
+world_population$Area_km2[565:567] = 185180
+
+world_population$Continente[586:588] = "South America"
+world_population$Area_km2[586:588] = 5128
+
+world_population$Continente[598:600] = "North America"
+world_population$Area_km2[598:600] = 948
+
+world_population$Continente[604:606] = "Asia"
+world_population$Area_km2[604:606] = 83600
+
+world_population$Continente[634:636] = "North America"
+world_population$Area_km2[634:636] = 346
+
+world_population$Continente[637:639] = "Asia"
+world_population$Area_km2[637:639] = 5860
+
+```
 
 ## Fuente de datos y planteamiento del problema
 
-*Objetivo*: estudiar y analizar una serie de datos demográficos de los países del mundo y comparar sus diferencias por continentes, aportando información histórica relevante que pueda explicar los valores registrados.
+*Objetivo*: estudiar y analizar una serie de datos demográficos de los países del mundo, comprendidos entre 2018 y 2020, y comparar sus diferencias por continentes, aportando información histórica relevante que pueda explicar los valores registrados.
 
 *Fuentes de datos*: hemos escogido dos *dataframes* de la plataforma [Kaggle.com](https://www.kaggle.com/):
 
@@ -24,45 +153,251 @@ editor: visual
 
 ## Limpieza de los datos
 
-## Descripción variables
+-   Seleccionar las columnas para nuestro estudio
+-   `left.join()` para unir los tibbles
+-   Redefinir las variables
+-   Arreglo de NA's:
+    -   2017-2021
+    -   Añadir Continente y Área
 
-Ahora que ya tenemos bien construida nuestra base de datos, hagamos una breve explicación de las distintas variables que lo conforman:
+## Descripción variables {.scrollable}
 
--   **País:** nombre del país de estudio.
--   **Continente:** continente al que pertenece cada país.
--   **Area_km2:** área en $\textit{km}^2$ que ocupa cada uno de los paises.
--   **Año:** año en el que fueron tomados los datos. Valores del 2018 al 2020.
--   **Pob_total:** número total de habitantes de cada país.
--   **Pob_urbana** y **Pob_rural:** numéro de habitantes que residen en una localidad urbana y en una rural, respectivamente.
--   **Densidad:** densidad de cada país; recordemos que la densidad viene dada por el cociente: $\textit{Densidad} = \displaystyle \frac{\textit{Pob_total}}{\textit{Area_km2}}$.
--   **Esp_vida:** edad media que pueden alcanzar los individuos de cada país.
--   **Natalidad:** número de personas que nacen en un año y país determinado, por cada 1000 habitantes.
--   **Mortalidad:** número de personas que fallecen en un año y país determinado, por cada 1000 habitantes.
--   **Fertilidad:** número de hijos que puede llegar a tener una mujer si viviera todos sus años fértiles de cada país.
--   **Mortalidad_infantil:** número total de defunciones de menores de un año de vida, por cada 1000 nacidos vivos.
--   **Crecimiento:** cambio en el número de individuos de un país en un tiempo determinado.
+-   **País:** (chr) nombre del país de estudio.
+-   **Continente:** (chr) continente al que pertenece cada país.
+-   **Area_km2:** (int) área en $\textit{km}^2$ que ocupa cada uno de los países.
+-   **Año:** (ord) año en el que fueron tomados los datos. Valores del 2018 al 2020.
+-   **Pob_total:** (int) número total de habitantes de cada país.
+-   **Pob_urbana** y **Pob_rural:** (int) numéro de habitantes que residen en una localidad urbana y en una rural, respectivamente.
+-   **Densidad:** (int) densidad de cada país; recordemos que la densidad viene dada por el cociente: $\textit{Densidad} = \displaystyle \frac{\textit{Pob_total}}{\textit{Area_km2}}$.
+-   **Esp_vida:** (int) edad media que pueden alcanzar los individuos de cada país.
+-   **Natalidad y Mortalidad:** (num) número de personas que nacen y fallecen en un año y país determinado, por cada 1000 habitantes.
+-   **Fertilidad:** (num) número de hijos que puede llegar a tener una mujer si viviera todos sus años fértiles de cada país.
+-   **Mortalidad_infantil:** (num) número total de defunciones de menores de un año de vida, por cada 1000 nacidos vivos.
+-   **Crecimiento:** (ord) cambio en el número de individuos de un país en un tiempo determinado. Valores: -5 a 5
 
-## Análisis multivariante exploratorio
+## Vector de medias
 
-!!!!NO SE DONDE METER EL VECTOR DE MEDIAS!!!!
+```{r, echo = FALSE}
+world_population %>% 
+  group_by(Año) %>% 
+  drop_na() %>% 
+  filter(Natalidad > 0, Mortalidad > 0, Mortalidad_infantil > 0, Esp_vida > 0) %>% 
+  summarise("Población_total" = mean(Pob_total), "Población_rural" = mean(Pob_rural), "Población_urbana" = mean (Pob_urbana), "Densidad" = mean(Densidad), "Esperanza_de_vida" = mean(Esp_vida), "Natalidad" = mean(Natalidad), "Mortalidad" = mean(Mortalidad), "Mortalidad_infantil" = mean(Mortalidad_infantil), "Fertilidad"= mean(Fertilidad)) %>% 
+  glimpse()
 
-1.  Pob total
-2.  Pob_urbana vs pob_rural
-3.  Densidad
-4.  Boxplots:
+```
 
--   Natalidad
--   Mortalidad
--   Mortalidad infantil
--   Fertilidad
--   Esperanza de vida
 
-## Correlaciones y covarianzas (?)
 
-1.  Matrices de correlaciones por contiente
-2.  Contrastes:
+## Natalidad
 
--   Fertilidad/Natalidad
--   Esperanza de vida/Mortalidad \_ Natalidad/Mortalidad infantil
+```{r, warning=FALSE,message=FALSE,echo=FALSE}
+
+world_population %>% 
+  group_by(Año, Continente) %>% 
+  filter(Natalidad > 0, Mortalidad > 0, Mortalidad_infantil > 0, Esp_vida > 0) %>%
+  drop_na() %>% 
+  ggplot(.,aes(x=Continente, y = Natalidad, fill = Año)) + 
+  geom_boxplot() +
+  guides(fill = guide_legend(title = "Año")) +
+  labs(x="Continente", y="Número de paises") +
+  labs(x="Continente", y="Natalidad") +
+  theme_bw() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=10, face = "bold"),
+        legend.title = element_text(size=12, face = "bold")) 
+
+
+```
+## Natalidad y fertilidad
+
+```{r, warning=FALSE,message=FALSE,echo=FALSE}
+library("cowplot")
+g1<- world_population %>% 
+  group_by(Año, Continente) %>% 
+  filter(Natalidad > 0) %>%
+  drop_na() %>% 
+  ggplot(.,aes(x=Continente, y = Natalidad, fill = Año)) + 
+  geom_boxplot() +
+  guides(fill = guide_legend(title = "Año")) +
+  labs(x="Continente", y="Número de paises") +
+  labs(x="Continente", y="Natalidad") +
+  theme_bw() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=10, face = "bold"),
+        legend.title = element_text(size=12, face = "bold")) 
+
+
+g2<-  world_population %>% 
+  group_by(Año, Continente) %>% 
+  filter(Natalidad > 0, Fertilidad > 0) %>%
+  drop_na() %>% 
+  ggplot(., aes(x=Continente, y = Fertilidad ,fill = Año)) + 
+  geom_boxplot() +
+  guides(fill = guide_legend(title = "Año")) +
+  labs(x="Continente", y="Fertilidad") +
+  theme_bw() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=10, face = "bold"),
+        legend.title = element_text(size=12, face = "bold"))
+
+print(plot_grid(g1,g2,nrow = 2))
+```
+
+## Mortalidad
+
+```{r, warning=FALSE,message=FALSE,echo=FALSE}
+world_population %>% 
+  group_by(Continente, Año) %>% 
+  drop_na() %>% 
+  filter(Mortalidad > 0) %>%
+  ggplot(., aes(x=Continente, y = Mortalidad ,fill = Año)) + 
+  geom_boxplot() +
+  guides(fill = guide_legend(title = "Año")) +
+  labs(x="Continente", y="Mortalidad") +
+  theme_bw() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=10, face = "bold"),
+        legend.title = element_text(size=12, face = "bold")) 
+
+```
+
+## Mortalidad infantil
+
+```{r, warning=FALSE,message=FALSE,echo=FALSE}
+world_population %>% 
+  group_by(Continente, Año) %>% 
+  drop_na() %>% 
+  filter(Mortalidad_infantil > 0) %>%
+  ggplot(., aes(x=Continente, y = Mortalidad_infantil ,fill = Año)) + 
+  geom_boxplot() +
+  guides(fill = guide_legend(title = "Año")) +
+  labs(x="Continente", y="Mortalidad infantil") +
+  theme_bw() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=10, face = "bold"),
+        legend.title = element_text(size=12, face = "bold"))
+```
+
+## Esperanza de vida
+
+```{r, warning=FALSE,message=FALSE,echo=FALSE}
+
+world_population %>% 
+  group_by(Continente) %>% 
+  filter(Año == 2019) %>% 
+  drop_na() %>% 
+  filter( Esp_vida > 0) %>%
+  ggplot(aes(x=Continente, y = Esp_vida, fill = Continente)) + 
+  geom_violin() + 
+  geom_boxplot(width=0.1, fill="black", alpha=0.2)  +
+  guides(fill = guide_legend(title = "Año")) +
+  labs(x="Continente", y="Esperanza de vida") +
+  theme_bw() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=10, face = "bold"),
+        legend.title = element_text(size=12, face = "bold"))
+
+```
+
+## Asia
+
+```{r, echo = FALSE,warning=FALSE, message=FALSE}
+library(GGally)
+
+a_asia <- world_population %>% 
+  filter(Continente == "Asia") %>% 
+  filter(Natalidad >0, Mortalidad >0, Mortalidad_infantil>0, Esp_vida > 0) %>%
+  select(4,9:13) %>% 
+  drop_na()
+
+ggpairs(a_asia,mapping=ggplot2::aes(colour = Año, alpha = 0.5),
+        upper = list(continuous = wrap("cor", size = 3)))
+```
+## África
+```{r, echo = FALSE,warning=FALSE, message=FALSE}
+a_africa <- world_population %>% 
+  filter(Continente == "Africa") %>% 
+  select(4,9:13) %>% 
+  drop_na()
+
+ggpairs(a_africa,mapping=ggplot2::aes(colour = Año, alpha = 0.5),
+        upper = list(continuous = wrap("cor", size = 3)))
+```
+
+
+## Europa
+
+```{r, echo = FALSE,warning=FALSE, message=FALSE}
+a_europe <- world_population %>% 
+  filter(Continente == "Europe") %>% 
+  select(4,9:13) %>% 
+  drop_na()
+
+ggpairs(a_europe,mapping=ggplot2::aes(colour = Año, alpha = 0.5),
+        upper = list(continuous = wrap("cor", size = 3)))
+```
+
+## Oceanía
+
+
+```{r, echo = FALSE,warning=FALSE, message=FALSE}
+a_oceania <- world_population %>% 
+  filter(Continente == "Oceania") %>% 
+  select(4,9:13) %>% 
+  drop_na()
+
+ggpairs(a_oceania,mapping=ggplot2::aes(colour = Año, alpha = 0.5),
+        upper = list(continuous = wrap("cor", size = 3)))
+```
+
+## Norteamérica
+
+
+```{r, echo = FALSE,warning=FALSE, message=FALSE}
+a_north_am <- world_population %>% 
+  filter(Continente == "North America") %>% 
+  select(4,9:13) %>% 
+  drop_na()
+
+ggpairs(a_north_am,mapping=ggplot2::aes(colour = Año, alpha = 0.5),
+        upper = list(continuous = wrap("cor", size = 3)))
+```
+
+## Sudamérica
+
+
+```{r, echo = FALSE,warning=FALSE, message=FALSE}
+a_south_am <- world_population %>% 
+  filter(Continente == "South America") %>% 
+  select(4,9:13) %>% 
+  drop_na()
+
+ggpairs(a_south_am,mapping=ggplot2::aes(colour = Año, alpha = 0.5),
+        upper = list(continuous = wrap("cor", size = 3)))
+```
+
+
+## Contraste para la Natalidad y Fertilidad
+
+```{r, echo = FALSE,warning=FALSE, message=FALSE}
+cor.test(world_population$Natalidad, world_population$Fertilidad,alternative="greater")
+```
+## Contraste para la Natalidad y la Mortalidad infantil
+
+```{r, echo = FALSE,warning=FALSE, message=FALSE}
+cor.test(world_population$Natalidad, world_population$Mortalidad_infantil,alternative="greater")
+```
+## Contraste para la Esperanza de vida y la Mortalidad infantil
+
+```{r}
+cor.test(world_population$Esp_vida, world_population$Mortalidad_infantil, alternative = "less")
+```
 
 ## Conclusiones
+
+- No observamos cambios significativos en estos años a nivel global
+- Sí que hay diferencias entre continentes
+- Como consecuencia, hemos visto que hay correlación positiva entre Natalidad y Fertilidad
+- La mayoría de los outliers están justificados por eventos históricos
+
