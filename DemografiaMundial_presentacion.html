@@ -8,9 +8,10 @@
 <link href="DemografiaMundial_presentacion_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="DemografiaMundial_presentacion_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="DemografiaMundial_presentacion_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.353">
+  <meta name="generator" content="quarto-1.3.433">
 
-  <title>DemografiaMundial</title>
+  <meta name="author" content="Carla Martínez, Patricia Mateu, Margalida Verd">
+  <title>Demografia Mundial</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -324,32 +325,84 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">DemografiaMundial</h1>
+  <h1 class="title">Demografia Mundial</h1>
 
 <div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Carla Martínez, Patricia Mateu, Margalida Verd 
+</div>
+</div>
 </div>
 
 </section>
 <section id="portada" class="slide level2">
 <h2>Portada</h2>
 </section>
+<section id="índice" class="slide level2">
+<h2>Índice</h2>
+</section>
+<section id="fuente-de-datos-y-planteamiento-del-problema" class="slide level2">
+<h2>Fuente de datos y planteamiento del problema</h2>
+<p><em>Objetivo</em>: estudiar y analizar una serie de datos demográficos de los países del mundo y comparar sus diferencias por continentes, aportando información histórica relevante que pueda explicar los valores registrados.</p>
+<p><em>Fuentes de datos</em>: hemos escogido dos <em>dataframes</em> de la plataforma <a href="https://www.kaggle.com/">Kaggle.com</a>:</p>
+<ul>
+<li><p><a href="https://www.kaggle.com/datasets/alitaqi000/global-population-trends2016-2022">Global Population Trends</a></p></li>
+<li><p><a href="https://www.kaggle.com/datasets/iamsouravbanerjee/world-population-dataset">World Population</a></p></li>
+</ul>
+</section>
+<section id="limpieza-de-los-datos" class="slide level2">
+<h2>Limpieza de los datos</h2>
+</section>
 <section id="descripción-variables" class="slide level2">
 <h2>Descripción variables</h2>
 <p>Ahora que ya tenemos bien construida nuestra base de datos, hagamos una breve explicación de las distintas variables que lo conforman:</p>
 <ul>
-<li><span class="math inline">\(\textit{País}\)</span> nos indica el país de estudio.</li>
-<li><span class="math inline">\(\textit{Continente}\)</span> variable que nos indica a continente pertenece cada uno de los países.</li>
-<li><span class="math inline">\(\textit{Area_km2}\)</span> se refiere al área en <span class="math inline">\(km^2\)</span> que ocupa cada uno de los paises</li>
-<li><span class="math inline">\(\textit{Año}\)</span> nos expone a que año fue tomada la muestra, ya que observamos que de cada país tenemos 4 muestras distintas que vienen tomadas desde el 2018 hasta el 2021.</li>
-<li><span class="math inline">\(\textit{Pob_total}\)</span> nos indica en número total de habitantes en cada pais</li>
-<li><span class="math inline">\(\textit{Pob_urbana}\)</span> y <span class="math inline">\(\textit{Pob_rural}\)</span> que se refieren al numéro de habitantes que residen en una localidad urbana y en una rural, respectivamente. - <span class="math inline">\(\textit{Densidad}\)</span>, que nos indica la densidad de cada país; recordemos que la densidad no és más que un indicador que nos permite saber cuánta población habita en una zona territorial. Ésta viene dada por: <span class="math inline">\(\textit{Densidad} = \frac{\textit{Pob_total}}{\textit{Area_km2}}\)</span>.</li>
-<li><span class="math inline">\(\textit{Esp_vida}\)</span> presenta la edad media que pueden alcanzar los individuos de cada país.</li>
-<li><span class="math inline">\(\textit{Natalidad}\)</span> número de personas que nacen en un año y país determinado.</li>
-<li><span class="math inline">\(\textit{Mortalidad}\)</span> número de personas que fallecen en un año y país determinado.</li>
-<li><span class="math inline">\(\textit{Fertilidad}\)</span> ???????????? número de embarazos????</li>
-<li><span class="math inline">\(\textit{Mortalidad_infantil}\)</span> número total de defunciones de menores de un año de vida, por cada 1000 nacidos vivos.</li>
-<li><span class="math inline">\(\textit{Crecimiento}\)</span> ???????????</li>
+<li><strong>País:</strong> nombre del país de estudio.</li>
+<li><strong>Continente:</strong> continente al que pertenece cada país.</li>
+<li><strong>Area_km2:</strong> área en <span class="math inline">\(\textit{km}^2\)</span> que ocupa cada uno de los paises.</li>
+<li><strong>Año:</strong> año en el que fueron tomados los datos. Valores del 2018 al 2020.</li>
+<li><strong>Pob_total:</strong> número total de habitantes de cada país.</li>
+<li><strong>Pob_urbana</strong> y <strong>Pob_rural:</strong> numéro de habitantes que residen en una localidad urbana y en una rural, respectivamente.</li>
+<li><strong>Densidad:</strong> densidad de cada país; recordemos que la densidad viene dada por el cociente: <span class="math inline">\(\textit{Densidad} = \displaystyle \frac{\textit{Pob_total}}{\textit{Area_km2}}\)</span>.</li>
+<li><strong>Esp_vida:</strong> edad media que pueden alcanzar los individuos de cada país.</li>
+<li><strong>Natalidad:</strong> número de personas que nacen en un año y país determinado, por cada 1000 habitantes.</li>
+<li><strong>Mortalidad:</strong> número de personas que fallecen en un año y país determinado, por cada 1000 habitantes.</li>
+<li><strong>Fertilidad:</strong> número de hijos que puede llegar a tener una mujer si viviera todos sus años fértiles de cada país.</li>
+<li><strong>Mortalidad_infantil:</strong> número total de defunciones de menores de un año de vida, por cada 1000 nacidos vivos.</li>
+<li><strong>Crecimiento:</strong> cambio en el número de individuos de un país en un tiempo determinado.</li>
 </ul>
+</section>
+<section id="análisis-multivariante-exploratorio" class="slide level2">
+<h2>Análisis multivariante exploratorio</h2>
+<p>!!!!NO SE DONDE METER EL VECTOR DE MEDIAS!!!!</p>
+<ol type="1">
+<li>Pob total</li>
+<li>Pob_urbana vs pob_rural</li>
+<li>Densidad</li>
+<li>Boxplots:</li>
+</ol>
+<ul>
+<li>Natalidad</li>
+<li>Mortalidad</li>
+<li>Mortalidad infantil</li>
+<li>Fertilidad</li>
+<li>Esperanza de vida</li>
+</ul>
+</section>
+<section id="correlaciones-y-covarianzas" class="slide level2">
+<h2>Correlaciones y covarianzas (?)</h2>
+<ol type="1">
+<li>Matrices de correlaciones por contiente</li>
+<li>Contrastes:</li>
+</ol>
+<ul>
+<li>Fertilidad/Natalidad</li>
+<li>Esperanza de vida/Mortalidad _ Natalidad/Mortalidad infantil</li>
+</ul>
+</section>
+<section id="conclusiones" class="slide level2">
+<h2>Conclusiones</h2>
 <div class="footer footer-default">
 
 </div>
@@ -511,7 +564,7 @@
         previewLinks: false,
 
         // Transition style (none/fade/slide/convex/concave/zoom)
-        transition: 'none',
+        transition: 'concave',
 
         // Transition speed (default/fast/slow)
         transitionSpeed: 'default',

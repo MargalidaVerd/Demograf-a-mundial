@@ -1,24 +1,68 @@
 ---
-title: "DemografiaMundial"
-format: revealjs
+title: "Demografia Mundial"
+author: "Carla Martínez, Patricia Mateu, Margalida Verd"
+format: 
+  revealjs:
+    theme: beige
+    transition: concave
 editor: visual
 ---
 
 ## Portada
 
+## Índice
+
+## Fuente de datos y planteamiento del problema
+
+*Objetivo*: estudiar y analizar una serie de datos demográficos de los países del mundo y comparar sus diferencias por continentes, aportando información histórica relevante que pueda explicar los valores registrados.
+
+*Fuentes de datos*: hemos escogido dos *dataframes* de la plataforma [Kaggle.com](https://www.kaggle.com/):
+
+-   [Global Population Trends](https://www.kaggle.com/datasets/alitaqi000/global-population-trends2016-2022)
+
+-   [World Population](https://www.kaggle.com/datasets/iamsouravbanerjee/world-population-dataset)
+
+## Limpieza de los datos
+
 ## Descripción variables
 
 Ahora que ya tenemos bien construida nuestra base de datos, hagamos una breve explicación de las distintas variables que lo conforman:
 
--   $\textit{País}$ nos indica el país de estudio.
--   $\textit{Continente}$ variable que nos indica a continente pertenece cada uno de los países.
--   $\textit{Area_km2}$ se refiere al área en $km^2$ que ocupa cada uno de los paises
--   $\textit{Año}$ nos expone a que año fue tomada la muestra, ya que observamos que de cada país tenemos 4 muestras distintas que vienen tomadas desde el 2018 hasta el 2021.
--   $\textit{Pob_total}$ nos indica en número total de habitantes en cada pais
--   $\textit{Pob_urbana}$ y $\textit{Pob_rural}$ que se refieren al numéro de habitantes que residen en una localidad urbana y en una rural, respectivamente. - $\textit{Densidad}$, que nos indica la densidad de cada país; recordemos que la densidad no és más que un indicador que nos permite saber cuánta población habita en una zona territorial. Ésta viene dada por: $\textit{Densidad} = \frac{\textit{Pob_total}}{\textit{Area_km2}}$.
--   $\textit{Esp_vida}$ presenta la edad media que pueden alcanzar los individuos de cada país.
--   $\textit{Natalidad}$ número de personas que nacen en un año y país determinado.
--   $\textit{Mortalidad}$ número de personas que fallecen en un año y país determinado.
--   $\textit{Fertilidad}$ ???????????? número de embarazos????
--   $\textit{Mortalidad_infantil}$ número total de defunciones de menores de un año de vida, por cada 1000 nacidos vivos.
--   $\textit{Crecimiento}$ ???????????
+-   **País:** nombre del país de estudio.
+-   **Continente:** continente al que pertenece cada país.
+-   **Area_km2:** área en $\textit{km}^2$ que ocupa cada uno de los paises.
+-   **Año:** año en el que fueron tomados los datos. Valores del 2018 al 2020.
+-   **Pob_total:** número total de habitantes de cada país.
+-   **Pob_urbana** y **Pob_rural:** numéro de habitantes que residen en una localidad urbana y en una rural, respectivamente.
+-   **Densidad:** densidad de cada país; recordemos que la densidad viene dada por el cociente: $\textit{Densidad} = \displaystyle \frac{\textit{Pob_total}}{\textit{Area_km2}}$.
+-   **Esp_vida:** edad media que pueden alcanzar los individuos de cada país.
+-   **Natalidad:** número de personas que nacen en un año y país determinado, por cada 1000 habitantes.
+-   **Mortalidad:** número de personas que fallecen en un año y país determinado, por cada 1000 habitantes.
+-   **Fertilidad:** número de hijos que puede llegar a tener una mujer si viviera todos sus años fértiles de cada país.
+-   **Mortalidad_infantil:** número total de defunciones de menores de un año de vida, por cada 1000 nacidos vivos.
+-   **Crecimiento:** cambio en el número de individuos de un país en un tiempo determinado.
+
+## Análisis multivariante exploratorio
+
+!!!!NO SE DONDE METER EL VECTOR DE MEDIAS!!!!
+
+1.  Pob total
+2.  Pob_urbana vs pob_rural
+3.  Densidad
+4.  Boxplots:
+
+-   Natalidad
+-   Mortalidad
+-   Mortalidad infantil
+-   Fertilidad
+-   Esperanza de vida
+
+## Correlaciones y covarianzas (?)
+
+1.  Matrices de correlaciones por contiente
+2.  Contrastes:
+
+-   Fertilidad/Natalidad
+-   Esperanza de vida/Mortalidad \_ Natalidad/Mortalidad infantil
+
+## Conclusiones
