@@ -355,8 +355,8 @@ world_population %>%
   select(Natalidad) %>% 
   summarise( media = mean(Natalidad))
 ```
-Además, nos encontramos con el el índice mínimo de natalidad lo encontramos en South Korea, Ásia, las causas se deben a distintos factores como el alto costo de la vida, la presión económica o la desigualdad entre hombres y mujeres en el ámbito laboral, esta diferencia salarial entre hombres y mujeres, provoca que las personas gestantes se vean en la tesitura de elegir entre tener hijos o una carrera profesional.
 
+Además, nos encontramos con el el índice mínimo de natalidad lo encontramos en South Korea, Ásia, las causas se deben a distintos factores como el alto costo de la vida, la presión económica o la desigualdad entre hombres y mujeres en el ámbito laboral, esta diferencia salarial entre hombres y mujeres, provoca que las personas gestantes se vean en la tesitura de elegir entre tener hijos o una carrera profesional.
 
 ```{r,warning=FALSE,message=FALSE,echo=FALSE}
 datos = world_population[world_population$Natalidad > 0 & world_population$Mortalidad,]
@@ -399,7 +399,7 @@ ggplot(mort, aes(x=Continente, y = Mortalidad ,fill = Año)) +
 
 ```
 
-Igual que antes, Europa es el continente con el índice de mortalidad más alto, veamos cual es el pais con más tasa de mortalidad en los disitintos años: 
+Igual que antes, Europa es el continente con el índice de mortalidad más alto, veamos cual es el pais con más tasa de mortalidad en los disitintos años:
 
 ```{r}
 data_18 = world_population[world_population$Año == "2018",]
@@ -419,8 +419,7 @@ data_20[which.max(data_20$Mortalidad),]  %>%
   select(Pais, Año, Mortalidad)
 ```
 
-Nos resulta impactante que el país con más mortalidad del mundo sea Bulgaria, sin embargo, tras investigar un poco, hemos observado que se trata del país con más pobreza de la UE, con una inversión en el sistema sanitario muy bajo, lo que imlicó ser el país de la UE con más muertes a lo largo de la pandemia. Añadiendo que la tasa de desempleo es muy alta, tenemos como consecuendia que una tasa de natalidad muy baja, resultando asi en un índice de crecimiento de -1.   
-
+Nos resulta impactante que el país con más mortalidad del mundo sea Bulgaria, sin embargo, tras investigar un poco, hemos observado que se trata del país con más pobreza de la UE, con una inversión en el sistema sanitario muy bajo, lo que imlicó ser el país de la UE con más muertes a lo largo de la pandemia. Añadiendo que la tasa de desempleo es muy alta, tenemos como consecuendia que una tasa de natalidad muy baja, resultando asi en un índice de crecimiento de -1.
 
 Fijémonos también en los diferentes valores por años:
 
@@ -554,16 +553,17 @@ Resalta África; la esperanza de vida es mucho más baja que en los demás conti
 world_population[which.min(world_population[world_population$Esp_vida>0,]$Esp_vida),] %>% 
   select(Pais, Año, Esp_vida)
 ```
+
 La esperanza de vida és un claro indicador de la calidad de vida de un determinado país; así, teniendo en cuenta las enfermedades causadas por la falta de agua, la poca asistencia médica y la desnutrición, hacen que Chad sea él país con una esperaza de vida de tan solo 53 años, siendo la más baja del mundo.
 
 De la misma forma, veamo qué país presenta una esperanza de vida más alta:
+
 ```{r}
 world_population[which.max(world_population$Esp_vida),] %>% 
   select(Pais, Año, Esp_vida)
 ```
+
 Los motivos podrían ser su estilo de vida activo y saludable acompañado de una dieta rica en alimentos cocinados al vapor y el alto consumo de diferentes variedades de tés.
-
-
 
 ```{r, warning=FALSE,message=FALSE,echo=FALSE}
 library(ggplot2)
