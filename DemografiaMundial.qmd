@@ -5,6 +5,8 @@ format: html
 editor: visual
 ---
 
+El link a nuestro repositorio es: [GitHub](https://github.com/MargalidaVerd/DemografiaMundial)
+
 ## Introducción
 
 Este proyecto recoge datos poblacionales de los países del mundo, tomados en 3 años consecutivos (del 2018 al 2020) y pretende estudiarlos y analizarlos a nivel continental para ver si existen diferencias significativas entre continentes.
@@ -21,21 +23,29 @@ Los datos utilizados se han sacado de los siguientes enlaces:
 
 Ahora que ya tenemos bien construida nuestra base de datos, hagamos una breve explicación de las distintas variables que lo conforman:
 
--   $\textit{País}$ nos indica el país de estudio.
--   $\textit{Continente}$ variable que nos indica a continente pertenece cada uno de los países.
--   $\textit{Area_km2}$ se refiere al área en $km^2$ que ocupa cada uno de los países.
--   $\textit{Año}$ nos expone a que año fue tomada la muestra, ya que observamos que de cada país tenemos 4 muestras distintas que vienen tomadas desde el 2018 hasta el 2021.
--   $\textit{Pob_total}$ nos indica en número total de habitantes en cada país.
--   $\textit{Pob_urbana}$ y $\textit{Pob_rural}$ que se refieren al numéro de habitantes que residen en una localidad urbana y en una rural, respectivamente.
--   $\textit{Densidad}$ que nos indica la densidad de cada país; recordemos que la densidad no és más que un indicador que nos permite saber cuánta población habita en una zona territorial. Ésta viene dada por: $\textit{Densidad} =\frac{\textit{Pob_total}}{\textit{Area_km2}}$
--   $\textit{Esp_vida}$ presenta la edad media que pueden alcanzar los individuos de cada país.
--   $\textit{Natalidad}$ número de personas que nacen en un año y país determinado, por 1000 habitantes estimados a mitad de año.
--   $\textit{Mortalidad}$ número de personas que fallecen en un año y país determinado, por 1000 habitantes estimados a mitad de año.
--   $\textit{Fertilidad}$ esla tasa de fertilidad total que representa el número de hijos que tendría una mujer si viviera hasta el final de sus años fértiles y tuviera hijos de acuerdo con las tasas de fertilidad específicas por edad del año indicado.
--   $\textit{Mortalidad_infantil}$ número total de defunciones de menores de un año de vida, por cada 1000 nacidos vivos.
--   $\textit{Crecimiento}$ es la diferencia entre el número de nacimientos y el de muertes totales.
+-   **País:** (chr) nombre del país de estudio.
 
-""" - analisis a nivel continental desde el 2018 al 2020 - ver si hay diferencias significativas por continentes - en cada continente analizar los paises que más difieren del resto - ver si en el 2020 han habido cambios significativos - ver si en los paises con más diferencias en mortalidad de un año al otro vienen dados por un evento significativo - ver si la paz afecta en la esperanza de vida y en la natalidad ejemplo Dinamarca """
+-   **Continente:** (chr) continente al que pertenece cada país.
+
+-   **Area_km2:** (int) área en $\textit{km}^2$ que ocupa cada uno de los países.
+
+-   **Año:** (ord) año en el que fueron tomados los datos. Valores del 2018 al 2020.
+
+-   **Pob_total:** (int) número total de habitantes de cada país.
+
+-   **Pob_urbana** y **Pob_rural:** (int) numéro de habitantes que residen en una localidad urbana y en una rural, respectivamente.
+
+-   **Densidad:** (int) densidad de cada país; recordemos que la densidad viene dada por el cociente: $\textit{Densidad} = \displaystyle \frac{\textit{Pob_total}}{\textit{Area_km2}}$.
+
+-   **Esp_vida:** (int) edad media que pueden alcanzar los individuos de cada país.
+
+-   **Natalidad y Mortalidad:** (num) número de personas que nacen y fallecen en un año y país determinado, por cada 1000 habitantes.
+
+-   **Fertilidad:** (num) número de hijos que puede llegar a tener una mujer si viviera todos sus años fértiles de cada país.
+
+-   **Mortalidad_infantil:** (num) número total de defunciones de menores de un año de vida, por cada 1000 nacidos vivos.
+
+-   **Crecimiento:** (ord) cambio en el número de individuos de un país en un tiempo determinado. Valores: -5 a 5
 
 ## Carga de datos y limpieza
 
@@ -334,7 +344,6 @@ nat<- world_population %>%
 
 ggplot(nat, aes(x=Continente, y = Natalidad ,fill = Año)) + 
   geom_boxplot() + 
- 
   guides(fill = guide_legend(title = "Año")) +
   labs(x="Continente", y="Número de paises") +
   labs(x="Continente", y="Natalidad") +
@@ -389,7 +398,6 @@ mort<- world_population %>%
 
 ggplot(mort, aes(x=Continente, y = Mortalidad ,fill = Año)) + 
   geom_boxplot() + 
-  geom_point(mapping= (aes(x = Continente, y = med, color = "white")))+
   guides(fill = guide_legend(title = "Año")) +
   labs(x="Continente", y="Mortalidad") +
   theme_bw() +
@@ -399,7 +407,7 @@ ggplot(mort, aes(x=Continente, y = Mortalidad ,fill = Año)) +
 
 ```
 
-Igual que antes, Europa es el continente con el índice de mortalidad más alto, veamos cual es el pais con más tasa de mortalidad en los disitintos años:
+Igual que antes, Europa es el continente con el índice de mortalidad más alto. Veamos cual es el pais con más tasa de mortalidad en los disitintos años:
 
 ```{r}
 data_18 = world_population[world_population$Año == "2018",]
@@ -419,7 +427,7 @@ data_20[which.max(data_20$Mortalidad),]  %>%
   select(Pais, Año, Mortalidad)
 ```
 
-Nos resulta impactante que el país con más mortalidad del mundo sea Bulgaria, sin embargo, tras investigar un poco, hemos observado que se trata del país con más pobreza de la UE, con una inversión en el sistema sanitario muy bajo, lo que imlicó ser el país de la UE con más muertes a lo largo de la pandemia. Añadiendo que la tasa de desempleo es muy alta, tenemos como consecuendia que una tasa de natalidad muy baja, resultando asi en un índice de crecimiento de -1.
+Vemos que el país con más mortalidad del mundo es Bulgaria; tras investigar un poco, hemos observado que se trata del país con más pobreza de la UE, con una inversión en el sistema sanitario muy bajo, lo que imlicó ser el país de la UE con más muertes a lo largo de la pandemia. Añadiendo que la tasa de desempleo es muy alta, tenemos como consecuencia una tasa de natalidad muy baja.
 
 Fijémonos también en los diferentes valores por años:
 
@@ -443,7 +451,6 @@ mort_inf<- world_population %>%
 
 ggplot(mort_inf, aes(x=Continente, y = Mortalidad_infantil ,fill = Año)) + 
   geom_boxplot() + 
-  geom_point(mapping= (aes(x = Continente, y = med, color = "white")))+
   guides(fill = guide_legend(title = "Año")) +
   labs(x="Continente", y="Mortalidad infantil") +
   theme_bw() +
@@ -462,9 +469,9 @@ world_population %>%
   summarise( media = mean(Mortalidad_infantil))
 ```
 
-En concreto, mueren al año 43 niños/niñas por cada 1000 nacimientos. Teniendo en cuenta el número de nacimientos en este continente, esto equivale a $\textbf{1.5 millones de muertes infantiles cada año}$.
+En concreto, mueren al año 43 niños/niñas por cada 1000 nacimientos. Teniendo en cuenta el número de nacimientos en este continente, esto equivale a 1.5 millones de muertes infantiles, cada año.
 
-Sin embargo, nos llama la atención el valor máximo de Norteamérica, y tras investigar un poco, encontramos que en 2018 hibo un terremoto en Haití, que hizo que las tasas de mortalidad infantil augmentaran respecto al resto de años, sin embargo, en general, las tasas en Haití siguen siendo muy altas, esto viene provocado por la situación de pobreza y de insalubridad, que causan enfermedad y sufrimiento entre la población infantil, un 8% de la cual sufre desnutrición grave y el 22% padece desnutrición crónica.
+También nos llama la atención el valor máximo de Norteamérica, y tras investigar un poco, encontramos que en 2018 hubo un terremoto en Haití, que hizo que las tasas de mortalidad infantil augmentaran respecto al resto de años; sin embargo, en general, las tasas en Haití siguen siendo muy altas. Esto viene provocado por la situación de pobreza y de insalubridad, que causan enfermedad y sufrimiento entre la población infantil, un 8% de la cual sufre desnutrición grave y el 22% padece desnutrición crónica.
 
 ```{r}
 north_am = world_population[world_population$Continente == "North America",]
@@ -493,7 +500,6 @@ fert<- world_population %>%
 
 ggplot(fert, aes(x=Continente, y = Fertilidad ,fill = Año)) + 
   geom_boxplot() + 
-  geom_point(aes(x = Continente, y = med, colour = "white"))+
   guides(fill = guide_legend(title = "Año")) +
   labs(x="Continente", y="Fertilidad") +
   theme_bw() +
@@ -502,7 +508,7 @@ ggplot(fert, aes(x=Continente, y = Fertilidad ,fill = Año)) +
         legend.title = element_text(size=12, face = "bold"))
 ```
 
-Observemos que la mayor tasa de fertilidad total está en África, veamos los datos
+Observemos que la mayor tasa de fertilidad total está en África, veamos los datos:
 
 ```{r, warning=FALSE,message=FALSE,echo=FALSE}
 world_population %>% 
@@ -554,9 +560,9 @@ world_population[which.min(world_population[world_population$Esp_vida>0,]$Esp_vi
   select(Pais, Año, Esp_vida)
 ```
 
-La esperanza de vida és un claro indicador de la calidad de vida de un determinado país; así, teniendo en cuenta las enfermedades causadas por la falta de agua, la poca asistencia médica y la desnutrición, hacen que Chad sea él país con una esperaza de vida de tan solo 53 años, siendo la más baja del mundo.
+La esperanza de vida és un claro indicador de la calidad de vida de un determinado país; así, teniendo en cuenta las enfermedades causadas por la falta de agua, la poca asistencia médica y la desnutrición, hacen que Chad sea el país con una esperaza de vida de tan solo 53 años, siendo la más baja del mundo.
 
-De la misma forma, veamo qué país presenta una esperanza de vida más alta:
+De la misma forma, veamos qué país presenta una esperanza de vida más alta:
 
 ```{r}
 world_population[which.max(world_population$Esp_vida),] %>% 
@@ -565,176 +571,9 @@ world_population[which.max(world_population$Esp_vida),] %>%
 
 Los motivos podrían ser su estilo de vida activo y saludable acompañado de una dieta rica en alimentos cocinados al vapor y el alto consumo de diferentes variedades de tés.
 
-```{r, warning=FALSE,message=FALSE,echo=FALSE}
-library(ggplot2)
-library(dplyr)
-library(plotly)
-library(viridis)
-library(hrbrthemes)
-
-
-data_2019 <- world_population %>% 
-  filter(Año == 2019) %>% 
-  select(-Año)
-
-p_19 <- data_2019 %>% 
-  mutate(Pob = round(Pob_total /1000000,2)) %>% 
-  arrange(desc(Pob)) %>% 
-  mutate(Area = round(Area_km2 / 1000000, 2)) %>% 
-  arrange(desc(Area)) %>% 
-  mutate(text= paste("Pais: ", Pais, "\nPoblación (M):", Pob, "\nArea_km2: ", Area)) %>%
-  ggplot(aes(x=Pob, y = Area, size= Pob_total, color = Continente, text = text)) +
-  geom_point(alpha = 0.7) +
-  scale_size(range = c(1.4, 19),name="Population (M)") +
-    scale_color_viridis(discrete=TRUE, guide=FALSE) +
-    theme_ipsum() +
-    theme(legend.position="right")
-
-pp_19 <- ggplotly(p_19, tooltip = "text")
-pp_19
-
-```
-
-```{r, warning=FALSE,message=FALSE,echo=FALSE}
-library(GGally)
-
-a_asia <- world_population %>% 
-  filter(Continente == "Asia") %>% 
-  filter(Natalidad >0, Mortalidad >0, Mortalidad_infantil>0, Esp_vida > 0) %>%
-  select(4,10:13) %>% 
-  drop_na()
-
-ggpairs(a_asia,mapping=ggplot2::aes(colour = Año),
-        upper = list(continuous = wrap("cor", size = 3)))
-
-a_africa <- world_population %>% 
-  filter(Continente == "Africa") %>% 
-  select(4,10:13) %>% 
-  drop_na()
-
-ggpairs(a_africa,mapping=ggplot2::aes(colour = Año, alpha = 0.5),
-        upper = list(continuous = wrap("cor", size = 3)))
-
-a_north_am <- world_population %>% 
-  filter(Continente == "North America") %>% 
-  select(4,9:13) %>% 
-  drop_na()
-
-ggpairs(a_north_am,mapping=ggplot2::aes(colour = Año),
-        upper = list(continuous = wrap("cor", size = 3)))
-
-a_oceania <- world_population %>% 
-  filter(Continente == "Oceania") %>% 
-  select(4,10:14) %>% 
-  drop_na()
-
-ggpairs(a_oceania,mapping=ggplot2::aes(colour = Año),
-        upper = list(continuous = wrap("cor", size = 3)))
-
-a_south_am <- world_population %>% 
-  filter(Continente == "South America") %>% 
-  select(4,10:14) %>% 
-  drop_na()
-
-ggpairs(a_south_am,mapping=ggplot2::aes(colour = Año),
-        upper = list(continuous = wrap("cor", size = 3)))
-
-
-
-```
-
-```{r, warning=FALSE,message=FALSE,echo=FALSE}
-library(GGally)
-library(MVA)
-a_europe <- world_population %>% 
-  filter(Continente == "Europe") %>% 
-  select(4,10:14) %>% 
-  drop_na()
-
-ggpairs(a_europe,mapping=ggplot2::aes(colour = Año),
-        upper = list(continuous = wrap("cor", size = 3)))
-
-corr_esp_mort_europe<- a_europe %>%
-  select(Esp_vida,Mortalidad) %>%
-  na.omit %>% as.matrix()
-
-View(corr_esp_mort_europe)
-
-bvbox(corr_esp_mort_europe,
-      col = c("red", "blue", "green"),
-      xlab = "Esperanza vida", 
-           ylab = "Mortalidad",
-      pch = 19, cex = 1.25)
-
-corr_nat_mort_europe<- a_europe %>%
-  select(Natalidad,Fertilidad) %>%
-  na.omit %>% as.matrix()
-
-bvbox(corr_nat_mort_europe,
-      col = c("red", "blue", "green"),
-      xlab = "Natalidad", 
-           ylab = "Fertilidad",
-      pch = 19, cex = 1.25)
-
-```
-
-```{r, warning=FALSE,message=FALSE,echo=FALSE}
-
-a_asia <- world_population %>% 
-  filter(Continente == "Asia") %>% 
-  select(4,10:14) %>% 
-  drop_na()
-
-ggpairs(a_asia,mapping=ggplot2::aes(colour = Año),
-        upper = list(continuous = wrap("cor", size = 3)))
-
-
-#ggplot(a_asia, aes(x = Mortalidad)) + 
- # geom_histogram(aes(y = ..density..),
-  #               colour = 1, fill = "white") +
-  #geom_density()
-
-
-#ggplot(a_asia, aes(x = Mortalidad)) +
- # geom_density(color = 4,
-  #             fill = 4,
-   #            alpha = 0.25) 
-
-corr_esp_mortinf_asia<- a_asia %>%
-  select(Esp_vida,Mortalidad_infantil) %>%
-  na.omit %>% as.matrix()
-
-bvbox(corr_esp_mortinf_asia,
-      col = c("red", "blue", "green"),
-      xlab = "Esperanza vida", 
-           ylab = "Mortalidad Infantil",
-      pch = 19, cex = 1.25)
-
-corr_nat_mortinf_asia<- a_asia %>%
-  select(Natalidad,Mortalidad_infantil) %>%
-  na.omit %>% as.matrix()
-
-bvbox(corr_nat_mortinf_asia,
-      col = c("red", "blue", "green"),
-      xlab = "Natalidad", 
-           ylab = "Mortalidad Infantil",
-      pch = 19, cex = 1.25)
-
-
-
-```
-
-```{r}
-cor.test(world_population$Natalidad, world_population$Fertilidad, alternative = "greater")
-cor.test(world_population$Esp_vida, world_population$Mortalidad, alternative = "less")
-cor.test(world_population$Esp_vida, world_population$Mortalidad_infantil, alternative = "less")
-
-
-```
-
 ## Estimación y correlaciones
 
-Estimación del vector de medias por continentes:
+Vemos aquí el vector de medias por continentes y año:
 
 ```{r, warning=FALSE,message=FALSE,echo=FALSE}
 
@@ -746,4 +585,106 @@ world_population %>%
 
 ```
 
+El vector de medias global, dividido en años es el siguiente:
+
+```{r, echo = FALSE}
+world_population %>% 
+  group_by(Año) %>% 
+  drop_na() %>% 
+  filter(Natalidad > 0, Mortalidad > 0, Mortalidad_infantil > 0, Esp_vida > 0) %>% summarise("Población_total" = mean(Pob_total), "Población_rural" = mean(Pob_rural), "Población_urbana" = mean (Pob_urbana), "Densidad" = mean(Densidad), "Esperanza_de_vida" = mean(Esp_vida), "Natalidad" = mean(Natalidad), "Mortalidad" = mean(Mortalidad), "Mortalidad_infantil" = mean(Mortalidad_infantil), "Fertilidad"= mean(Fertilidad)) %>% glimpse()
+
+```
+
+Empezamos ahora con las matrices de correlación; como nuestro estudio se centra en estudiar cada continente por separado, hemos hecho un gráfico `ggpairs()` para cada continente.
+
+### Asia
+
+```{r, warning=FALSE,message=FALSE,echo=FALSE}
+library(GGally)
+
+a_asia <- world_population %>% 
+  filter(Continente == "Asia") %>% 
+  filter(Natalidad >0, Mortalidad >0, Mortalidad_infantil>0, Esp_vida > 0) %>%
+  select(4,9:13) %>% 
+  drop_na()
+
+ggpairs(a_asia,mapping=ggplot2::aes(colour = Año, alpha = 0.5),
+        upper = list(continuous = wrap("cor", size = 3)))
+```
+
+### África
+
+```{r, warning=FALSE,message=FALSE,echo=FALSE}
+a_africa <- world_population %>% 
+  filter(Continente == "Africa") %>% 
+  select(4,9:13) %>% 
+  drop_na()
+
+ggpairs(a_africa,mapping=ggplot2::aes(colour = Año, alpha = 0.5),
+        upper = list(continuous = wrap("cor", size = 3)))
+```
+
+### Europa
+
+```{r, warning=FALSE,message=FALSE,echo=FALSE}
+a_europa <- world_population %>% 
+  filter(Continente == "Europe") %>% 
+  select(4,9:13) %>% 
+  drop_na()
+
+ggpairs(a_europa,mapping=ggplot2::aes(colour = Año, alpha = 0.5),
+        upper = list(continuous = wrap("cor", size = 3)))
+```
+
+### Norteamérica
+
+```{r, warning=FALSE,message=FALSE,echo=FALSE}
+a_north_am <- world_population %>% 
+  filter(Continente == "North America") %>% 
+  select(4,9:13) %>% 
+  drop_na()
+
+ggpairs(a_north_am,mapping=ggplot2::aes(colour = Año, alpha = 0.5),
+        upper = list(continuous = wrap("cor", size = 3)))
+```
+
+### Oceania
+
+```{r, warning=FALSE,message=FALSE,echo=FALSE}
+a_oceania <- world_population %>% 
+  filter(Continente == "Oceania") %>% 
+  select(4,9:13) %>% 
+  drop_na()
+
+ggpairs(a_oceania,mapping=ggplot2::aes(colour = Año, alpha = 0.5),
+        upper = list(continuous = wrap("cor", size = 3)))
+```
+
+### Sudamérica
+
+```{r, warning=FALSE,message=FALSE,echo=FALSE}
+a_south_am <- world_population %>% 
+  filter(Continente == "South America") %>% 
+  select(4,9:13) %>% 
+  drop_na()
+
+ggpairs(a_south_am,mapping=ggplot2::aes(colour = Año, alpha = 0.5),
+        upper = list(continuous = wrap("cor", size = 3)))
+
+```
+
+En general, observamos una clara asociación positiva entre la Fertilidad y la Natalidad; de la misma forma, notamos la asociación positiva entre la Natalidad y la Mortalidad infatil; además también podemos apreciar la asociación negativa entre la Esperanza de vida y la Mortalidad infantil. En cuanto a las funciones de densidad, observamos que en todos los continentes, las funciones de densidad no varian en los años 2018 y 2019; sin embargo, sí que encontramos variaciones significativas al analizar la función de densidad de 2020: la Esperanza de vida disminuye, mientras que la Mortalidad augmenta en todos los continentes.
+
+Para confirmar estas posibles correlaciones, realizaremos unos tests de correlación.
+
+```{r, echo = FALSE,warning=FALSE, message=FALSE}
+cor.test(world_population$Natalidad, world_population$Fertilidad, alternative = "greater")
+cor.test(world_population$Natalidad, world_population$Mortalidad_infantil, alternative = "less")
+cor.test(world_population$Esp_vida, world_population$Mortalidad_infantil, alternative = "less")
+```
+
+Por lo tanto, podemos concluir que las variables Natalidad y Fertilidad están correlacionadas positivamente; al igual que las de Natalidad y la de Mortalidad infantil, esto no nos debe estrañar, ya que cuántos más nacimientos, más alta será la tasa de Mortalidad infantil; por último, tenemos que las variables de Esperanza de vida y Mortalidad infantil están correlacionadas negativamente, ya que cuánta más Mortalidad infantil más baja será la Esperanza de vida.
+
 ## Conclusiones
+
+En conclusión, observamos diferencias entre los distintos continentes, sin embargo, diferenciando por años, no encontramos cambios significativos. Además hemos confirmado las correlaciones positivas entre las variables de Natalidad y Fertilidad, y Natalidad con Mortalidad infantil; además tenemos correlación negativa entre la Esperanza de vida y la Mortalidad infantil. Por último, hemos visto que la mayoría de los outliers y valores máximos y mínimos están justificados por eventos históricos o por las cualidades propias de cada país.

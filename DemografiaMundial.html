@@ -68,14 +68,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="DemografiaMundial_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="DemografiaMundial_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="DemografiaMundial_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script src="DemografiaMundial_files/libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
-<script src="DemografiaMundial_files/libs/plotly-binding-4.10.2/plotly.js"></script>
-<script src="DemografiaMundial_files/libs/typedarray-0.1/typedarray.min.js"></script>
-<script src="DemografiaMundial_files/libs/jquery-3.5.1/jquery.min.js"></script>
-<link href="DemografiaMundial_files/libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
-<script src="DemografiaMundial_files/libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
-<link href="DemografiaMundial_files/libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
-<script src="DemografiaMundial_files/libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -125,21 +117,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="descripción-variables">Descripción variables</h2>
 <p>Ahora que ya tenemos bien construida nuestra base de datos, hagamos una breve explicación de las distintas variables que lo conforman:</p>
 <ul>
-<li><span class="math inline">\(\textit{País}\)</span> nos indica el país de estudio.</li>
-<li><span class="math inline">\(\textit{Continente}\)</span> variable que nos indica a continente pertenece cada uno de los países.</li>
-<li><span class="math inline">\(\textit{Area_km2}\)</span> se refiere al área en <span class="math inline">\(km^2\)</span> que ocupa cada uno de los países.</li>
-<li><span class="math inline">\(\textit{Año}\)</span> nos expone a que año fue tomada la muestra, ya que observamos que de cada país tenemos 4 muestras distintas que vienen tomadas desde el 2018 hasta el 2021.</li>
-<li><span class="math inline">\(\textit{Pob_total}\)</span> nos indica en número total de habitantes en cada país.</li>
-<li><span class="math inline">\(\textit{Pob_urbana}\)</span> y <span class="math inline">\(\textit{Pob_rural}\)</span> que se refieren al numéro de habitantes que residen en una localidad urbana y en una rural, respectivamente.</li>
-<li><span class="math inline">\(\textit{Densidad}\)</span> que nos indica la densidad de cada país; recordemos que la densidad no és más que un indicador que nos permite saber cuánta población habita en una zona territorial. Ésta viene dada por: <span class="math inline">\(\textit{Densidad} =\frac{\textit{Pob_total}}{\textit{Area_km2}}\)</span></li>
-<li><span class="math inline">\(\textit{Esp_vida}\)</span> presenta la edad media que pueden alcanzar los individuos de cada país.</li>
-<li><span class="math inline">\(\textit{Natalidad}\)</span> número de personas que nacen en un año y país determinado, por 1000 habitantes estimados a mitad de año.</li>
-<li><span class="math inline">\(\textit{Mortalidad}\)</span> número de personas que fallecen en un año y país determinado, por 1000 habitantes estimados a mitad de año.</li>
-<li><span class="math inline">\(\textit{Fertilidad}\)</span> esla tasa de fertilidad total que representa el número de hijos que tendría una mujer si viviera hasta el final de sus años fértiles y tuviera hijos de acuerdo con las tasas de fertilidad específicas por edad del año indicado.</li>
-<li><span class="math inline">\(\textit{Mortalidad_infantil}\)</span> número total de defunciones de menores de un año de vida, por cada 1000 nacidos vivos.</li>
-<li><span class="math inline">\(\textit{Crecimiento}\)</span> es la diferencia entre el número de nacimientos y el de muertes totales.</li>
+<li><p><strong>País:</strong> (chr) nombre del país de estudio.</p></li>
+<li><p><strong>Continente:</strong> (chr) continente al que pertenece cada país.</p></li>
+<li><p><strong>Area_km2:</strong> (int) área en <span class="math inline">\(\textit{km}^2\)</span> que ocupa cada uno de los países.</p></li>
+<li><p><strong>Año:</strong> (ord) año en el que fueron tomados los datos. Valores del 2018 al 2020.</p></li>
+<li><p><strong>Pob_total:</strong> (int) número total de habitantes de cada país.</p></li>
+<li><p><strong>Pob_urbana</strong> y <strong>Pob_rural:</strong> (int) numéro de habitantes que residen en una localidad urbana y en una rural, respectivamente.</p></li>
+<li><p><strong>Densidad:</strong> (int) densidad de cada país; recordemos que la densidad viene dada por el cociente: <span class="math inline">\(\textit{Densidad} = \displaystyle \frac{\textit{Pob_total}}{\textit{Area_km2}}\)</span>.</p></li>
+<li><p><strong>Esp_vida:</strong> (int) edad media que pueden alcanzar los individuos de cada país.</p></li>
+<li><p><strong>Natalidad y Mortalidad:</strong> (num) número de personas que nacen y fallecen en un año y país determinado, por cada 1000 habitantes.</p></li>
+<li><p><strong>Fertilidad:</strong> (num) número de hijos que puede llegar a tener una mujer si viviera todos sus años fértiles de cada país.</p></li>
+<li><p><strong>Mortalidad_infantil:</strong> (num) número total de defunciones de menores de un año de vida, por cada 1000 nacidos vivos.</p></li>
+<li><p><strong>Crecimiento:</strong> (ord) cambio en el número de individuos de un país en un tiempo determinado. Valores: -5 a 5</p></li>
 </ul>
-<p>““” - analisis a nivel continental desde el 2018 al 2020 - ver si hay diferencias significativas por continentes - en cada continente analizar los paises que más difieren del resto - ver si en el 2020 han habido cambios significativos - ver si en los paises con más diferencias en mortalidad de un año al otro vienen dados por un evento significativo - ver si la paz afecta en la esperanza de vida y en la natalidad ejemplo Dinamarca ““”</p>
 </section>
 <section id="carga-de-datos-y-limpieza" class="level2">
 <h2 class="anchored" data-anchor-id="carga-de-datos-y-limpieza">Carga de datos y limpieza</h2>
@@ -201,7 +191,7 @@ $ Natalidad           &lt;dbl&gt; 36.927, 36.466, 36.051, 10.517, 10.343, 10.285
 $ Mortalidad          &lt;dbl&gt; 6.981, 6.791, 7.113, 8.308, 8.480, 10.785, 4.482, …
 $ Mortalidad_infantil &lt;dbl&gt; 47.8, 46.3, 44.8, 8.3, 8.4, 8.4, 20.6, 20.1, 19.6,…
 $ Fertilidad          &lt;dbl&gt; 5.002, 4.870, 4.750, 1.440, 1.414, 1.400, 3.023, 2…
-$ Crecimiento         &lt;int&gt; 3, 3, 3, 0, 0, -1, 2, 2, 2, -2, -2, -2, 2, 2, 2, 3…</code></pre>
+$ Crecimiento         &lt;chr&gt; "3.0", "3.0", "3.0", "0.0", "0.0", "-1.0", "2.0", …</code></pre>
 </div>
 </div>
 </section>
@@ -297,7 +287,22 @@ Attaching package: 'cowplot'</code></pre>
 3 2020   9.39</code></pre>
 </div>
 </div>
-<p>De la misma forma, África presenta los valores de natalidad más altos; en concreto</p>
+<p>Además, nos encontramos con el el índice mínimo de natalidad lo encontramos en South Korea, Ásia, las causas se deben a distintos factores como el alto costo de la vida, la presión económica o la desigualdad entre hombres y mujeres en el ámbito laboral, esta diferencia salarial entre hombres y mujeres, provoca que las personas gestantes se vean en la tesitura de elegir entre tener hijos o una carrera profesional.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  Pais        Año   Natalidad
+  &lt;chr&gt;       &lt;chr&gt;     &lt;dbl&gt;
+1 South Korea 2020        5.3</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  Pais        Año   Natalidad
+  &lt;chr&gt;       &lt;chr&gt;     &lt;dbl&gt;
+1 South Korea 2020        5.3</code></pre>
+</div>
+</div>
+<p>Nos econtramos con que África presenta los valores de natalidad más altos; en concreto, la tasa de máxima natalidad la encontramos en Níger, Africa, se trata de uno de los países más pobres del mundo con una notable desigualdad de género, que incluye la falta de oportunidades educativas para las mujeres, que desencadena en el matrimonio y el parto precoces. La natalidad és tanta, que a pesar de que la tasa de mortalidad infantil sea muy alta, nos encontramos con que la tasa de crecimiento toma uno de los valores más elevados a nivel mundial.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
@@ -312,10 +317,45 @@ Attaching package: 'cowplot'</code></pre>
 <p>Continuamos con la mortalidad:</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Igual que antes, Europa es el continente con el índice de mortalidad más alto. Fijémonos también en los diferentes valores por años:</p>
+<p>Igual que antes, Europa es el continente con el índice de mortalidad más alto. Veamos cual es el pais con más tasa de mortalidad en los disitintos años:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>data_18 <span class="ot">=</span> world_population[world_population<span class="sc">$</span>Año <span class="sc">==</span> <span class="st">"2018"</span>,]</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>data_18[<span class="fu">which.max</span>(data_18<span class="sc">$</span>Mortalidad),] <span class="sc">%&gt;%</span> </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Pais, Año, Mortalidad)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  Pais     Año   Mortalidad
+  &lt;chr&gt;    &lt;chr&gt;      &lt;dbl&gt;
+1 Bulgaria 2018        15.4</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>data_19 <span class="ot">=</span> world_population[world_population<span class="sc">$</span>Año <span class="sc">==</span> <span class="st">"2019"</span>,]</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>data_19[<span class="fu">which.max</span>(data_19<span class="sc">$</span>Mortalidad),]  <span class="sc">%&gt;%</span> </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Pais, Año, Mortalidad)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  Pais     Año   Mortalidad
+  &lt;chr&gt;    &lt;chr&gt;      &lt;dbl&gt;
+1 Bulgaria 2019        15.5</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>data_20 <span class="ot">=</span> world_population[world_population<span class="sc">$</span>Año <span class="sc">==</span> <span class="st">"2020"</span>,]</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>data_20[<span class="fu">which.max</span>(data_20<span class="sc">$</span>Mortalidad),]  <span class="sc">%&gt;%</span> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Pais, Año, Mortalidad)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  Pais     Año   Mortalidad
+  &lt;chr&gt;    &lt;chr&gt;      &lt;dbl&gt;
+1 Bulgaria 2020          18</code></pre>
+</div>
+</div>
+<p>Vemos que el país con más mortalidad del mundo es Bulgaria; tras investigar un poco, hemos observado que se trata del país con más pobreza de la UE, con una inversión en el sistema sanitario muy bajo, lo que imlicó ser el país de la UE con más muertes a lo largo de la pandemia. Añadiendo que la tasa de desempleo es muy alta, tenemos como consecuencia una tasa de natalidad muy baja.</p>
+<p>Fijémonos también en los diferentes valores por años:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
@@ -330,7 +370,7 @@ Attaching package: 'cowplot'</code></pre>
 <p>Vamos ahora con la mortalidad infantil.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>África es el continente con más mortalidad infantil, con diferencia. Ilustremos estos valores:</p>
@@ -344,7 +384,19 @@ Attaching package: 'cowplot'</code></pre>
 3 2020   41.2</code></pre>
 </div>
 </div>
-<p>En concreto, mueren al año 43 niños/niñas por cada 1000 nacimientos. Teniendo en cuenta el número de nacimientos en este continente, esto equivale a <span class="math inline">\(\textbf{1.5 millones de muertes infantiles cada año}\)</span>.</p>
+<p>En concreto, mueren al año 43 niños/niñas por cada 1000 nacimientos. Teniendo en cuenta el número de nacimientos en este continente, esto equivale a 1.5 millones de muertes infantiles, cada año.</p>
+<p>También nos llama la atención el valor máximo de Norteamérica, y tras investigar un poco, encontramos que en 2018 hubo un terremoto en Haití, que hizo que las tasas de mortalidad infantil augmentaran respecto al resto de años; sin embargo, en general, las tasas en Haití siguen siendo muy altas. Esto viene provocado por la situación de pobreza y de insalubridad, que causan enfermedad y sufrimiento entre la población infantil, un 8% de la cual sufre desnutrición grave y el 22% padece desnutrición crónica.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>north_am <span class="ot">=</span> world_population[world_population<span class="sc">$</span>Continente <span class="sc">==</span> <span class="st">"North America"</span>,]</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>north_am[<span class="fu">which.max</span>(north_am<span class="sc">$</span>Mortalidad_infantil),]  <span class="sc">%&gt;%</span> </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Pais, Año, Mortalidad_infantil)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  Pais  Año   Mortalidad_infantil
+  &lt;chr&gt; &lt;chr&gt;               &lt;dbl&gt;
+1 Haiti 2018                 49.2</code></pre>
+</div>
+</div>
 <p>Por otro lado, Europa presenta unos valores mínimos en mortalidad infantil:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -359,10 +411,10 @@ Attaching package: 'cowplot'</code></pre>
 <p>Por último, veamos la fertilidad:</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Observemos que la mayor tasa de fertilidad total está en África, veamos los datos</p>
+<p>Observemos que la mayor tasa de fertilidad total está en África, veamos los datos:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
@@ -388,111 +440,37 @@ Attaching package: 'cowplot'</code></pre>
 <p>Otra variable interesante en nuestro estudio es la esperanza de vida. Veamos representada la distribución de esta variable en cada continente, en un año concreto (2019).</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 14
-  Pais    Continente    Area_km2 Año   Pob_total Pob_urbana Pob_rural Densidad
-  &lt;chr&gt;   &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;    &lt;int&gt;
-1 Curacao North America      444 2019     157441     140277     17164      355
-# ℹ 6 more variables: Esp_vida &lt;int&gt;, Natalidad &lt;dbl&gt;, Mortalidad &lt;dbl&gt;,
-#   Mortalidad_infantil &lt;dbl&gt;, Fertilidad &lt;dbl&gt;, Crecimiento &lt;int&gt;</code></pre>
-</div>
-</div>
-<p>Resalta África; la esperanza de vida es mucho más baja que en los demás continentes</p>
-<div class="cell">
-<div class="cell-output-display">
-<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-c50b7e3521476ca7f424" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-c50b7e3521476ca7f424">{"x":{"data":[{"x":[42.71,89.91,43.23,6.57,16.13,23.44,32.35,20.57,58.09,114.12,4.38,105.62,59.87,203.3,2.45,30.29,18.38,15.98,10.45,5.21,27.53,50.95,2.5,25.78,36.3,15.35,5.57,20.95,2.24,12.88,42.95,31.52,16,12.05,18.87,3.5,12.29,4.99,8.05,8.24,1.97,12.84,11.87,2.23,1.55,1.17,1.07,2.51,1.27,0.79,0.58,0.21,0.1],"y":[2.38,2.34,1.89,1.76,1.28,1.27,1.25,1.24,1.22,1.1,1.03,1,0.95,0.92,0.83,0.8,0.75,0.64,0.62,0.62,0.59,0.58,0.58,0.48,0.45,0.39,0.34,0.27,0.27,0.25,0.24,0.24,0.2,0.16,0.12,0.12,0.11,0.11,0.07,0.06,0.04,0.03,0.03,0.03,0.03,0.02,0.02,0.01,0,0,0,0,0],"text":["Pais:  Algeria <br />Población (M): 42.71 <br />Area_km2:  2.38","Pais:  Democratic Republic Of Congo <br />Población (M): 89.91 <br />Area_km2:  2.34","Pais:  Sudan <br />Población (M): 43.23 <br />Area_km2:  1.89","Pais:  Libya <br />Población (M): 6.57 <br />Area_km2:  1.76","Pais:  Chad <br />Población (M): 16.13 <br />Area_km2:  1.28","Pais:  Niger <br />Población (M): 23.44 <br />Area_km2:  1.27","Pais:  Angola <br />Población (M): 32.35 <br />Area_km2:  1.25","Pais:  Mali <br />Población (M): 20.57 <br />Area_km2:  1.24","Pais:  South Africa <br />Población (M): 58.09 <br />Area_km2:  1.22","Pais:  Ethiopia <br />Población (M): 114.12 <br />Area_km2:  1.1","Pais:  Mauritania <br />Población (M): 4.38 <br />Area_km2:  1.03","Pais:  Egypt <br />Población (M): 105.62 <br />Area_km2:  1","Pais:  Tanzania <br />Población (M): 59.87 <br />Area_km2:  0.95","Pais:  Nigeria <br />Población (M): 203.3 <br />Area_km2:  0.92","Pais:  Namibia <br />Población (M): 2.45 <br />Area_km2:  0.83","Pais:  Mozambique <br />Población (M): 30.29 <br />Area_km2:  0.8","Pais:  Zambia <br />Población (M): 18.38 <br />Area_km2:  0.75","Pais:  Somalia <br />Población (M): 15.98 <br />Area_km2:  0.64","Pais:  South Sudan <br />Población (M): 10.45 <br />Area_km2:  0.62","Pais:  Central African Republic <br />Población (M): 5.21 <br />Area_km2:  0.62","Pais:  Madagascar <br />Población (M): 27.53 <br />Area_km2:  0.59","Pais:  Kenya <br />Población (M): 50.95 <br />Area_km2:  0.58","Pais:  Botswana <br />Población (M): 2.5 <br />Area_km2:  0.58","Pais:  Cameroon <br />Población (M): 25.78 <br />Area_km2:  0.48","Pais:  Morocco <br />Población (M): 36.3 <br />Area_km2:  0.45","Pais:  Zimbabwe <br />Población (M): 15.35 <br />Area_km2:  0.39","Pais:  Republic Of Congo <br />Población (M): 5.57 <br />Area_km2:  0.34","Pais:  Burkina Faso <br />Población (M): 20.95 <br />Area_km2:  0.27","Pais:  Gabon <br />Población (M): 2.24 <br />Area_km2:  0.27","Pais:  Guinea <br />Población (M): 12.88 <br />Area_km2:  0.25","Pais:  Uganda <br />Población (M): 42.95 <br />Area_km2:  0.24","Pais:  Ghana <br />Población (M): 31.52 <br />Area_km2:  0.24","Pais:  Senegal <br />Población (M): 16 <br />Area_km2:  0.2","Pais:  Tunisia <br />Población (M): 12.05 <br />Area_km2:  0.16","Pais:  Malawi <br />Población (M): 18.87 <br />Area_km2:  0.12","Pais:  Eritrea <br />Población (M): 3.5 <br />Area_km2:  0.12","Pais:  Benin <br />Población (M): 12.29 <br />Area_km2:  0.11","Pais:  Liberia <br />Población (M): 4.99 <br />Area_km2:  0.11","Pais:  Sierra Leone <br />Población (M): 8.05 <br />Area_km2:  0.07","Pais:  Togo <br />Población (M): 8.24 <br />Area_km2:  0.06","Pais:  Guinea-Bissau <br />Población (M): 1.97 <br />Area_km2:  0.04","Pais:  Rwanda <br />Población (M): 12.84 <br />Area_km2:  0.03","Pais:  Burundi <br />Población (M): 11.87 <br />Area_km2:  0.03","Pais:  Lesotho <br />Población (M): 2.23 <br />Area_km2:  0.03","Pais:  Equatorial Guinea <br />Población (M): 1.55 <br />Area_km2:  0.03","Pais:  Eswatini <br />Población (M): 1.17 <br />Area_km2:  0.02","Pais:  Djibouti <br />Población (M): 1.07 <br />Area_km2:  0.02","Pais:  Gambia <br />Población (M): 2.51 <br />Area_km2:  0.01","Pais:  Mauritius <br />Población (M): 1.27 <br />Area_km2:  0","Pais:  Comoros <br />Población (M): 0.79 <br />Area_km2:  0","Pais:  Cabo Verde <br />Población (M): 0.58 <br />Area_km2:  0","Pais:  Sao Tome And Principe <br />Población (M): 0.21 <br />Area_km2:  0","Pais:  Seychelles <br />Población (M): 0.1 <br />Area_km2:  0"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(68,1,84,1)","opacity":0.7,"size":[16.8757879531532,22.1010362313717,16.9470281264271,9.83159054038356,12.4086717211246,13.8735380960107,15.3740551061413,13.3296370118092,18.8023728643868,24.2300768120913,8.99878004736157,23.5108908586008,19.0084959561971,30.5698596890378,8.05828472426689,15.0463855360023,12.8900297416283,12.3764553635731,11.0189254617845,9.33359061229388,14.5923735505873,17.9451527919501,8.08825935881062,14.2916752902941,15.9721443206191,12.2360507006831,9.47174555845654,13.4044099951948,7.93996273929428,11.650816892607,16.9088045897903,15.2436343005453,12.3807753423438,11.442732015352,12.9900678902541,8.60241744040684,11.5040332062554,9.24552650312184,10.3171522460851,10.3781565727215,7.7731148215143,11.6403023893249,11.3979922020932,7.92980663830244,7.49295992055582,7.19972941833429,7.11928841376264,8.09341353910094,7.27751013872467,6.85717190311497,6.62524843869931,6.09140238272304,5.8132800117123],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(68,1,84,1)"}},"hoveron":"points","name":"Africa","legendgroup":"Africa","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1407.74,1383.11,18.51,35.83,269.58,86.56,3.23,223.29,83.48,53.04,37.77,31.55,71.31,6.16,33.58,41.56,126.63,110.38,95.78,32.8,4.6,7.21,6.46,20.1,16.21,165.52,28.83,9.34,25.76,51.76,10.7,10.02,9.21,21.8,3.72,0.77,2.82,9.05,4.44,5.78,4.69,2.81,1.28,0.44,7.51,5.7,1.49,0.66,0.5],"y":[9.71,3.29,2.72,2.15,1.9,1.65,1.56,0.88,0.78,0.68,0.65,0.53,0.51,0.49,0.45,0.44,0.38,0.34,0.33,0.33,0.31,0.24,0.2,0.19,0.18,0.15,0.15,0.14,0.12,0.1,0.09,0.09,0.08,0.07,0.07,0.04,0.03,0.02,0.02,0.01,0.01,0.01,0.01,0.01,0,0,0,0,0],"text":["Pais:  China <br />Población (M): 1407.74 <br />Area_km2:  9.71","Pais:  India <br />Población (M): 1383.11 <br />Area_km2:  3.29","Pais:  Kazakhstan <br />Población (M): 18.51 <br />Area_km2:  2.72","Pais:  Saudi Arabia <br />Población (M): 35.83 <br />Area_km2:  2.15","Pais:  Indonesia <br />Población (M): 269.58 <br />Area_km2:  1.9","Pais:  Iran <br />Población (M): 86.56 <br />Area_km2:  1.65","Pais:  Mongolia <br />Población (M): 3.23 <br />Area_km2:  1.56","Pais:  Pakistan <br />Población (M): 223.29 <br />Area_km2:  0.88","Pais:  Turkey <br />Población (M): 83.48 <br />Area_km2:  0.78","Pais:  Myanmar <br />Población (M): 53.04 <br />Area_km2:  0.68","Pais:  Afghanistan <br />Población (M): 37.77 <br />Area_km2:  0.65","Pais:  Yemen <br />Población (M): 31.55 <br />Area_km2:  0.53","Pais:  Thailand <br />Población (M): 71.31 <br />Area_km2:  0.51","Pais:  Turkmenistan <br />Población (M): 6.16 <br />Area_km2:  0.49","Pais:  Uzbekistan <br />Población (M): 33.58 <br />Area_km2:  0.45","Pais:  Iraq <br />Población (M): 41.56 <br />Area_km2:  0.44","Pais:  Japan <br />Población (M): 126.63 <br />Area_km2:  0.38","Pais:  Philippines <br />Población (M): 110.38 <br />Area_km2:  0.34","Pais:  Vietnam <br />Población (M): 95.78 <br />Area_km2:  0.33","Pais:  Malaysia <br />Población (M): 32.8 <br />Area_km2:  0.33","Pais:  Oman <br />Población (M): 4.6 <br />Area_km2:  0.31","Pais:  Lao PDR <br />Población (M): 7.21 <br />Area_km2:  0.24","Pais:  Kyrgyz Republic <br />Población (M): 6.46 <br />Area_km2:  0.2","Pais:  Syrian Arab Republic <br />Población (M): 20.1 <br />Area_km2:  0.19","Pais:  Cambodia <br />Población (M): 16.21 <br />Area_km2:  0.18","Pais:  Bangladesh <br />Población (M): 165.52 <br />Area_km2:  0.15","Pais:  Nepal <br />Población (M): 28.83 <br />Area_km2:  0.15","Pais:  Tajikistan <br />Población (M): 9.34 <br />Area_km2:  0.14","Pais:  North Korea <br />Población (M): 25.76 <br />Area_km2:  0.12","Pais:  South Korea <br />Población (M): 51.76 <br />Area_km2:  0.1","Pais:  Jordan <br />Población (M): 10.7 <br />Area_km2:  0.09","Pais:  Azerbaijan <br />Población (M): 10.02 <br />Area_km2:  0.09","Pais:  UAE <br />Población (M): 9.21 <br />Area_km2:  0.08","Pais:  Sri Lanka <br />Población (M): 21.8 <br />Area_km2:  0.07","Pais:  Georgia <br />Población (M): 3.72 <br />Area_km2:  0.07","Pais:  Bhutan <br />Población (M): 0.77 <br />Area_km2:  0.04","Pais:  Armenia <br />Población (M): 2.82 <br />Area_km2:  0.03","Pais:  Israel <br />Población (M): 9.05 <br />Area_km2:  0.02","Pais:  Kuwait <br />Población (M): 4.44 <br />Area_km2:  0.02","Pais:  Lebanon <br />Población (M): 5.78 <br />Area_km2:  0.01","Pais:  West Bank And Gaza <br />Población (M): 4.69 <br />Area_km2:  0.01","Pais:  Qatar <br />Población (M): 2.81 <br />Area_km2:  0.01","Pais:  Timor-Leste <br />Población (M): 1.28 <br />Area_km2:  0.01","Pais:  Brunei <br />Población (M): 0.44 <br />Area_km2:  0.01","Pais:  Hong Kong <br />Población (M): 7.51 <br />Area_km2:  0","Pais:  Singapore <br />Población (M): 5.7 <br />Area_km2:  0","Pais:  Bahrain <br />Población (M): 1.49 <br />Area_km2:  0","Pais:  Macao <br />Población (M): 0.66 <br />Area_km2:  0","Pais:  Maldives <br />Población (M): 0.5 <br />Area_km2:  0"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(65,68,135,1)","opacity":0.7,"size":[71.8110236220472,71.2264644985731,12.9175287492647,15.9017171576356,34.4003331481867,21.7855500184135,8.4734632690242,31.7834790659857,21.4891738593363,18.2019748085911,16.1855924491058,15.2474868663186,20.2614460395865,9.68713807529907,15.5634951004141,16.7198269615405,25.2414137983754,23.9171456341706,22.6411599335464,15.4440227393294,9.09044909397469,10.0489526319148,9.79234424305164,13.2373760091342,12.4265090466486,28.0997892632263,14.8093992513816,10.7055932225296,14.2869768181634,18.0457750842306,11.0873943236272,10.9015480526883,10.6690852052903,13.567688824579,8.70586357419043,6.83337703978137,8.26311190552044,10.6228114020651,9.02297049968481,9.55039674479687,9.12444160005187,8.25603431398662,7.28891384513917,6.44998412678043,10.1456989219,9.5213905964017,7.45054628502121,6.72367714934347,6.53687472886399],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(65,68,135,1)"}},"hoveron":"points","name":"Asia","legendgroup":"Asia","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[144.41,44.39,67.39,47.13,10.28,83.09,5.52,5.35,37.97,59.73,66.84,19.37,9.42,10.72,6.98,0.36,10.29,9.77,6.95,10.67,8.88,4.93,2.79,4.07,1.91,5.45,3.36,1.33,17.34,8.58,5.81,11.49,2.85,2.66,2.08,2.09,1.79,1.23,0.62,0.62,0.5,0.17,0.08,0.08,0.05,0.04,0.04,0.04,0.03,0.03,0.03],"y":[17.1,0.6,0.55,0.51,0.45,0.36,0.34,0.32,0.31,0.3,0.24,0.24,0.21,0.13,0.11,0.1,0.09,0.09,0.09,0.08,0.08,0.07,0.07,0.06,0.06,0.05,0.05,0.05,0.04,0.04,0.04,0.03,0.03,0.03,0.03,0.02,0.01,0.01,0.01,0,0,0,0,0,0,0,0,0,0,0,0],"text":["Pais:  Russia <br />Población (M): 144.41 <br />Area_km2:  17.1","Pais:  Ukraine <br />Población (M): 44.39 <br />Area_km2:  0.6","Pais:  France <br />Población (M): 67.39 <br />Area_km2:  0.55","Pais:  Spain <br />Población (M): 47.13 <br />Area_km2:  0.51","Pais:  Sweden <br />Población (M): 10.28 <br />Area_km2:  0.45","Pais:  Germany <br />Población (M): 83.09 <br />Area_km2:  0.36","Pais:  Finland <br />Población (M): 5.52 <br />Area_km2:  0.34","Pais:  Norway <br />Población (M): 5.35 <br />Area_km2:  0.32","Pais:  Poland <br />Población (M): 37.97 <br />Area_km2:  0.31","Pais:  Italy <br />Población (M): 59.73 <br />Area_km2:  0.3","Pais:  United Kingdom <br />Población (M): 66.84 <br />Area_km2:  0.24","Pais:  Romania <br />Población (M): 19.37 <br />Area_km2:  0.24","Pais:  Belarus <br />Población (M): 9.42 <br />Area_km2:  0.21","Pais:  Greece <br />Población (M): 10.72 <br />Area_km2:  0.13","Pais:  Bulgaria <br />Población (M): 6.98 <br />Area_km2:  0.11","Pais:  Iceland <br />Población (M): 0.36 <br />Area_km2:  0.1","Pais:  Portugal <br />Población (M): 10.29 <br />Area_km2:  0.09","Pais:  Hungary <br />Población (M): 9.77 <br />Area_km2:  0.09","Pais:  Serbia <br />Población (M): 6.95 <br />Area_km2:  0.09","Pais:  Czech Republic <br />Población (M): 10.67 <br />Area_km2:  0.08","Pais:  Austria <br />Población (M): 8.88 <br />Area_km2:  0.08","Pais:  Ireland <br />Población (M): 4.93 <br />Area_km2:  0.07","Pais:  Lithuania <br />Población (M): 2.79 <br />Area_km2:  0.07","Pais:  Croatia <br />Población (M): 4.07 <br />Area_km2:  0.06","Pais:  Latvia <br />Población (M): 1.91 <br />Area_km2:  0.06","Pais:  Slovak Republic <br />Población (M): 5.45 <br />Area_km2:  0.05","Pais:  Bosnia <br />Población (M): 3.36 <br />Area_km2:  0.05","Pais:  Estonia <br />Población (M): 1.33 <br />Area_km2:  0.05","Pais:  Netherlands <br />Población (M): 17.34 <br />Area_km2:  0.04","Pais:  Switzerland <br />Población (M): 8.58 <br />Area_km2:  0.04","Pais:  Denmark <br />Población (M): 5.81 <br />Area_km2:  0.04","Pais:  Belgium <br />Población (M): 11.49 <br />Area_km2:  0.03","Pais:  Albania <br />Población (M): 2.85 <br />Area_km2:  0.03","Pais:  Moldova <br />Población (M): 2.66 <br />Area_km2:  0.03","Pais:  North Macedonia <br />Población (M): 2.08 <br />Area_km2:  0.03","Pais:  Slovenia <br />Población (M): 2.09 <br />Area_km2:  0.02","Pais:  Kosovo <br />Población (M): 1.79 <br />Area_km2:  0.01","Pais:  Cyprus <br />Población (M): 1.23 <br />Area_km2:  0.01","Pais:  Montenegro <br />Población (M): 0.62 <br />Area_km2:  0.01","Pais:  Luxembourg <br />Población (M): 0.62 <br />Area_km2:  0","Pais:  Malta <br />Población (M): 0.5 <br />Area_km2:  0","Pais:  Channel Islands <br />Población (M): 0.17 <br />Area_km2:  0","Pais:  Andorra <br />Población (M): 0.08 <br />Area_km2:  0","Pais:  Isle Of Man <br />Población (M): 0.08 <br />Area_km2:  0","Pais:  Faroe Islands <br />Población (M): 0.05 <br />Area_km2:  0","Pais:  Liechtenstein <br />Población (M): 0.04 <br />Area_km2:  0","Pais:  Monaco <br />Población (M): 0.04 <br />Area_km2:  0","Pais:  Sint Maarten (Dutch Part) <br />Población (M): 0.04 <br />Area_km2:  0","Pais:  Gibraltar <br />Población (M): 0.03 <br />Area_km2:  0","Pais:  San Marino <br />Población (M): 0.03 <br />Area_km2:  0","Pais:  St. Martin (French Part) <br />Población (M): 0.03 <br />Area_km2:  0"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(42,120,142,1)","opacity":0.7,"size":[26.5955966221198,17.1016206257451,19.8441150118514,17.4618941280639,10.9724243812897,21.4514133005153,9.45323523504866,9.38711308124248,16.2138277699682,18.9920449680661,19.784414487402,13.0923392578624,10.7295619558455,11.0936001737836,9.97024499249227,6.33962494848827,10.9744645277487,10.830179633285,9.95998015799356,11.0801192857906,10.5712461971364,9.22522423932914,8.2490827250927,8.86116959009445,7.73698675757709,9.42768272185092,8.53620183773009,7.32513862288237,12.6727301840527,10.4797740795867,9.56237819822317,11.2978656948339,8.28082273693609,8.17922718746227,7.839503292552,7.84670376102117,7.65533181789834,7.24789388024623,6.6772519053786,6.67495137464756,6.53631183511128,5.99707329784792,5.74469063228787,5.77028053534026,5.64912217803493,5.5854835554351,5.57764232050246,5.60173684828716,5.55268090587526,5.56151017837362,5.55528984620134],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(42,120,142,1)"}},"hoveron":"points","name":"Europe","legendgroup":"Europe","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[37.6,328.33,0.06,125.09,6.66,16.6,11.32,9.96,4.23,10.88,5.08,11.16,6.28,0.39,3.19,2.81,0.4,0.28,0.16,0.12,0.11,0.11,0.1,0.09,0.07,0.07,0.06,0.05,0.04,0.03],"y":[9.98,9.37,2.17,1.96,0.13,0.11,0.11,0.11,0.08,0.05,0.05,0.03,0.02,0.02,0.01,0.01,0.01,0,0,0,0,0,0,0,0,0,0,0,0,0],"text":["Pais:  Canada <br />Población (M): 37.6 <br />Area_km2:  9.98","Pais:  United States <br />Población (M): 328.33 <br />Area_km2:  9.37","Pais:  Greenland <br />Población (M): 0.06 <br />Area_km2:  2.17","Pais:  Mexico <br />Población (M): 125.09 <br />Area_km2:  1.96","Pais:  Nicaragua <br />Población (M): 6.66 <br />Area_km2:  0.13","Pais:  Guatemala <br />Población (M): 16.6 <br />Area_km2:  0.11","Pais:  Cuba <br />Población (M): 11.32 <br />Area_km2:  0.11","Pais:  Honduras <br />Población (M): 9.96 <br />Area_km2:  0.11","Pais:  Panama <br />Población (M): 4.23 <br />Area_km2:  0.08","Pais:  Dominican Republic <br />Población (M): 10.88 <br />Area_km2:  0.05","Pais:  Costa Rica <br />Población (M): 5.08 <br />Area_km2:  0.05","Pais:  Haiti <br />Población (M): 11.16 <br />Area_km2:  0.03","Pais:  El Salvador <br />Población (M): 6.28 <br />Area_km2:  0.02","Pais:  Belize <br />Población (M): 0.39 <br />Area_km2:  0.02","Pais:  Puerto Rico <br />Población (M): 3.19 <br />Area_km2:  0.01","Pais:  Jamaica <br />Población (M): 2.81 <br />Area_km2:  0.01","Pais:  Bahamas <br />Población (M): 0.4 <br />Area_km2:  0.01","Pais:  Barbados <br />Población (M): 0.28 <br />Area_km2:  0","Pais:  Curacao <br />Población (M): 0.16 <br />Area_km2:  0","Pais:  Grenada <br />Población (M): 0.12 <br />Area_km2:  0","Pais:  Aruba <br />Población (M): 0.11 <br />Area_km2:  0","Pais:  Virgin Islands (U.S.) <br />Población (M): 0.11 <br />Area_km2:  0","Pais:  St. Vincent And The Grenadines <br />Población (M): 0.1 <br />Area_km2:  0","Pais:  Antigua And Barbuda <br />Población (M): 0.09 <br />Area_km2:  0","Pais:  Cayman Islands <br />Población (M): 0.07 <br />Area_km2:  0","Pais:  Dominica <br />Población (M): 0.07 <br />Area_km2:  0","Pais:  Bermuda <br />Población (M): 0.06 <br />Area_km2:  0","Pais:  St. Kitts And Nevis <br />Población (M): 0.05 <br />Area_km2:  0","Pais:  Turks And Caicos Islands <br />Población (M): 0.04 <br />Area_km2:  0","Pais:  British Virgin Islands <br />Población (M): 0.03 <br />Area_km2:  0"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(34,168,132,1)","opacity":0.7,"size":[16.1612905034648,37.4159500406015,5.66855477589759,25.1191150177029,9.86430060598916,12.5132681754207,11.25261683264,10.883181893998,8.93407026975281,11.1368585347794,9.28477673377384,11.211277461773,9.73047051717558,6.38156226857504,8.45427398425603,8.25949817863118,6.4036284323824,6.21125159850882,5.96989577038067,5.88405726637103,5.83918613775525,5.83983695343123,5.83481395560416,5.79642253730912,5.70779816085385,5.72731906112204,5.69932280068004,5.63124080096016,5.60910257708815,5.53988949027708],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(34,168,132,1)"}},"hoveron":"points","name":"North America","legendgroup":"North America","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[25.34,9.54,4.98,0.67,0.92,0.27,0.3,0.3,0.21,0.17,0.12,0.11,0.1,0.05,0.05,0.04,0.02,0.01,0.01],"y":[7.69,0.46,0.27,0.03,0.02,0.02,0.01,0,0,0,0,0,0,0,0,0,0,0,0],"text":["Pais:  Australia <br />Población (M): 25.34 <br />Area_km2:  7.69","Pais:  Papua New Guinea <br />Población (M): 9.54 <br />Area_km2:  0.46","Pais:  New Zealand <br />Población (M): 4.98 <br />Area_km2:  0.27","Pais:  Solomon Islands <br />Población (M): 0.67 <br />Area_km2:  0.03","Pais:  Fiji <br />Población (M): 0.92 <br />Area_km2:  0.02","Pais:  New Caledonia <br />Población (M): 0.27 <br />Area_km2:  0.02","Pais:  Vanuatu <br />Población (M): 0.3 <br />Area_km2:  0.01","Pais:  French Polynesia <br />Población (M): 0.3 <br />Area_km2:  0","Pais:  Samoa <br />Población (M): 0.21 <br />Area_km2:  0","Pais:  Guam <br />Población (M): 0.17 <br />Area_km2:  0","Pais:  Kiribati <br />Población (M): 0.12 <br />Area_km2:  0","Pais:  Micronesia <br />Población (M): 0.11 <br />Area_km2:  0","Pais:  Tonga <br />Población (M): 0.1 <br />Area_km2:  0","Pais:  American Samoa <br />Población (M): 0.05 <br />Area_km2:  0","Pais:  Northern Mariana Islands <br />Población (M): 0.05 <br />Area_km2:  0","Pais:  Marshall Islands <br />Población (M): 0.04 <br />Area_km2:  0","Pais:  Palau <br />Población (M): 0.02 <br />Area_km2:  0","Pais:  Nauru <br />Población (M): 0.01 <br />Area_km2:  0","Pais:  Tuvalu <br />Población (M): 0.01 <br />Area_km2:  0"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(122,209,81,1)","opacity":0.7,"size":[14.2141381393873,10.764915016817,9.24310563354577,6.73606633998679,6.9802829632311,6.19584908452066,6.25174588707574,6.24404512165535,6.08609272859042,5.99532074791387,5.8880661229924,5.85317058473696,5.83489202889057,5.62942807510903,5.6410226477937,5.6171514769164,5.43924754740436,5.35213717699187,5.29133858267716],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(122,209,81,1)"}},"hoveron":"points","name":"Oceania","legendgroup":"Oceania","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[211.78,44.94,32.82,50.19,11.78,28.97,19.04,6.53,17.34,0.8,3.43,0.6,1.52,0.18],"y":[8.52,2.78,1.29,1.14,1.1,0.92,0.76,0.41,0.28,0.21,0.18,0.16,0.01,0],"text":["Pais:  Brazil <br />Población (M): 211.78 <br />Area_km2:  8.52","Pais:  Argentina <br />Población (M): 44.94 <br />Area_km2:  2.78","Pais:  Peru <br />Población (M): 32.82 <br />Area_km2:  1.29","Pais:  Colombia <br />Población (M): 50.19 <br />Area_km2:  1.14","Pais:  Bolivia <br />Población (M): 11.78 <br />Area_km2:  1.1","Pais:  Venezuela <br />Población (M): 28.97 <br />Area_km2:  0.92","Pais:  Chile <br />Población (M): 19.04 <br />Area_km2:  0.76","Pais:  Paraguay <br />Población (M): 6.53 <br />Area_km2:  0.41","Pais:  Ecuador <br />Población (M): 17.34 <br />Area_km2:  0.28","Pais:  Guyana <br />Población (M): 0.8 <br />Area_km2:  0.21","Pais:  Uruguay <br />Población (M): 3.43 <br />Area_km2:  0.18","Pais:  Suriname <br />Población (M): 0.6 <br />Area_km2:  0.16","Pais:  Trinidad And Tobago <br />Población (M): 1.52 <br />Area_km2:  0.01","Pais:  St. Lucia <br />Población (M): 0.18 <br />Area_km2:  0"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(253,231,37,1)","opacity":0.7,"size":[31.0915976336075,17.1749171334756,15.4472483983113,17.8498985377843,11.3728415771206,14.8323542135072,13.0251305495829,9.81804886422804,12.6724887315726,6.8649483363461,8.56882690294982,6.65239046069607,7.46922062253486,6.01721362398894],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(253,231,37,1)"}},"hoveron":"points","name":"South America","legendgroup":"South America","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":71.7907845579078,"r":39.8505603985056,"b":86.8410128684101,"l":70.9007887090079},"font":{"color":"rgba(0,0,0,1)","family":"Arial Narrow","size":15.2760481527605},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-70.3765,1478.1265],"tickmode":"array","ticktext":["0","500","1000"],"tickvals":[0,500,1000],"categoryorder":"array","categoryarray":["0","500","1000"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.81901203819012,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"Arial Narrow","size":15.2760481527605},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(204,204,204,1)","gridwidth":0.265670402656704,"zeroline":false,"anchor":"y","title":{"text":"Pob","font":{"color":"rgba(0,0,0,1)","family":"Arial Narrow","size":11.9551681195517}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.855,17.955],"tickmode":"array","ticktext":["0","5","10","15"],"tickvals":[0,5,10,15],"categoryorder":"array","categoryarray":["0","5","10","15"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.81901203819012,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"Arial Narrow","size":15.2760481527605},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(204,204,204,1)","gridwidth":0.265670402656704,"zeroline":false,"anchor":"x","title":{"text":"Area","font":{"color":"rgba(0,0,0,1)","family":"Arial Narrow","size":11.9551681195517}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"Arial Narrow","size":12.2208385222084},"title":{"text":"Population (M)","font":{"color":"rgba(0,0,0,1)","family":"Arial Narrow","size":15.2760481527605}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"51987970b3e":{"x":{},"y":{},"size":{},"colour":{},"text":{},"type":"scatter"}},"cur_data":"51987970b3e","visdat":{"51987970b3e":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output-display">
-<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-26-2.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output-display">
-<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-26-3.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output-display">
-<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-26-4.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output-display">
-<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-26-5.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output-display">
-<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-27-2.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output-display">
-<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-27-3.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
 <p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="cell-output-display">
-<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-28-2.png" class="img-fluid" width="672"></p>
 </div>
-<div class="cell-output-display">
-<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-28-3.png" class="img-fluid" width="672"></p>
-</div>
-</div>
+<p>Resalta África; la esperanza de vida es mucho más baja que en los demás continentes, veamos cuál és el país que presenta una esperanza de vida más baja:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(world_population<span class="sc">$</span>Natalidad, world_population<span class="sc">$</span>Fertilidad, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>world_population[<span class="fu">which.min</span>(world_population[world_population<span class="sc">$</span>Esp_vida<span class="sc">&gt;</span><span class="dv">0</span>,]<span class="sc">$</span>Esp_vida),] <span class="sc">%&gt;%</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Pais, Año, Esp_vida)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
-    Pearson's product-moment correlation
-
-data:  world_population$Natalidad and world_population$Fertilidad
-t = 112.52, df = 628, p-value &lt; 2.2e-16
-alternative hypothesis: true correlation is greater than 0
-95 percent confidence interval:
- 0.972772 1.000000
-sample estimates:
-      cor 
-0.9760841 </code></pre>
+<pre><code># A tibble: 1 × 3
+  Pais  Año   Esp_vida
+  &lt;chr&gt; &lt;chr&gt;    &lt;int&gt;
+1 Chad  2018        53</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(world_population<span class="sc">$</span>Esp_vida, world_population<span class="sc">$</span>Mortalidad, <span class="at">alternative =</span> <span class="st">"less"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>La esperanza de vida és un claro indicador de la calidad de vida de un determinado país; así, teniendo en cuenta las enfermedades causadas por la falta de agua, la poca asistencia médica y la desnutrición, hacen que Chad sea el país con una esperaza de vida de tan solo 53 años, siendo la más baja del mundo.</p>
+<p>De la misma forma, veamos qué país presenta una esperanza de vida más alta:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>world_population[<span class="fu">which.max</span>(world_population<span class="sc">$</span>Esp_vida),] <span class="sc">%&gt;%</span> </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Pais, Año, Esp_vida)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
-    Pearson's product-moment correlation
-
-data:  world_population$Esp_vida and world_population$Mortalidad
-t = -3.0963, df = 625, p-value = 0.001024
-alternative hypothesis: true correlation is less than 0
-95 percent confidence interval:
- -1.00000000 -0.05762643
-sample estimates:
-       cor 
--0.1229126 </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(world_population<span class="sc">$</span>Esp_vida, world_population<span class="sc">$</span>Mortalidad_infantil, <span class="at">alternative =</span> <span class="st">"less"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Pearson's product-moment correlation
-
-data:  world_population$Esp_vida and world_population$Mortalidad_infantil
-t = -51.725, df = 571, p-value &lt; 2.2e-16
-alternative hypothesis: true correlation is less than 0
-95 percent confidence interval:
- -1.0000000 -0.8949037
-sample estimates:
-      cor 
--0.907808 </code></pre>
+<pre><code># A tibble: 1 × 3
+  Pais      Año   Esp_vida
+  &lt;chr&gt;     &lt;chr&gt;    &lt;int&gt;
+1 Hong Kong 2018        85</code></pre>
 </div>
 </div>
+<p>Los motivos podrían ser su estilo de vida activo y saludable acompañado de una dieta rica en alimentos cocinados al vapor y el alto consumo de diferentes variedades de tés.</p>
 </section>
 <section id="estimación-y-correlaciones" class="level2">
 <h2 class="anchored" data-anchor-id="estimación-y-correlaciones">Estimación y correlaciones</h2>
-<p>Estimación del vector de medias por continentes:</p>
+<p>Vemos aquí el vector de medias por continentes y año:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 18 × 11
@@ -523,9 +501,120 @@ sample estimates:
 #   `Fertilidad media` &lt;dbl&gt;</code></pre>
 </div>
 </div>
+<p>El vector de medias global, dividido en años es el siguiente:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 3
+Columns: 10
+$ Año                 &lt;chr&gt; "2018", "2019", "2020"
+$ Población_total     &lt;dbl&gt; 40554622, 40981441, 41395285
+$ Población_rural     &lt;dbl&gt; 18086703, 18098140, 18102674
+$ Población_urbana    &lt;dbl&gt; 22467920, 22883301, 23292611
+$ Densidad            &lt;dbl&gt; 127.3333, 128.5191, 129.7541
+$ Esperanza_de_vida   &lt;dbl&gt; 71.91803, 72.09836, 71.45355
+$ Natalidad           &lt;dbl&gt; 20.46535, 20.09978, 19.73060
+$ Mortalidad          &lt;dbl&gt; 7.803743, 7.774290, 8.323546
+$ Mortalidad_infantil &lt;dbl&gt; 21.90765, 21.38087, 20.80820
+$ Fertilidad          &lt;dbl&gt; 2.718836, 2.677464, 2.635984</code></pre>
+</div>
+</div>
+<p>Empezamos ahora con las matrices de correlación; como nuestro estudio se centra en estudiar cada continente por separado, hemos hecho un gráfico <code>ggpairs()</code> para cada continente.</p>
+<section id="asia" class="level3">
+<h3 class="anchored" data-anchor-id="asia">Asia</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="áfrica" class="level3">
+<h3 class="anchored" data-anchor-id="áfrica">África</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="europa" class="level3">
+<h3 class="anchored" data-anchor-id="europa">Europa</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="norteamérica" class="level3">
+<h3 class="anchored" data-anchor-id="norteamérica">Norteamérica</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="oceania" class="level3">
+<h3 class="anchored" data-anchor-id="oceania">Oceania</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="sudamérica" class="level3">
+<h3 class="anchored" data-anchor-id="sudamérica">Sudamérica</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="DemografiaMundial_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>En general, observamos una clara asociación positiva entre la Fertilidad y la Natalidad; de la misma forma, notamos la asociación positiva entre la Natalidad y la Mortalidad infatil; además también podemos apreciar la asociación negativa entre la Esperanza de vida y la Mortalidad infantil. En cuanto a las funciones de densidad, observamos que en todos los continentes, las funciones de densidad no varian en los años 2018 y 2019; sin embargo, sí que encontramos variaciones significativas al analizar la función de densidad de 2020: la Esperanza de vida disminuye, mientras que la Mortalidad augmenta en todos los continentes.</p>
+<p>Para confirmar estas posibles correlaciones, realizaremos unos tests de correlación.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  world_population$Natalidad and world_population$Fertilidad
+t = 112.52, df = 628, p-value &lt; 2.2e-16
+alternative hypothesis: true correlation is greater than 0
+95 percent confidence interval:
+ 0.972772 1.000000
+sample estimates:
+      cor 
+0.9760841 </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  world_population$Natalidad and world_population$Mortalidad_infantil
+t = 42.088, df = 583, p-value = 1
+alternative hypothesis: true correlation is less than 0
+95 percent confidence interval:
+ -1.0000000  0.8833144
+sample estimates:
+      cor 
+0.8673972 </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  world_population$Esp_vida and world_population$Mortalidad_infantil
+t = -51.725, df = 571, p-value &lt; 2.2e-16
+alternative hypothesis: true correlation is less than 0
+95 percent confidence interval:
+ -1.0000000 -0.8949037
+sample estimates:
+      cor 
+-0.907808 </code></pre>
+</div>
+</div>
+<p>Por lo tanto, podemos concluir que las variables Natalidad y Fertilidad están correlacionadas positivamente; al igual que las de Natalidad y la de Mortalidad infantil, esto no nos debe estrañar, ya que cuántos más nacimientos, más alta será la tasa de Mortalidad infantil; por último, tenemos que las variables de Esperanza de vida y Mortalidad infantil están correlacionadas negativamente, ya que cuánta más Mortalidad infantil más baja será la Esperanza de vida.</p>
+</section>
 </section>
 <section id="conclusiones" class="level2">
 <h2 class="anchored" data-anchor-id="conclusiones">Conclusiones</h2>
+<p>En conclusión, observamos diferencias entre los distintos continentes, sin embargo, diferenciando por años, no encontramos cambios significativos. Además hemos confirmado las correlaciones positivas entre las variables de Natalidad y Fertilidad, y Natalidad con Mortalidad infantil; además tenemos correlación negativa entre la Esperanza de vida y la Mortalidad infantil. Por último, hemos visto que la mayoría de los outliers y valores máximos y mínimos están justificados por eventos históricos o por las cualidades propias de cada país.</p>
 </section>
 
 </main>
