@@ -411,7 +411,7 @@ cor.test(world_population$Esp_vida, world_population$Mortalidad_infantil, altern
 
 -   No observamos cambios significativos en estos años a nivel global
 -   Sí que hay diferencias entre continentes
--   Como consecuencia, hemos visto que hay correlación positiva entre:
+-   Como consecuencia, hemos visto que hay correlación entre:
     -   Natalidad y Fertilidad
     -   Natalidad y Mortalidad infantil
     -   Esperanza de vida y Mortalidad infantil
