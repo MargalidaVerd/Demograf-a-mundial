@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.3.353">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -254,9 +254,6 @@ $ Crecimiento         &lt;chr&gt; "3.0", "3.0", "3.0", "0.0", "0.0", "-1.0", "2.
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'cowplot' was built under R version 4.2.3</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'cowplot'</code></pre>
 </div>
@@ -323,9 +320,9 @@ Attaching package: 'cowplot'</code></pre>
 </div>
 <p>Igual que antes, Europa es el continente con el índice de mortalidad más alto. Veamos cual es el pais con más tasa de mortalidad en los disitintos años:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>data_18 <span class="ot">=</span> world_population[world_population<span class="sc">$</span>Año <span class="sc">==</span> <span class="st">"2018"</span>,]</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>data_18[<span class="fu">which.max</span>(data_18<span class="sc">$</span>Mortalidad),] <span class="sc">%&gt;%</span> </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Pais, Año, Mortalidad)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>data_18 <span class="ot">=</span> world_population[world_population<span class="sc">$</span>Año <span class="sc">==</span> <span class="st">"2018"</span>,]</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>data_18[<span class="fu">which.max</span>(data_18<span class="sc">$</span>Mortalidad),] <span class="sc">%&gt;%</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Pais, Año, Mortalidad)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
   Pais     Año   Mortalidad
@@ -334,9 +331,9 @@ Attaching package: 'cowplot'</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>data_19 <span class="ot">=</span> world_population[world_population<span class="sc">$</span>Año <span class="sc">==</span> <span class="st">"2019"</span>,]</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>data_19[<span class="fu">which.max</span>(data_19<span class="sc">$</span>Mortalidad),]  <span class="sc">%&gt;%</span> </span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Pais, Año, Mortalidad)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>data_19 <span class="ot">=</span> world_population[world_population<span class="sc">$</span>Año <span class="sc">==</span> <span class="st">"2019"</span>,]</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>data_19[<span class="fu">which.max</span>(data_19<span class="sc">$</span>Mortalidad),]  <span class="sc">%&gt;%</span> </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Pais, Año, Mortalidad)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
   Pais     Año   Mortalidad
@@ -345,9 +342,9 @@ Attaching package: 'cowplot'</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>data_20 <span class="ot">=</span> world_population[world_population<span class="sc">$</span>Año <span class="sc">==</span> <span class="st">"2020"</span>,]</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>data_20[<span class="fu">which.max</span>(data_20<span class="sc">$</span>Mortalidad),]  <span class="sc">%&gt;%</span> </span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Pais, Año, Mortalidad)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>data_20 <span class="ot">=</span> world_population[world_population<span class="sc">$</span>Año <span class="sc">==</span> <span class="st">"2020"</span>,]</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>data_20[<span class="fu">which.max</span>(data_20<span class="sc">$</span>Mortalidad),]  <span class="sc">%&gt;%</span> </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Pais, Año, Mortalidad)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
   Pais     Año   Mortalidad
@@ -388,9 +385,9 @@ Attaching package: 'cowplot'</code></pre>
 <p>En concreto, mueren al año 43 niños/niñas por cada 1000 nacimientos. Teniendo en cuenta el número de nacimientos en este continente, esto equivale a 1.5 millones de muertes infantiles, cada año.</p>
 <p>También nos llama la atención el valor máximo de Norteamérica, y tras investigar un poco, encontramos que en 2018 hubo un terremoto en Haití, que hizo que las tasas de mortalidad infantil augmentaran respecto al resto de años; sin embargo, en general, las tasas en Haití siguen siendo muy altas. Esto viene provocado por la situación de pobreza y de insalubridad, que causan enfermedad y sufrimiento entre la población infantil, un 8% de la cual sufre desnutrición grave y el 22% padece desnutrición crónica.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>north_am <span class="ot">=</span> world_population[world_population<span class="sc">$</span>Continente <span class="sc">==</span> <span class="st">"North America"</span>,]</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>north_am[<span class="fu">which.max</span>(north_am<span class="sc">$</span>Mortalidad_infantil),]  <span class="sc">%&gt;%</span> </span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Pais, Año, Mortalidad_infantil)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>north_am <span class="ot">=</span> world_population[world_population<span class="sc">$</span>Continente <span class="sc">==</span> <span class="st">"North America"</span>,]</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>north_am[<span class="fu">which.max</span>(north_am<span class="sc">$</span>Mortalidad_infantil),]  <span class="sc">%&gt;%</span> </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Pais, Año, Mortalidad_infantil)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
   Pais  Año   Mortalidad_infantil
@@ -446,8 +443,8 @@ Attaching package: 'cowplot'</code></pre>
 </div>
 <p>Resalta África; la esperanza de vida es mucho más baja que en los demás continentes, veamos cuál és el país que presenta una esperanza de vida más baja:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>world_population[<span class="fu">which.min</span>(world_population[world_population<span class="sc">$</span>Esp_vida<span class="sc">&gt;</span><span class="dv">0</span>,]<span class="sc">$</span>Esp_vida),] <span class="sc">%&gt;%</span> </span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Pais, Año, Esp_vida)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>world_population[<span class="fu">which.min</span>(world_population[world_population<span class="sc">$</span>Esp_vida<span class="sc">&gt;</span><span class="dv">0</span>,]<span class="sc">$</span>Esp_vida),] <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Pais, Año, Esp_vida)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
   Pais  Año   Esp_vida
@@ -458,8 +455,8 @@ Attaching package: 'cowplot'</code></pre>
 <p>La esperanza de vida és un claro indicador de la calidad de vida de un determinado país; así, teniendo en cuenta las enfermedades causadas por la falta de agua, la poca asistencia médica y la desnutrición, hacen que Chad sea el país con una esperaza de vida de tan solo 53 años, siendo la más baja del mundo.</p>
 <p>De la misma forma, veamos qué país presenta una esperanza de vida más alta:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>world_population[<span class="fu">which.max</span>(world_population<span class="sc">$</span>Esp_vida),] <span class="sc">%&gt;%</span> </span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Pais, Año, Esp_vida)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>world_population[<span class="fu">which.max</span>(world_population<span class="sc">$</span>Esp_vida),] <span class="sc">%&gt;%</span> </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Pais, Año, Esp_vida)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
   Pais      Año   Esp_vida
