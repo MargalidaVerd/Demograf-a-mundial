@@ -122,7 +122,7 @@ Como vemos, tenemos bastantes datos faltantes en los años 2017 y 2021; por eso,
 
 ```{r,warning=FALSE,message=FALSE,echo=FALSE}
 world_population <- world_population %>% 
-  filter(Año == 2018 |Año == 2019 |Año == 2020) 
+  filter(Año == 2018 |Año == 2019 |Año == 2020 ) 
 ```
 
 Ahora, trataremos particularmente los datos NA de las variables *Contiente* y *Area_km2*, ya que son las variables que hemos añadido de otro dataframe. En este caso, rellenaremos manualmente. La información con la que hemos completado estos valores se han sacado de las correspondientes páginas web de *Wikipedia* de cada uno de los países.
