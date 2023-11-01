@@ -96,39 +96,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 1,073
-Columns: 14
-$ Country                 &lt;chr&gt; "Afghanistan", "Afghanistan", "Afghanistan", "…
-$ Year                    &lt;dbl&gt; 2017, 2018, 2019, 2020, 2021, 2017, 2018, 2019…
-$ `Total Population`      &lt;chr&gt; "-", "36,686,784", "37,769,499", "38,972,230",…
-$ `Urban Population`      &lt;chr&gt; "-", "9,353,296", "9,727,157", "10,142,913", "…
-$ `Rural Population`      &lt;chr&gt; "-", "27,333,488", "28,042,342", "28,829,317",…
-$ `Population Density`    &lt;chr&gt; "55", "56", "58", "60", "-", "105", "105", "10…
-$ `Life Expectancy`       &lt;chr&gt; "63.0", "63.0", "64.0", "63.0", "62.0", "79.0"…
-$ `Birth Rate`            &lt;dbl&gt; 37.342, 36.927, 36.466, 36.051, 35.842, 10.870…
-$ `Death Rate`            &lt;dbl&gt; 7.027, 6.981, 6.791, 7.113, 7.344, 8.150, 8.30…
-$ `Fertility Rate`        &lt;chr&gt; "5.129", "5.002", "4.87", "4.75", "4.643", "1.…
-$ `Infant Mortality Rate` &lt;chr&gt; "49.4", "47.8", "46.3", "44.8", "43.4", "8.3",…
-$ `Growth Rate`           &lt;chr&gt; "-", "3.0", "3.0", "3.0", "3.0", "-", "0.0", "…
-$ Continent               &lt;chr&gt; "Asia", "Asia", "Asia", "Asia", "Asia", "Europ…
-$ Area_km2                &lt;dbl&gt; 652230, 652230, 652230, 652230, 652230, 28748,…</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
 <pre><code>[1]  5  6  7  8  9 10 11 12 13</code></pre>
 </div>
 </div>
+<p>Comprobemos la normalidad multivariante de nuestros datos</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mvnormtest)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Shapiro-Wilk</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>data0 <span class="ot">&lt;-</span> world_population <span class="sc">%&gt;%</span> </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Año <span class="sc">==</span> <span class="dv">2018</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>x<span class="ot">=</span> data0[, <span class="fu">c</span>(<span class="st">"Pob_urbana"</span>,<span class="st">"Pob_rural"</span>, <span class="st">"Densidad"</span>,<span class="st">"Esp_vida"</span>, <span class="st">"Natalidad"</span>, <span class="st">"Mortalidad"</span>, <span class="st">"Mortalidad_infantil"</span>, <span class="st">"Fertilidad"</span>)]</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">t</span>(x)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">mshapiro.test</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mvnormtest)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Shapiro-Wilk</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>data0 <span class="ot">&lt;-</span> world_population <span class="sc">%&gt;%</span> </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Año <span class="sc">==</span> <span class="dv">2018</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>x<span class="ot">=</span> data0[, <span class="fu">c</span>(<span class="st">"Pob_urbana"</span>,<span class="st">"Pob_rural"</span>, <span class="st">"Densidad"</span>,<span class="st">"Esp_vida"</span>, <span class="st">"Natalidad"</span>, <span class="st">"Mortalidad"</span>, <span class="st">"Mortalidad_infantil"</span>, <span class="st">"Fertilidad"</span>)]</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">t</span>(x)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">mshapiro.test</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Shapiro-Wilk normality test
