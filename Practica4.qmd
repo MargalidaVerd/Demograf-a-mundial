@@ -18,9 +18,6 @@ world_data <- data %>%
 # Unimos los dos dataframes y creamos el tibble que usaremos para el estudio
 world_population = left_join(global_population,world_data, by = "Country")
 
-world_population %>% 
-  glimpse()
-
 ```
 
 ```{r, warning=FALSE, message=FALSE,echo=FALSE}
@@ -140,6 +137,8 @@ View(world_population)
 5:13
 ```
 
+
+Comprobemos la normalidad multivariante de nuestros datos
 ```{r}
 library(mvnormtest)
 # Shapiro-Wilk
