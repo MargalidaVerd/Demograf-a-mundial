@@ -3,6 +3,7 @@ title: "Práctica 4"
 format: html
 editor: visual
 ---
+
 ```{r, warning=FALSE,message=FALSE,echo=FALSE}
 library(tidyverse)
 
@@ -133,12 +134,11 @@ world_population$Area_km2[634:636] = 346
 world_population$Continente[637:639] = "Asia"
 world_population$Area_km2[637:639] = 5860
 
-View(world_population)
-5:13
+#View(world_population)
 ```
 
+Comprobemos la normalidad multivariante de nuestros datos. Suponemos $H_0 =$ "los datos siguen una distribución normal" y $H_1 =$ "no la siguen"
 
-Comprobemos la normalidad multivariante de nuestros datos
 ```{r}
 library(mvnormtest)
 # Shapiro-Wilk
@@ -146,21 +146,19 @@ data0 <- world_population %>%
   filter(Año == 2018) %>% 
   drop_na() 
   
-x= data0[, c("Pob_urbana","Pob_rural", "Densidad","Esp_vida", "Natalidad", "Mortalidad", "Mortalidad_infantil", "Fertilidad")]
+x= data0[, c("Pob_total","Pob_urbana","Pob_rural", "Densidad","Esp_vida", 
+             "Natalidad", "Mortalidad", "Mortalidad_infantil", "Fertilidad")]
+x = t(x)
+#mshapiro.test(x)
+```
+El test con "Pob_total" nos da error porque está teniendo problemas para calcular la inversa de una matriz computacionalmente singular. Una matriz singular es aquella que no puede ser invertida debido a que su determinante es cero o muy cercano a cero.
+
+Esto viene dado a que hay datos redundantes o colineales, i.e., datos contienen columnas que son linealmente dependientes, es decir, una columna es una combinación lineal de las otras, la matriz resultante puede ser singular, el caso de "Pob_urbana" y "Pob_rural" son combinación lineal de "Pob_total". 
+
+Así que haremos el estudio con sólo la variable "Pob_total".
+```{r}
+ x= data0[, c("Pob_total", "Densidad","Esp_vida", "Natalidad", "Mortalidad", "Mortalidad_infantil", "Fertilidad")]
 x = t(x)
 mshapiro.test(x)
 ```
-
-"Pob_total", "Pob_urbana", "Pob_rural", "Densidad", 
-
-
-
-
-
-
-
-
-
-
-
-
+Como podemos observar, el test no da un p-valor$< 0.05$, entonces, concluimos que rechazamos la hipótesis nula. Es decir, las variables cuantitativas de nuestro estudio no siguen una distribución normal.
