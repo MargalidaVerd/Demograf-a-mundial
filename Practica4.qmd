@@ -151,14 +151,92 @@ x= data0[, c("Pob_total","Pob_urbana","Pob_rural", "Densidad","Esp_vida",
 x = t(x)
 #mshapiro.test(x)
 ```
+
 El test con "Pob_total" nos da error porque está teniendo problemas para calcular la inversa de una matriz computacionalmente singular. Una matriz singular es aquella que no puede ser invertida debido a que su determinante es cero o muy cercano a cero.
 
-Esto viene dado a que hay datos redundantes o colineales, i.e., datos contienen columnas que son linealmente dependientes, es decir, una columna es una combinación lineal de las otras, la matriz resultante puede ser singular, el caso de "Pob_urbana" y "Pob_rural" son combinación lineal de "Pob_total". 
+Esto viene dado a que hay datos redundantes o colineales, i.e., datos contienen columnas que son linealmente dependientes, es decir, una columna es una combinación lineal de las otras, la matriz resultante puede ser singular, el caso de "Pob_urbana" y "Pob_rural" son combinación lineal de "Pob_total".
 
 Así que haremos el estudio con sólo la variable "Pob_total".
+
 ```{r}
  x= data0[, c("Pob_total", "Densidad","Esp_vida", "Natalidad", "Mortalidad", "Mortalidad_infantil", "Fertilidad")]
 x = t(x)
 mshapiro.test(x)
 ```
+
 Como podemos observar, el test no da un p-valor$< 0.05$, entonces, concluimos que rechazamos la hipótesis nula. Es decir, las variables cuantitativas de nuestro estudio no siguen una distribución normal.
+
+
+
+
+```{r}
+library(mvtnorm)
+library(ggplot2)
+```
+
+
+Vamos a crear una muestra aleatoria de tamaño $N$ de una $T^2$ con parámetros $p$ y $n$ grados de libertad. Para ello, crearemos una muestra aleatoria de una F de Fisher y usaremos la siguiente propiedad:
+
+$$ T^2(p,n) = \frac{np}{n-p+1}F_{n-p+1}^p$$
+
+```{r,message=FALSE}
+N = 100
+n = 100
+p = 15
+set.seed(61123)
+vector_fisher = rf(N,n-p+1,p)
+x = (n*p*vector_fisher)/(n-p+1)
+df <- data.frame(x)
+ggplot(df, aes(x = x)) + 
+  geom_histogram(aes(y = ..density..),
+                 colour = 1, fill = "lightblue") +
+  geom_density(lwd = 0.75,
+               color = "blue") +
+  xlab("x") +
+  ylab("")
+
+```
+```{r,message=FALSE}
+N = 1000
+n = 100
+p = 15
+set.seed(61123)
+
+vector_fisher = rf(N,n-p+1,p)
+x = (n*p*vector_fisher)/(n-p+1)
+df <- data.frame(x)
+ggplot(df, aes(x = x)) + 
+  geom_histogram(aes(y = ..density..),
+                 colour = 1, fill = "#A2CD5A") +
+  geom_density(lwd = 0.75,
+               color = "darkgreen") +
+  xlab("x") +
+  ylab("")
+```
+```{r,message=FALSE}
+N = 1000000
+n = 1000
+p = 15
+set.seed(61123)
+
+vector_fisher = rf(N,p,n-p+1)
+x = (n*p*vector_fisher)/(n-p+1)
+df <- data.frame(x)
+ggplot(df, aes(x = x)) + 
+  geom_histogram(aes(y = ..density..),
+                 colour = 1, fill = "#CD96CD") +
+  geom_density(lwd = 0.75,
+               color = "#551A8B") +
+  xlab("x") +
+  ylab("")
+```
+
+
+
+
+
+
+
+
+
+
