@@ -166,14 +166,12 @@ mshapiro.test(x)
 
 Como podemos observar, el test no da un p-valor$< 0.05$, entonces, concluimos que rechazamos la hipótesis nula. Es decir, las variables cuantitativas de nuestro estudio no siguen una distribución normal.
 
+Cabe destacar que si hacemos el test cambiando la variable "Pob_total" por la variables "Pob_rural" y "Pob_urbana" también sacamos un p-valor$<0.05$, entonces llegamos a la misma conclusión.
 
-
-
-```{r}
+```{r, warning=FALSE}
 library(mvtnorm)
 library(ggplot2)
 ```
-
 
 Vamos a crear una muestra aleatoria de tamaño $N$ de una $T^2$ con parámetros $p$ y $n$ grados de libertad. Para ello, crearemos una muestra aleatoria de una F de Fisher y usaremos la siguiente propiedad:
 
@@ -183,7 +181,7 @@ $$ T^2(p,n) = \frac{np}{n-p+1}F_{n-p+1}^p$$
 N = 100
 n = 100
 p = 15
-set.seed(61123)
+set.seed(61123) #fecha del día
 vector_fisher = rf(N,n-p+1,p)
 x = (n*p*vector_fisher)/(n-p+1)
 df <- data.frame(x)
@@ -196,6 +194,7 @@ ggplot(df, aes(x = x)) +
   ylab("")
 
 ```
+
 ```{r,message=FALSE}
 N = 1000
 n = 100
@@ -213,6 +212,7 @@ ggplot(df, aes(x = x)) +
   xlab("x") +
   ylab("")
 ```
+
 ```{r,message=FALSE}
 N = 1000000
 n = 1000
@@ -230,13 +230,3 @@ ggplot(df, aes(x = x)) +
   xlab("x") +
   ylab("")
 ```
-
-
-
-
-
-
-
-
-
-
