@@ -688,3 +688,61 @@ Por lo tanto, podemos concluir que las variables Natalidad y Fertilidad están c
 ## Conclusiones
 
 En conclusión, observamos diferencias entre los distintos continentes, sin embargo, diferenciando por años, no encontramos cambios significativos. Además hemos confirmado las correlaciones positivas entre las variables de Natalidad y Fertilidad, y Natalidad con Mortalidad infantil; además tenemos correlación negativa entre la Esperanza de vida y la Mortalidad infantil. Por último, hemos visto que la mayoría de los outliers y valores máximos y mínimos están justificados por eventos históricos o por las cualidades propias de cada país.
+
+## Normal multivariante
+
+Como hemos visto anteriormente, no encontramos cambios significativos por años. Por tanto, haremos el estudio sobre el año $2018$.
+
+Comprobemos la normalidad multivariante de nuestros datos. Suponemos $H_0 =$ "los datos siguen una distribución normal" y $H_1 =$ "no la siguen".
+
+```{r}
+library(mvnormtest)
+# Shapiro-Wilk
+data0 <- world_population %>% 
+  filter(Año == 2018) %>% 
+  drop_na() 
+  
+x= data0[, c("Pob_total","Pob_urbana","Pob_rural", "Densidad","Esp_vida", 
+             "Natalidad", "Mortalidad", "Mortalidad_infantil", "Fertilidad")]
+x = t(x)
+#mshapiro.test(x)
+```
+
+El test con "Pob_total" nos da error porque está teniendo problemas para calcular la inversa de una matriz computacionalmente singular. Una matriz singular es aquella que no puede ser invertida debido a que su determinante es cero o muy cercano a cero.
+
+Esto viene dado a que hay datos redundantes o colineales, i.e., datos contienen columnas que son linealmente dependientes, es decir, una columna es una combinación lineal de las otras, la matriz resultante puede ser singular, el caso de "Pob_urbana" y "Pob_rural" son combinación lineal de "Pob_total".
+
+Así que haremos el estudio con sólo la variable "Pob_total".
+
+```{r}
+x= data0[, c("Pob_total", "Densidad","Esp_vida", "Natalidad", 
+             "Mortalidad", "Mortalidad_infantil", "Fertilidad")]
+x = t(x)
+mshapiro.test(x)
+```
+
+Como podemos observar, el test no da un p-valor$< 0.05$, entonces, concluimos que rechazamos la hipótesis nula. Es decir, las variables cuantitativas de nuestro estudio no siguen una distribución normal.
+
+Cabe destacar que si hacemos el test cambiando la variable "Pob_total" por la variables "Pob_rural" y "Pob_urbana" también sacamos un p-valor$<0.05$, entonces llegamos a la misma conclusión.
+
+Visualizamos las marginales:
+
+```{r. echo = FALSE}
+library(car)
+x=t(x)
+```
+
+
+```{r, echo = FALSE}
+qqPlot(x[,1], main = "Población total")
+qqPlot(x[,2], main = "Densidad")
+qqPlot(x[,3], main = "Esperanza de vida")
+qqPlot(x[,4], main = "Natalidad")
+qqPlot(x[,5], main = "Mortalidad")
+qqPlot(x[,6], main = "Mortalidad infantil")
+qqPlot(x[,7], main = "Fertilidad")
+
+```
+
+En efecto, ninguna se ajusta a una normal.
+

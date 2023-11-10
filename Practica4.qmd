@@ -1,188 +1,42 @@
 ---
 title: "Práctica 4"
+author: "Carla Martínez, Patricia Mateu y Margalida Verd"
 format: html
 editor: visual
 ---
 
-```{r, warning=FALSE,message=FALSE,echo=FALSE}
-library(tidyverse)
+## Ejercicio 4:
 
-# Cargamos el primer dataframe
-global_population = read_csv("Global Population Trends(2016-2022).csv", show_col_types = FALSE) 
-
-# Del segundo dataframe seleccionamos las variables que nos interesan para el estudio
-
-data = read_csv("world_population.csv",show_col_types = FALSE)
-world_data <- data %>% 
-  select(3,5,14) %>% rename(Country= "Country/Territory", Area_km2 = "Area (km²)")   
-
-# Unimos los dos dataframes y creamos el tibble que usaremos para el estudio
-world_population = left_join(global_population,world_data, by = "Country")
-
-```
-
-```{r, warning=FALSE, message=FALSE,echo=FALSE}
-world_population <- world_population %>% 
-  rename(Pais = "Country", 
-         Año = "Year", 
-         Pob_total = "Total Population", 
-         Pob_urbana = "Urban Population", 
-         Pob_rural = "Rural Population", 
-         Densidad = "Population Density", 
-         Esp_vida = "Life Expectancy", 
-         Natalidad = "Birth Rate", 
-         Mortalidad = "Death Rate", 
-         Fertilidad = "Fertility Rate", 
-         Mortalidad_infantil = "Infant Mortality Rate", 
-         Crecimiento = "Growth Rate", 
-         Continente = "Continent") %>% 
-  relocate(Continente, .after = Pais) %>% 
-  relocate(Area_km2, .after = Continente) %>% 
-  relocate(Mortalidad_infantil, .after = Mortalidad) 
-
-```
-
-```{r, warning=FALSE, message=FALSE,echo=FALSE}
-world_population <- world_population %>% 
-  mutate(Año = as.character(Año)) %>% 
-  mutate(Pob_total = as.numeric(gsub("," , "", Pob_total, fixed = TRUE))) %>%
-  mutate(Pob_rural = as.numeric(gsub("," , "", Pob_rural, fixed = TRUE))) %>%
-  mutate(Pob_urbana = as.numeric(gsub("," , "", Pob_urbana, fixed = TRUE))) %>% 
-  mutate(Densidad = as.integer(Densidad)) %>% 
-  mutate(Esp_vida = as.integer(Esp_vida)) %>% 
-  mutate(Fertilidad = as.numeric(Fertilidad)) %>% 
-  mutate(Mortalidad_infantil = as.numeric(Mortalidad_infantil)) %>% 
-  mutate(Crecimiento = as.character(Crecimiento))
-  
-```
-
-```{r,warning=FALSE,message=FALSE,echo=FALSE}
-world_population <- world_population %>% 
-  filter(Año == 2018 |Año == 2019 |Año == 2020 | Año == 2021 )
-```
-
-```{r, warning=FALSE,message=FALSE,echo=FALSE}
-world_population$Continente[19:21] = "North America"
-world_population$Area_km2[19:21] = 442
-
-world_population$Continente[73:75] = "Europe"
-world_population$Area_km2[73:75] = 51197
-
-world_population$Continente[97:99] = "Africa"
-world_population$Area_km2[97:99] = 4033
-
-world_population$Continente[151:153] = "Africa"
-world_population$Area_km2[151:153] = 2344858
-
-world_population$Continente[118:120] = "Europe"
-world_population$Area_km2[118:120] = 198
-
-world_population$Continente[277:279] = "Europe"
-world_population$Area_km2[277:279] = 572
-
-world_population$Continente[304:306] = "Europe"
-world_population$Area_km2[304:306] = 10887
-
-world_population$Continente[310:312] = "Asia"
-world_population$Area_km2[310:312] = 199951
-
-world_population$Continente[313:315] = "Asia"
-world_population$Area_km2[313:315] = 236800
-
-world_population$Continente[340:342] = "Asia"
-world_population$Area_km2[340:342] = 28
-
-world_population$Continente[472:474] = "Africa"
-world_population$Area_km2[472:474] = 342000
-
-world_population$Continente[490:492] = "Africa"
-world_population$Area_km2[490:492] = 964
-
-world_population$Continente[511:513] = "Europe"
-world_population$Area_km2[511:513] = 34
-
-world_population$Continente[514:516] = "Europe"
-world_population$Area_km2[514:516] = 49035
-
-world_population$Continente[541:543] = "North America"
-world_population$Area_km2[541:543] = 269
-
-world_population$Continente[544:546] = "South America"
-world_population$Area_km2[544:546] = 616
-
-world_population$Continente[547:549] = "Europe"
-world_population$Area_km2[547:549] = 53
-
-world_population$Continente[550:552] = "North America"
-world_population$Area_km2[550:552] = 389
-
-world_population$Continente[565:567] = "Asia"
-world_population$Area_km2[565:567] = 185180
-
-world_population$Continente[586:588] = "South America"
-world_population$Area_km2[586:588] = 5128
-
-world_population$Continente[598:600] = "North America"
-world_population$Area_km2[598:600] = 948
-
-world_population$Continente[604:606] = "Asia"
-world_population$Area_km2[604:606] = 83600
-
-world_population$Continente[634:636] = "North America"
-world_population$Area_km2[634:636] = 346
-
-world_population$Continente[637:639] = "Asia"
-world_population$Area_km2[637:639] = 5860
-
-#View(world_population)
-```
-
-Comprobemos la normalidad multivariante de nuestros datos. Suponemos $H_0 =$ "los datos siguen una distribución normal" y $H_1 =$ "no la siguen"
-
-```{r}
-library(mvnormtest)
-# Shapiro-Wilk
-data0 <- world_population %>% 
-  filter(Año == 2018) %>% 
-  drop_na() 
-  
-x= data0[, c("Pob_total","Pob_urbana","Pob_rural", "Densidad","Esp_vida", 
-             "Natalidad", "Mortalidad", "Mortalidad_infantil", "Fertilidad")]
-x = t(x)
-#mshapiro.test(x)
-```
-
-El test con "Pob_total" nos da error porque está teniendo problemas para calcular la inversa de una matriz computacionalmente singular. Una matriz singular es aquella que no puede ser invertida debido a que su determinante es cero o muy cercano a cero.
-
-Esto viene dado a que hay datos redundantes o colineales, i.e., datos contienen columnas que son linealmente dependientes, es decir, una columna es una combinación lineal de las otras, la matriz resultante puede ser singular, el caso de "Pob_urbana" y "Pob_rural" son combinación lineal de "Pob_total".
-
-Así que haremos el estudio con sólo la variable "Pob_total".
-
-```{r}
- x= data0[, c("Pob_total", "Densidad","Esp_vida", "Natalidad", "Mortalidad", "Mortalidad_infantil", "Fertilidad")]
-x = t(x)
-mshapiro.test(x)
-```
-
-Como podemos observar, el test no da un p-valor$< 0.05$, entonces, concluimos que rechazamos la hipótesis nula. Es decir, las variables cuantitativas de nuestro estudio no siguen una distribución normal.
-
-```{r}
+```{r, warning=FALSE, echo=FALSE}
 library(mvtnorm)
 library(ggplot2)
+
 ```
 
 Vamos a crear una muestra aleatoria de tamaño $N$ de una $T^2$ con parámetros $p$ y $n$ grados de libertad. Para ello, crearemos una muestra aleatoria de una F de Fisher y usaremos la siguiente propiedad:
 
 $$ T^2(p,n) = \frac{np}{n-p+1}F_{n-p+1}^p$$
 
-```{r,message=FALSE}
+Hemos elegido:
+
+-   Número de variables: $p=15$
+
+-   Número de observaciones de cada variable: $n = 100$
+
+-   Tamaño de las muestra: $N = 100$, $N = 1000$, $N = 1000000$
+
+```{r,message=FALSE, warning=FALSE}
 N = 100
 n = 100
 p = 15
-set.seed(61123)
-vector_fisher = rf(N,n-p+1,p)
-x = (n*p*vector_fisher)/(n-p+1)
-df <- data.frame(x)
+set.seed(61123) 
+vector_fisher = rf(N,n-p+1,p) #creamos el vector aleatorio de una ley F de Fisher
+x = (n*p*vector_fisher)/(n-p+1) #creamos el vector T^2 Hotelling siguiendo la propiedad
+df <- data.frame(x) #escribimos los datos en forma de dataframe
+
+```
+
+```{r, echo = FALSE, message=FALSE, warning=FALSE}
 ggplot(df, aes(x = x)) + 
   geom_histogram(aes(y = ..density..),
                  colour = 1, fill = "lightblue") +
@@ -193,7 +47,7 @@ ggplot(df, aes(x = x)) +
 
 ```
 
-```{r,message=FALSE}
+```{r,echo= FALSE, message=FALSE, warning=FALSE}
 N = 1000
 n = 100
 p = 15
@@ -211,9 +65,9 @@ ggplot(df, aes(x = x)) +
   ylab("")
 ```
 
-```{r,message=FALSE}
+```{r,message=FALSE,echo=FALSE}
 N = 1000000
-n = 1000
+n = 100
 p = 15
 set.seed(61123)
 
